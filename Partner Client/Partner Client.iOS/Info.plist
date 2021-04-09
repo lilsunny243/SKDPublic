@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>MinimumOSVersion</key>
+	<string>11.4</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.uk.streetkidsdirect.partner</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.6</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>CFBundleName</key>
+	<string>Partner_Client</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Dynamic Links</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>org.streetkidsdirect.partner</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+	<key>FirebaseDeepLinkPasteboardRetrievalEnabled</key>
+	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>LemonMilkRegular.otf</string>
+	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>We need to access your camera for photo upload</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need to access your photo library for you to upload your photos</string>
+	<key>CFBundleDisplayName</key>
+	<string>SKD Partner</string>
+</dict>
+</plist>

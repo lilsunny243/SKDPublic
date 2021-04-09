@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             x:Class="DonorClient.Views.BrowsePage"
+             x:DataType="{x:Type vm:BrowseViewModel}"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="12">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="48,-6,8,0"/>
+                    <On Platform="iOS" Value="48,-6,-8,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+            <cviews:IconSwapToggleButton TrueIcon="{StaticResource ChevronUpIcon}" FalseIcon="{StaticResource FilterIcon}" 
+                                         HorizontalOptions="End" VerticalOptions="Center" x:Name="FilterButton" Toggled="FilterButton_Toggled"
+                                         Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <Grid RowDefinitions="auto,*" ColumnDefinitions="*" RowSpacing="0">
+            <StackLayout x:Name="FilterLayout" Spacing="8" Padding="8"
+                         BackgroundColor="{AppThemeBinding Light={StaticResource ButtonBackgroundColourLight}, Dark={x:Static Color.Black}}">
+                <Label Text="Filters" Style="{StaticResource ProgressLabel}" Margin="8,8,8,0"/>
+                <FlexLayout BindableLayout.ItemsSource="{Binding FilterItems}" Direction="Row"
+                            Wrap="Wrap" Margin="0,0,0,24" JustifyContent="Center">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type cvm:IMAFilterItem}">
+                            <Button WidthRequest="48" HeightRequest="48" CornerRadius="24" Text="{Binding Glyph}"
+                                    FontFamily="IconFont" FontSize="24" CommandParameter="{Binding}" Margin="8,4"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BrowseViewModel}}, Path=FilterCommand}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="{x:Type Button}" Binding="{Binding IsActive}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{Binding AccentColour}"/>
+                                        <Setter Property="TextColor" Value="{StaticResource PrimaryTextColourDark}"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="{x:Type Button}" Binding="{Binding IsActive}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#E2E2E2, Dark={StaticResource ButtonBackgroundColourDark}}"/>
+                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </StackLayout>
+            <Frame x:Name="CollectionFrame" Grid.RowSpan="2" Padding="0" BorderColor="Transparent" CornerRadius="18" TranslationY="-18"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundColourLight}, Dark={StaticResource PageBackgroundColourDark}}">
+                <RefreshView x:Name="RefreshView" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy, Mode=OneWay}" Padding="12,24,12,0">
+                    <CollectionView x:Name="CollectionView" ItemsSource="{Binding CardViewModels}" IsGrouped="True">
+                        <CollectionView.GroupHeaderTemplate>
+                            <DataTemplate x:DataType="utils:Grouping(cmodels:ProjectStatus,x:String)">
+                                <StackLayout>
+                                    <Label FontFamily="LemonMilkRegular" Margin="0,8,0,0">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} • {1}">
+                                                <Binding Path="Name"/>
+                                                <Binding Path="Count"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.GroupHeaderTemplate>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type cvm:ProjectCardViewModel}">
+                                <cviews:ProjectCard ViewModel="{Binding}" TappedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:BrowseViewModel}}, Path=CardTappedCommand}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </RefreshView>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

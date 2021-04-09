@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:st="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+       xmlns:views="clr-namespace:DonorClient.Views"
+       xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+       Title="DonorClient"
+       x:Class="DonorClient.AppShell">
+
+    <TabBar Route="Loading" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate cviews:LoadingPage}"/>
+        </Tab>
+    </TabBar>
+
+    <TabBar Route="Login" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:LoginPage}"/>
+        </Tab>
+    </TabBar>
+
+    <TabBar Route="InvalidAuth" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:InvalidAuthPage}"/>
+        </Tab>
+    </TabBar>
+
+    <TabBar Route="Home">
+        <Tab Route="Projects" Title="BROWSE">
+            <Tab.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{StaticResource BrowseIcon}"/>
+            </Tab.Icon>
+            <ShellContent Route="Browse" ContentTemplate="{DataTemplate views:BrowsePage}"/>
+        </Tab>
+        <Tab Route="CurrentBundle" Title="BUNDLE">
+            <Tab.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{StaticResource DonationBundleIcon}"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:CurrentBundlePage}"/>
+        </Tab>
+        <Tab Route="Profile" Title="PROFILE">
+            <Tab.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{StaticResource ProfileIcon}"/>
+            </Tab.Icon>
+            <ShellContent Route="Overview" ContentTemplate="{DataTemplate views:ProfilePage}"/>
+        </Tab>
+    </TabBar>
+
+</Shell>

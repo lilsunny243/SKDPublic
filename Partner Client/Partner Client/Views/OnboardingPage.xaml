@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             x:DataType="{x:Type vm:OnboardingViewModel}"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common" IsBusy="{Binding IsBusy}"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, 
+                Dark={StaticResource ChromeBackgroundColourDark}}"
+             x:Class="PartnerClient.Views.OnboardingPage">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+            <Setter Property="Margin" Value="0,12,0,8"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,auto,3*,auto" ColumnDefinitions="*" Padding="16">
+            <Grid.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS" Value="16,16,16,64"/>
+                    <On Platform="Android" Value="16"/>
+                </OnPlatform>
+            </Grid.Padding>
+            <Image Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" 
+                   Source="colour_logo.png" WidthRequest="80" HeightRequest="80"/>
+            <cviews:SwitchButtons Grid.Row="1" x:TypeArguments="x:Boolean" x:Name="SwitchButtons" ItemsSource="{Binding SwitchButtonItems}" 
+                                  Command="{Binding SwitchButtonCommand}" Margin="0,0,0,16"
+                                  ButtonBackgroundColor="{AppThemeBinding 
+                Light={StaticResource VeryTranslucentControlBackgroundColourLight}, 
+                Dark={StaticResource VeryTranslucentControlBackgroundColourDark}}"/>
+            <StackLayout Grid.Row="2" x:Name="JoinForm" VerticalOptions="Center">
+                <Label Text="{x:Static res:AppResources.YourDetails}"/>
+                <Entry Placeholder="{x:Static res:AppResources.FullName}" Text="{Binding Name}"/>
+                <Label Text="{x:Static res:AppResources.TeamCode}"/>
+                <Entry Placeholder="{x:Static res:AppResources.TeamCode}" Text="{Binding TeamCode}"/>
+            </StackLayout>
+            <ScrollView Grid.Row="2" x:Name="CreateForm" Orientation="Vertical" VerticalOptions="Center" Opacity="0">
+                <ScrollView.Triggers>
+                    <DataTrigger TargetType="{x:Type ScrollView}" Binding="{Binding Source={x:Reference CreateForm}, Path=Opacity}" Value="0">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </ScrollView.Triggers>
+                <StackLayout>
+                    <Label Text="{x:Static res:AppResources.YourDetails}"/>
+                    <Entry Placeholder="{x:Static res:AppResources.FullName}" Text="{Binding Name}"/>
+                    <Label Text="{x:Static res:AppResources.OrganisationDetails}"/>
+                    <Entry Placeholder="{x:Static res:AppResources.Name}" Text="{Binding OrgName}">
+                        <Entry.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0,0,0,8"/>
+                            </OnPlatform>
+                        </Entry.Margin>
+                    </Entry>
+                    <Entry Placeholder="{x:Static res:AppResources.Email}" Keyboard="Email" Text="{Binding OrgEmail}">
+                        <Entry.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0,0,0,8"/>
+                            </OnPlatform>
+                        </Entry.Margin>
+                    </Entry>
+                    <Entry Placeholder="{x:Static res:AppResources.PhoneNumber}" Keyboard="Numeric" Text="{Binding OrgPhone}">
+                        <Entry.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0,0,0,8"/>
+                            </OnPlatform>
+                        </Entry.Margin>
+                    </Entry>
+                    <Editor Placeholder="{x:Static res:AppResources.Address}" Text="{Binding OrgAddress}"/>
+                    <Label Text="{x:Static res:AppResources.AreasOfWork}"/>
+                    <FlexLayout BindableLayout.ItemsSource="{Binding AreasOfWorkOptions}" Wrap="Wrap" Direction="Row">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:ToggleOption}">
+                                <StackLayout Orientation="Horizontal" HeightRequest="32" Spacing="4" Margin="0,0,12,0">
+                                    <CheckBox IsChecked="{Binding IsChecked}" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Name}" VerticalTextAlignment="Center" Margin="0,0,0,4" VerticalOptions="FillAndExpand"
+                                           LineBreakMode="NoWrap" FontFamily="LexendDecaRegular" FontSize="15"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                    <Label Text="{x:Static res:AppResources.Documents}" Margin="0,12,0,0"/>
+                    <Label Text="{x:Static res:AppResources.AvailableDocumentsMessage}" Margin="0,8" FontFamily="LexendDecaRegular"/>
+                    <StackLayout BindableLayout.ItemsSource="{Binding DocumentOptions}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:ToggleOption}">
+                                <StackLayout Orientation="Horizontal" HeightRequest="32" Spacing="4">
+                                    <CheckBox IsChecked="{Binding IsChecked}" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Name}" VerticalTextAlignment="Center" Margin="0,0,0,4" VerticalOptions="FillAndExpand"
+                                           LineBreakMode="NoWrap" FontFamily="LexendDecaRegular" FontSize="15"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <Button x:Name="SubmitButton" Grid.Row="3" Text="{x:Static res:AppResources.Submit}" 
+                    Command="{Binding SubmitCommand}" Margin="-16,0,-16,-16"/>
+            <Grid RowDefinitions="*,auto,auto,auto,*" ColumnDefinitions="*" x:Name="PendingGrid" Grid.RowSpan="4"
+             BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, 
+                Dark={StaticResource ChromeBackgroundColourDark}}" Margin="-16">
+                <Grid.Triggers>
+                    <DataTrigger TargetType="{x:Type Grid}" Binding="{Binding Source={x:Reference PendingGrid}, Path=Opacity}" Value="0">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Label Grid.Row="1" FontSize="48" TextColor="{StaticResource PendingAccent}" HorizontalOptions="CenterAndExpand"
+                       Text="{StaticResource PendingIcon}" FontFamily="IconFont"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                <Label Grid.Row="2" Text="{x:Static res:AppResources.ApplicationPendingMessage}" FontFamily="LexendDecaRegular" FontSize="18"
+                       HorizontalOptions="CenterAndExpand" 
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="{x:Type Label}" Binding="{Binding IsJoining}" Value="True">
+                            <Setter Property="Text" Value="{Binding JoiningTeamName, 
+                                StringFormat={x:Static res:AppResources.TeamRequestPendingFormat}}"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <Label Grid.Row="3" Text="{Binding AuthCode, StringFormat={x:Static res:AppResources.AuthCodeFormat}}" FontFamily="LexendDecaRegular" FontSize="16"
+                       HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsCreating}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                <Button Grid.Row="3" Text="{x:Static res:AppResources.Cancel}" Command="{Binding CancelJoinCommand}" BackgroundColor="Transparent" IsVisible="{Binding IsJoining}"/>
+            </Grid>
+            <Button Text="{StaticResource LogoutIcon}" FontFamily="IconFont" Command="{Binding LogoutCommand}"
+                    HorizontalOptions="End" VerticalOptions="Start" BackgroundColor="Transparent" FontSize="24"
+                    Margin="0,-12,-16,0">
+                <Button.Padding>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,32,24,0"/>
+                    </OnPlatform>
+                </Button.Padding>
+            </Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

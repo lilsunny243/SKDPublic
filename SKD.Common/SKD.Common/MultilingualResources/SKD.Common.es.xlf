@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="es" original="SKD.COMMON/RESOURCES/APPRESOURCES.RESX" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6916.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="SKD.COMMON/RESOURCES/APPRESOURCES.RESX" datatype="resx">
+        <trans-unit id="ChildHealth" translate="yes" xml:space="preserve">
+          <source>Child Health</source>
+          <target state="needs-review-translation">Salud Infantil</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="ChristianFaith" translate="yes" xml:space="preserve">
+          <source>Christian Faith</source>
+          <target state="needs-review-translation">Fe Cristiana</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="CommunityRelations" translate="yes" xml:space="preserve">
+          <source>Community Relations</source>
+          <target state="needs-review-translation">Relaciones con la comunidad</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="ConstructiveUseOfTime" translate="yes" xml:space="preserve">
+          <source>Constructive Use Of Time</source>
+          <target state="needs-review-translation">Uso constructivo del tiempo</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="Education" translate="yes" xml:space="preserve">
+          <source>Education</source>
+          <target state="needs-review-translation">Educación</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="FamilyRelationships" translate="yes" xml:space="preserve">
+          <source>Family Relationships</source>
+          <target state="needs-review-translation">Relaciones familiares</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="PositiveValues" translate="yes" xml:space="preserve">
+          <source>Positive Values</source>
+          <target state="needs-review-translation">Valores positivos</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="ProgressLabelFormat" translate="yes" xml:space="preserve">
+          <source>Raised £{0} of £{1} target</source>
+          <target state="needs-review-translation">Recaudado £{0} de objetivo £{1}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Card / Details Page</note>
+        </trans-unit>
+        <trans-unit id="ResponsibleLimits" translate="yes" xml:space="preserve">
+          <source>Responsible Limits</source>
+          <target state="needs-review-translation">Límites responsables</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="SelfEsteemAndDreams" translate="yes" xml:space="preserve">
+          <source>Self Esteem And Dreams</source>
+          <target state="needs-review-translation">Autoestima y sueños</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="SocialIdentity" translate="yes" xml:space="preserve">
+          <source>Social Identity</source>
+          <target state="needs-review-translation">Identidad social</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="UnknownIMA" translate="yes" xml:space="preserve">
+          <source>Unknown - Please Update</source>
+          <target state="needs-review-translation">Desconocido - Por favor, actualice</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Impact Measurement Area</note>
+        </trans-unit>
+        <trans-unit id="Urgent" translate="yes" xml:space="preserve">
+          <source>Urgent</source>
+          <target state="needs-review-translation">Urgente</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Card / Details Page</note>
+        </trans-unit>
+        <trans-unit id="ProjectDatePublishedStringFormat" translate="yes" xml:space="preserve">
+          <source>Project Published  •  {0}</source>
+          <target state="needs-review-translation">Proyecto publicado • {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Detail Page</note>
+        </trans-unit>
+        <trans-unit id="CompletedProjectUpdateStringFormat" translate="yes" xml:space="preserve">
+          <source>Project Completed  •  {0}</source>
+          <target state="needs-review-translation">Proyecto completado • {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Update Card</note>
+        </trans-unit>
+        <trans-unit id="Draft" translate="yes" xml:space="preserve">
+          <source>Draft</source>
+          <target state="needs-review-translation">Borrador</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Update Card</note>
+        </trans-unit>
+        <trans-unit id="PendingUpdate" translate="yes" xml:space="preserve">
+          <source>Pending Update</source>
+          <target state="needs-review-translation">Actualización pendiente</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Update Card</note>
+        </trans-unit>
+        <trans-unit id="PublishedProjectUpdateStringFormat" translate="yes" xml:space="preserve">
+          <source>Update  •  {0}</source>
+          <target state="needs-review-translation">Actualización • {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Update Card</note>
+        </trans-unit>
+        <trans-unit id="ForOrganisation" translate="yes" xml:space="preserve">
+          <source>For Organisation</source>
+          <target state="needs-review-translation">Para la organización</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Questionnaire Page</note>
+        </trans-unit>
+        <trans-unit id="Questionnaire" translate="yes" xml:space="preserve">
+          <source>Questionnaire</source>
+          <target state="needs-review-translation">Cuestionario</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Questionnaire Page</note>
+        </trans-unit>
+        <trans-unit id="QuestionnaireCompletedDateStringFormat" translate="yes" xml:space="preserve">
+          <source>Completed {0}</source>
+          <target state="needs-review-translation">Completado {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Questionnaire Tab</note>
+        </trans-unit>
+        <trans-unit id="Questionnaires" translate="yes" xml:space="preserve">
+          <source>Questionnaires</source>
+          <target state="needs-review-translation">Cuestionarios</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Project Update Card</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

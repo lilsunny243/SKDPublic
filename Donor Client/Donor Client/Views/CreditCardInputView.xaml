@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dialogs:DialogView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" ProportionalWidth="1" ProportionalHeight="1"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:utils="clr-namespace:DonorClient.Utils"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             x:DataType="{x:Type vm:SettingsViewModel}"
+             ControlTemplate="{StaticResource DialogTemplate}"
+             xmlns:dialogs="clr-namespace:AiForms.Dialogs.Abstractions;assembly=AiForms.Dialogs.Abstractions" BackgroundColor="Transparent"
+             x:Class="DonorClient.Views.CreditCardInputView">
+    <dialogs:DialogView.Resources>
+        <utils:StringToString_AutoDashConverter x:Key="Dash"/>
+        <utils:MonthYearConverter x:Key="MonthYear"/>
+        <Style TargetType="Entry">
+            <Setter Property="Keyboard" Value="Numeric"/>
+            <Setter Property="ReturnType" Value="Next"/>
+        </Style>
+    </dialogs:DialogView.Resources>
+  <dialogs:DialogView.Content>
+        <Grid RowDefinitions="*,auto,auto,*,auto" ColumnDefinitions="*,*">
+            <ff:CachedImage Grid.ColumnSpan="2" Source="{Binding InputCardPreviewImageSource}" Margin="24" FadeAnimationForCachedImages="True" FadeAnimationEnabled="True"/>
+            <Entry Grid.Row="1" Grid.ColumnSpan="2" TabIndex="0" Placeholder="Card Number" Text="{Binding InputCardNumber, Converter={StaticResource Dash}}" Margin="0,0,0,8">
+                <Entry.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,0,0,8"/>
+                    </OnPlatform>
+                </Entry.Margin>
+            </Entry>
+            <Entry Grid.Row="2" Placeholder="Expiry (mm/yy)" TabIndex="1" Text="{Binding InputExpiry, Converter={StaticResource MonthYear}}"/>
+            <Entry Grid.Row="2" Grid.Column="1" Placeholder="CVC" TabIndex="2" Text="{Binding InputCVC}" ReturnType="Done"/>
+            <Button Grid.Row="4" Grid.ColumnSpan="2" Text="Submit" Clicked="SubmitButton_Clicked" IsEnabled="{Binding PaymentMethodInputValid}" Style="{StaticResource ConfirmButton}"/>
+        </Grid>
+  </dialogs:DialogView.Content>
+</dialogs:DialogView>

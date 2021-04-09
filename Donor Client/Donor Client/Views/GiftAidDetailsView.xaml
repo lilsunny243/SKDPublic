@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dialogs:DialogView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:dialogs="clr-namespace:AiForms.Dialogs.Abstractions;assembly=AiForms.Dialogs.Abstractions"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DonorClient.Views.GiftAidDetailsView"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             x:DataType="{x:Type vm:SettingsViewModel}"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ProportionalWidth="1" ProportionalHeight="1"
+             ControlTemplate="{StaticResource DialogTemplate}"
+             ios:Page.UseSafeArea="true">
+    <dialogs:DialogView.Resources>
+        <Style TargetType="{x:Type Entry}">
+            <Setter Property="ReturnType" Value="Next"/>
+            <Setter Property="IsEnabled" Value="{Binding GiftAidEnabledInput}"/>
+        </Style>
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BodyText}">
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,-4,0,0"/>
+        </Style>
+    </dialogs:DialogView.Resources>
+    <dialogs:DialogView.Content>
+        <Grid RowDefinitions="auto,*,auto" ColumnDefinitions="*" Padding="{OnPlatform Android='0,0,0,0', iOS='0,20,0,20'}">
+            <StackLayout Orientation="Horizontal" Spacing="8">
+                <StackLayout.Padding>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,16,0,0"/>
+                    </OnPlatform>
+                </StackLayout.Padding>
+                <CheckBox IsChecked="{Binding GiftAidEnabledInput}"/>
+                <Label Text="Enable Gift Aid"/>
+            </StackLayout>
+            <ScrollView Grid.Row="1" Orientation="Vertical">
+                <StackLayout Spacing="8">
+                    <StackLayout.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,8,0,0"/>
+                        </OnPlatform>
+                    </StackLayout.Padding>
+                    <StackLayout.Spacing>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="iOS" Value="8"/>
+                        </OnPlatform>
+                    </StackLayout.Spacing>
+                    <Entry Placeholder="Title" Text="{Binding GiftAidTitleInput}"/>
+                    <Entry Placeholder="First Name" Text="{Binding GiftAidFirstNameInput}"/>
+                    <Entry Placeholder="Last Name" Text="{Binding GiftAidLastNameInput}"/>
+                    <StackLayout Orientation="Horizontal" Spacing="8">
+                        <CheckBox Style="{StaticResource PossiblyDisabledCheckBox}" IsChecked="{Binding GiftAidInputHasUKAddress}" IsEnabled="{Binding GiftAidEnabledInput}"/>
+                        <Label Text="I live in the UK" IsEnabled="{Binding GiftAidEnabledInput}"/>
+                    </StackLayout>
+                    <Entry Placeholder="House Number / Name" Text="{Binding GiftAidHouseNumberNameInput}"/>
+                    <Grid RowDefinitions="auto" ColumnDefinitions="*">
+                        <Entry Placeholder="Post Code" Text="{Binding GiftAidPostCodeInput}" ReturnType="Done">
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="{x:Type Entry}" Value="True"
+                                         Binding="{Binding GiftAidInputHasUKAddress}">
+                                    <DataTrigger.EnterActions>
+                                        <cviews:FadeTriggerAction Direction="In"/>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                                <DataTrigger TargetType="{x:Type Entry}" Value="False"
+                                         Binding="{Binding GiftAidInputHasUKAddress}">
+                                    <DataTrigger.EnterActions>
+                                        <cviews:FadeTriggerAction Direction="Out"/>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <StackLayout Orientation="Horizontal" Spacing="8">
+                            <StackLayout.Triggers>
+                                <DataTrigger TargetType="{x:Type StackLayout}" Value="True"
+                                         Binding="{Binding GiftAidInputHasUKAddress}">
+                                    <DataTrigger.EnterActions>
+                                        <cviews:FadeTriggerAction Direction="Out"/>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                                <DataTrigger TargetType="{x:Type StackLayout}" Value="False"
+                                         Binding="{Binding GiftAidInputHasUKAddress}">
+                                    <DataTrigger.EnterActions>
+                                        <cviews:FadeTriggerAction Direction="In"/>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </StackLayout.Triggers>
+                            <Entry Placeholder="Street" Text="{Binding GiftAidStreetInput}" HorizontalOptions="FillAndExpand"/>
+                            <Entry Placeholder="Town" Text="{Binding GiftAidTownInput}" HorizontalOptions="FillAndExpand" ReturnType="Done"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            <Button Grid.Row="2" Text="Save Details" Clicked="SaveButton_Clicked" IsEnabled="{Binding GiftAidInputValid}" 
+                    Style="{StaticResource ConfirmButton}"/>
+        </Grid>
+    </dialogs:DialogView.Content>
+</dialogs:DialogView>

@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:utils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             xmlns:nado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             x:Class="SKD.Common.Themes.Resources">
+    <!--Light Theme-->
+    <Color x:Key="PageBackgroundColourLight">#F5F5F5</Color>
+    <Color x:Key="ChromeBackgroundColourLight">#EEE</Color>
+    <Color x:Key="PrimaryTextColourLight">#111</Color>
+    <Color x:Key="UnselectedTextColourLight">#555</Color>
+    <Color x:Key="DisabledTextColourLight">#888</Color>
+    <!--<Color x:Key="CardBackgroundColourLight">#EDEDED</Color>-->
+    <Color x:Key="CardBackgroundColourLight">#FAFAFA</Color>
+    <Color x:Key="NestedCardBackgroundColourLight">#FFF</Color>
+    <Color x:Key="ButtonBackgroundColourLight">#EAEAEA</Color>
+    <Color x:Key="DialogBackgroundColourLight">#EEFFFFFF</Color>
+    <Color x:Key="TranslucentControlBackgroundColourLight">#C0FFFFFF</Color>
+    <Color x:Key="VeryTranslucentControlBackgroundColourLight">#30FFFFFF</Color>
+
+    <!-- Dark Theme -->
+    <Color x:Key="PageBackgroundColourDark">#0B0B0B</Color>
+    <Color x:Key="ChromeBackgroundColourDark">#111</Color>
+    <Color x:Key="PrimaryTextColourDark">#EEE</Color>
+    <Color x:Key="UnselectedTextColourDark">#BBB</Color>
+    <Color x:Key="DisabledTextColourDark">#888</Color>
+    <Color x:Key="CardBackgroundColourDark">#121212</Color>
+    <Color x:Key="NestedCardBackgroundColourDark">#171717</Color>
+    <Color x:Key="ButtonBackgroundColourDark">#151515</Color>
+    <Color x:Key="DialogBackgroundColourDark">#EE000000</Color>
+    <Color x:Key="TranslucentControlBackgroundColourDark">#C0000000</Color>
+    <Color x:Key="VeryTranslucentControlBackgroundColourDark">#30000000</Color>
+
+    <!-- Accent Colours -->
+    <Color x:Key="PendingAccent">#F4A118</Color>
+    <Color x:Key="ErrorAccent">#CF1932</Color>
+    <Color x:Key="UserActionAccent">#0088EE</Color>
+    <Color x:Key="SuccessAccent">#00B858</Color>
+
+    <Color x:Key="ChildHealthAccent">#C91932</Color>
+    <Color x:Key="CommunityRelationsAccent">#E06D0E</Color>
+    <Color x:Key="ResponsibleLimitsAccent">#FFC21C</Color>
+    <Color x:Key="EducationAccent">#95C60C</Color>
+    <Color x:Key="FamilyRelationshipsAccent">#00B858</Color>
+    <Color x:Key="PositiveValuesAccent">#1BC7AA</Color>
+    <Color x:Key="SocialIdentityAccent">#23C6F9</Color>
+    <Color x:Key="ConstructiveUseOfTimeAccent">#0088EE</Color>
+    <Color x:Key="SelfEsteemAndDreamsAccent">#6228E4</Color>
+    <Color x:Key="ChristianFaithAccent">#8F17E9</Color>
+
+    <!-- Icon Glyphs -->
+    <x:String x:Key="DonationBundleIcon">&#x002A;</x:String>
+    <x:String x:Key="ProfileIcon">&#xF004;</x:String>
+    <x:String x:Key="SettingsIcon">&#xF493;</x:String>
+    <x:String x:Key="BackIcon">&#xF04D;</x:String>
+    <x:String x:Key="CloseIcon">&#xF156;</x:String>
+    <x:String x:Key="ImageIcon">&#xF2E9;</x:String>
+    <x:String x:Key="DeleteIcon">&#xF1C1;</x:String>
+    <x:String x:Key="PendingIcon">&#xF150;</x:String>
+    <x:String x:Key="ProcessingIcon">&#xF8D5;</x:String>
+    <x:String x:Key="ErrorIcon">&#xF02A;</x:String>
+    <x:String x:Key="SuccessIcon">&#xF12C;</x:String>
+    <x:String x:Key="ReturnedIcon">&#xF54D;</x:String>
+    <x:String x:Key="AddIcon">&#xF415;</x:String>
+    <x:String x:Key="FilterIcon">&#xF232;</x:String>
+    <x:String x:Key="SubDirRightArrowIcon">&#xF60D;</x:String>
+    <x:String x:Key="TransferOwnershipIcon">&#xF00A;</x:String>
+    <x:String x:Key="FilledStarIcon">&#xF4CE;</x:String>
+    <x:String x:Key="EmptyStarIcon">&#xF4D2;</x:String>
+    <x:String x:Key="InfoIcon">&#xF2FD;</x:String>
+    <x:String x:Key="ChevronUpIcon">&#xF143;</x:String>
+    <x:String x:Key="ChevronDownIcon">&#xF140;</x:String>
+    <x:String x:Key="ProjectCreatedIcon">&#xF2B9;</x:String>
+    <x:String x:Key="PublishedProjectUpdateIcon">&#xF130;</x:String>
+    <x:String x:Key="CompletedProjectUpdateIcon">&#xF133;</x:String>
+    <x:String x:Key="DraftProjectUpdateIcon">&#xF6FE;</x:String>
+    <x:String x:Key="LockIcon">&#xF341;</x:String>
+    <x:String x:Key="TelescopeIcon">&#xFB29;</x:String>
+    <x:String x:Key="EditIcon">&#xF3EB;</x:String>
+    <x:String x:Key="AccountStarIcon">&#xF017;</x:String>
+
+    <x:String x:Key="EmailIcon">&#xF1EE;</x:String>
+    <x:String x:Key="PasswordIcon">&#xF33E;</x:String>
+    <x:String x:Key="LogoutIcon">&#xF5FD;</x:String>
+
+    <x:String x:Key="ChildHealthIcon">&#xF5F6;</x:String>
+    <x:String x:Key="ChristianFaithIcon">&#xF952;</x:String>
+    <x:String x:Key="CommunityRelationsIcon">&#xFDB0;</x:String>
+    <x:String x:Key="ConstructiveUseOfTimeIcon">&#xF150;</x:String>
+    <x:String x:Key="EducationIcon">&#xF0BE;</x:String>
+    <x:String x:Key="FamilyRelationshipsIcon">&#xFA58;</x:String>
+    <x:String x:Key="PositiveValuesIcon">&#xF415;</x:String>
+    <x:String x:Key="ResponsibleLimitsIcon">&#xFFE8;</x:String>
+    <x:String x:Key="SelfEsteemAndDreamsIcon">&#xF594;</x:String>
+    <x:String x:Key="SocialIdentityIcon">&#xF016;</x:String>
+    <x:String x:Key="UnknownIMAIcon">&#xF1C2;</x:String>
+
+    <!-- Global Converters -->
+    <utils:DoubleToDouble_MultiplyConverter x:Key="Mult"/>
+    <utils:IntToString_CurrencyConverterGBP x:Key="CurrencyConverter"/>
+    <utils:IntToString_CurrencyInputConverterGBP x:Key="CurrencyInputConverter"/>
+    <utils:IntToString_NumberInputConverter x:Key="IntInputConverter"/>
+    <utils:IntToBool_GreaterThanConverter x:Key="GreaterThanConverter"/>
+    <utils:ANDConverter x:Key="ANDConverter"/>
+    <utils:ORConverter x:Key="ORConverter"/>
+    <utils:NOTConverter x:Key="NOTConverter"/>
+    <utils:ProductConverter x:Key="ProductConverter"/>
+
+    <utils:ColourMorphConverter x:Key="DefaultFaceColourConverter" MinT="-1" MaxT="1">
+        <GradientStopCollection>
+            <GradientStop Color="{StaticResource ErrorAccent}" Offset="0"/>
+            <GradientStop Color="{StaticResource PendingAccent}" Offset="0.5"/>
+            <GradientStop Color="{StaticResource SuccessAccent}" Offset="1"/>
+        </GradientStopCollection>
+    </utils:ColourMorphConverter>
+    <utils:ColourMorphConverter x:Key="ShockFaceColourConverter" MinT="-1" MaxT="1">
+        <GradientStopCollection>
+            <GradientStop Color="{StaticResource ErrorAccent}" Offset="0"/>
+            <GradientStop Color="{StaticResource CommunityRelationsAccent}" Offset="0.2"/>
+            <GradientStop Color="{StaticResource ResponsibleLimitsAccent}" Offset="0.4"/>
+            <GradientStop Color="{StaticResource SocialIdentityAccent}" Offset="0.5"/>
+            <GradientStop Color="{StaticResource SuccessAccent}" Offset="1"/>
+        </GradientStopCollection>
+    </utils:ColourMorphConverter>
+    <utils:ColourMorphConverter x:Key="UnderstandingFaceColourConverter" MinT="-1" MaxT="1">
+        <GradientStopCollection>
+            <GradientStop Color="{StaticResource ChristianFaithAccent}" Offset="0"/>
+            <GradientStop Color="{StaticResource UserActionAccent}" Offset="0.5"/>
+            <GradientStop Color="{StaticResource SuccessAccent}" Offset="1"/>
+        </GradientStopCollection>
+    </utils:ColourMorphConverter>
+
+    <!-- Styles -->
+    <Style TargetType="{x:Type ContentPage}" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackgroundColourLight}, Dark={StaticResource PageBackgroundColourDark}}"/>
+        <Setter Property="ios:Page.UseSafeArea" Value="True"/>
+        <!--<Setter Property="st:SharedTransitionShell.BackgroundAnimation" Value="Fade"/>
+        <Setter Property="st:SharedTransitionShell.TransitionDuration" Value="360"/>-->
+    </Style>
+
+    <BackButtonBehavior x:Key="DefaultBackButtonBehaviour">
+        <BackButtonBehavior.IconOverride>
+            <FontImageSource Glyph="{StaticResource BackIcon}" Size="22" FontFamily="IconFont"
+                                         Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, 
+                                                Dark={StaticResource PrimaryTextColourDark}}"/>
+        </BackButtonBehavior.IconOverride>
+    </BackButtonBehavior>
+
+    <Style TargetType="{x:Type TabBar}">
+        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource ChromeBackgroundColourDark}}" />
+        <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" />
+        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" />
+        <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource UnselectedTextColourLight}, Dark={StaticResource UnselectedTextColourDark}}"/>
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource ChromeBackgroundColourDark}}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource UnselectedTextColourLight}, Dark={StaticResource UnselectedTextColourDark}}"/>
+        <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        <Setter Property="Shell.NavBarHasShadow" Value="False"/>
+    </Style>
+
+    <Style TargetType="{x:Type Label}">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Label.TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Label.TextColor" Value="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Label}" x:Key="PageTitle">
+        <Setter Property="FontFamily" Value="LemonMilkMedium"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+        <Setter Property="LineBreakMode" Value="NoWrap"/>
+    </Style>
+
+    <Style TargetType="{x:Type ScrollView}" x:Key="PageTitleSV">
+        <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+        <Setter Property="Orientation" Value="Horizontal"/>
+    </Style>
+
+    <Style TargetType="{x:Type Label}" x:Key="BodyText">
+        <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style TargetType="{x:Type Label}" x:Key="ProgressLabel">
+        <Setter Property="FontFamily" Value="LemonMilkLight"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+    </Style>
+
+    <Style TargetType="{x:Type Picker}">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        <Setter Property="FontFamily" Value="LemonMilkLight"/>
+    </Style>
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ButtonBackgroundColourLight}, Dark={StaticResource ButtonBackgroundColourDark}}"/>
+        <Setter Property="FontFamily" Value="LemonMilkLight"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Button.TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Button.TextColor" Value="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="ConfirmButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource SuccessAccent}"/>
+        <Setter Property="FontFamily" Value="LemonMilkRegular"/>
+        <Setter Property="CornerRadius" Value="24"/>
+        <Setter Property="HeightRequest" Value="48"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Button.Opacity" Value="1"/>
+                            <Setter Property="Button.TextColor" Value="{StaticResource PrimaryTextColourDark}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Button.Opacity" Value="0.5"/>
+                            <Setter Property="Button.TextColor" Value="{StaticResource PrimaryTextColourDark}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Frame}">
+        <Setter Property="HasShadow" Value="False"/>
+        <Setter Property="IsClippedToBounds" Value="True"/>
+    </Style>
+
+    <Style TargetType="{x:Type Entry}">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource UnselectedTextColourLight}, Dark={StaticResource UnselectedTextColourDark}}"/>
+        <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+        <Setter Property="Margin" Value="0,-4,0,0"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}"/>
+    </Style>
+
+    <Style TargetType="{x:Type CheckBox}" x:Key="PossiblyDisabledCheckBox">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="CheckBox.Color" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="CheckBox.Color" Value="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="IsChecked">
+                            <VisualState.Setters>
+                                <Setter Property="CheckBox.Color" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Editor}">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource UnselectedTextColourLight}, Dark={StaticResource UnselectedTextColourDark}}"/>
+        <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+        <Setter Property="Margin" Value="0,-4,0,0"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}"/>
+    </Style>
+
+    <Style TargetType="{x:Type RefreshView}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource ChromeBackgroundColourDark}}"/>
+        <Setter Property="RefreshColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        <Setter Property="Padding" Value="12,12,12,0"/>
+    </Style>
+
+    <Style TargetType="{x:Type CollectionView}">
+        <Setter Property="ItemsLayout">
+            <Setter.Value>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type StackLayout}" x:Key="ProjectUpdateSL">
+        <Setter Property="Spacing" Value="0"/>
+    </Style>
+
+    <Style TargetType="{x:Type nado:MaterialFrame}">
+        <Setter Property="MaterialTheme" Value="AcrylicBlur"/>
+        <Setter Property="MaterialBlurStyle" Value="{AppThemeBinding Light=Light, Dark=Dark}"/>
+    </Style>
+
+    <Style TargetType="{x:Type BoxView}" x:Key="ProjectUpdateLine">
+        <Setter Property="WidthRequest" Value="2"/>
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+        <Setter Property="Margin" Value="0,-3"/>
+        <Setter Property="MinimumHeightRequest" Value="0"/>
+        <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+    </Style>
+
+    <ControlTemplate x:Key="DialogTemplate">
+        <nado:MaterialFrame>
+            <Grid RowDefinitions="48, *" ColumnDefinitions="*, 48">
+                <ContentPresenter Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                <Button Grid.Column="1" x:Name="CloseButton" FontFamily="IconFont" FontSize="24" BackgroundColor="Transparent" Text="{StaticResource CloseIcon}">
+                    <Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="0,-32,-24,0"/>
+                            <On Platform="iOS" Value="0,16,-24,0"/>
+                        </OnPlatform>
+                    </Button.Margin>
+                </Button>
+            </Grid>
+        </nado:MaterialFrame>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="OpaqueDialogTemplate">
+        <Grid Padding="16" BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource ChromeBackgroundColourDark}}" RowDefinitions="48, *" ColumnDefinitions="*, 48">
+            <ContentPresenter Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+            <Button Grid.Column="1" x:Name="CloseButton" FontFamily="IconFont" FontSize="24" BackgroundColor="Transparent" Text="{StaticResource CloseIcon}">
+                <Button.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="Android" Value="0,-32,-24,0"/>
+                        <On Platform="iOS" Value="0,16,-24,0"/>
+                    </OnPlatform>
+                </Button.Margin>
+            </Button>
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

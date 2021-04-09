@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:nado="http://sharpnado.com"
+             x:DataType="{x:Type vm:ProjectUpdateCreationViewModel}"
+             x:Class="PartnerClient.Views.ProjectUpdateCreationPage"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+            <Setter Property="Margin" Value="0,12,0,10"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="12">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android">0,-6,8,0</On>
+                    <On Platform="iOS">20,0,0,0</On>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{x:Static res:AppResources.ProgressUpdate}" Style="{StaticResource PageTitle}"/>
+            <Button WidthRequest="48" HorizontalOptions="End" BackgroundColor="Transparent"
+                    Command="{Binding DeleteDraftCommand}" Text="{StaticResource DeleteIcon}" FontFamily="IconFont" FontSize="22"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,48" ColumnDefinitions="*,*" ColumnSpacing="0">
+            <ScrollView Orientation="Vertical" Grid.ColumnSpan="2">
+                <StackLayout Padding="16" Spacing="4">
+                    <Label Text="{x:Static res:AppResources.CoreInfo}">
+                        <Label.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="Android">0,12,0,0</On>
+                                <On Platform="iOS">0,12,0,12</On>
+                            </OnPlatform>
+                        </Label.Margin>
+                    </Label>
+                    <Editor Placeholder="{x:Static res:AppResources.CaptionPlaceholder}" Text="{Binding Caption}" AutoSize="TextChanges">
+                        <Editor.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS">0,12,0,0</On>
+                            </OnPlatform>
+                        </Editor.Margin>
+                    </Editor>
+                    <StackLayout Orientation="Horizontal" HeightRequest="32" Spacing="4">
+                        <StackLayout.Triggers>
+                            <DataTrigger TargetType="{x:Type StackLayout}" Binding="{Binding MarksCompletion}" Value="True">
+                                <Setter TargetName="CompletionLabel" Property="Label.Text" Value="{x:Static res:AppResources.ProjectCompleteE}"/>
+                                <Setter TargetName="CompletionLabel" Property="Label.TextColor" Value="{StaticResource SuccessAccent}"/>
+                                <Setter TargetName="CompletionCheckbox" Property="CheckBox.Color" Value="{StaticResource SuccessAccent}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type StackLayout}" Binding="{Binding MarksCompletion}" Value="False">
+                                <Setter TargetName="CompletionCheckbox" Property="CheckBox.Color" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </DataTrigger>
+                        </StackLayout.Triggers>
+                        <CheckBox x:Name="CompletionCheckbox" IsChecked="{Binding MarksCompletion}" VerticalOptions="CenterAndExpand"/>
+                        <Label x:Name="CompletionLabel" Text="{x:Static res:AppResources.ProjectCompleteQ}" VerticalTextAlignment="Center" Margin="0,0,0,4" VerticalOptions="FillAndExpand"
+                                           LineBreakMode="NoWrap" FontFamily="LexendDecaRegular" FontSize="15"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static res:AppResources.Images}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand"/>
+                        <Button Text="{StaticResource AddIcon}" Padding="4" Margin="0,0,-4,-4" BackgroundColor="Transparent" 
+                       HorizontalOptions="End" FontFamily="IconFont" FontSize="24" WidthRequest="32"
+                       VerticalOptions="Center" Command="{Binding AddImageCommand}"/>
+                    </StackLayout>
+                    <Grid RowDefinitions="72" ColumnDefinitions="*">
+                        <nado:HorizontalListView HorizontalOptions="FillAndExpand" ItemsSource="{Binding ImageViewModels}" 
+                                     ItemHeight="72" ItemWidth="108" ItemSpacing="8" EnableDragAndDrop="True">
+                            <nado:HorizontalListView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type vm:ProjectCreationImageViewModel}">
+                                    <nado:DraggableViewCell>
+                                        <ContentView>
+                                            <Grid RowDefinitions="auto,*" ColumnDefinitions="*,auto">
+                                                <ff:CachedImage Grid.RowSpan="2" Grid.ColumnSpan="2" Source="{Binding Source}" Aspect="AspectFill"/>
+                                                <Button Grid.Column="1" Text="{StaticResource CloseIcon}" Padding="2" BackgroundColor="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}" 
+                                                FontFamily="IconFont" FontSize="18" CommandParameter="{Binding}" HorizontalOptions="EndAndExpand" WidthRequest="24" HeightRequest="24" VerticalOptions="StartAndExpand"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjectUpdateCreationViewModel}}, Path=RemoveImageCommand}"/>
+                                            </Grid>
+                                        </ContentView>
+                                    </nado:DraggableViewCell>
+                                </DataTemplate>
+                            </nado:HorizontalListView.ItemTemplate>
+                        </nado:HorizontalListView>
+                        <Label FontFamily="LexendDecaRegular" Text="{x:Static res:AppResources.ProjectUpdateImageHint}" IsVisible="False" TranslationY="-8"
+                       VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="{x:Type Label}" Binding="{Binding ImageViewModels.Count}" Value="0">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Grid>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static res:AppResources.Questionnaires}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand"/>
+                        <Button Text="{StaticResource EditIcon}" Padding="4" Margin="0,0,-4,-4" BackgroundColor="Transparent" 
+                       HorizontalOptions="End" FontFamily="IconFont" FontSize="24" WidthRequest="32"
+                       VerticalOptions="Center" Command="{Binding SelectQuestionnairesCommand}"/>
+                    </StackLayout>
+                    <StackLayout BindableLayout.ItemsSource="{Binding SelectedQuestionnaireTabViewModels}" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type cvm:QuestionnaireTabViewModel}">
+                                <cviews:QuestionnaireTab/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <Button x:Name="SaveButton" Grid.Row="1" Text="Save" Command="{Binding SubmitCommand}">
+                <Button.CommandParameter>
+                    <x:Boolean>True</x:Boolean>
+                </Button.CommandParameter>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="1" Text="Submit" Command="{Binding SubmitCommand}">
+                <Button.CommandParameter>
+                    <x:Boolean>False</x:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

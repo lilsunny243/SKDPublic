@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             x:DataType="{x:Type vm:ChildDetailViewModel}"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cres="clr-namespace:SKD.Common.Resources;assembly=SKD.Common"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             xmlns:models="clr-namespace:PartnerClient.Models"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:utils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             x:Class="PartnerClient.Views.ChildDetailPage"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="12">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android">0,-6,8,0</On>
+                    <On Platform="iOS">20,0,0,0</On>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+            <Button WidthRequest="48" HorizontalOptions="End" BackgroundColor="Transparent"
+                    Command="{Binding EditCommand}" Text="{StaticResource EditIcon}" FontFamily="IconFont" FontSize="22"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <Style TargetType="{x:Type Label}" x:Key="SectionHeader">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+        </Style>
+        <x:Int32 x:Key="One">1</x:Int32>
+        <x:Int32 x:Key="Zero">0</x:Int32>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="auto,auto,auto,*" ColumnSpacing="16" Padding="16" ColumnDefinitions="96,*,auto">
+            <Grid Grid.RowSpan="2" BackgroundColor="{StaticResource UserActionAccent}" RowDefinitions="96" ColumnDefinitions="96" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                <Grid.Clip>
+                    <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48"/>
+                </Grid.Clip>
+                <Image Margin="20" Source="{FontImage Glyph={StaticResource ProfileIcon}, FontFamily=IconFont, Size=56, Color={StaticResource PrimaryTextColourDark}}"/>
+                <ff:CachedImage Aspect="AspectFill" DownsampleToViewSize="True" IsVisible="{Binding HasProfileImage}" Source="{Binding ProfileImageURL}"/>
+            </Grid>
+            <Label Grid.Row="2" Text="{Binding RegNumber, StringFormat='№ {0}'}" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Style="{StaticResource BodyText}"/>
+
+            <Label Grid.Column="1" Margin="0,24,0,0" Text="{Binding FirstNames}" Style="{StaticResource BodyText}"/>
+            <Label Grid.Row="1" Margin="0,-4,0,0" Grid.Column="1" Text="{Binding LastNames}" Style="{StaticResource BodyText}"/>
+
+            <Button WidthRequest="48" Margin="0,24,0,0" Grid.RowSpan="2" Grid.Column="2" BackgroundColor="Transparent" TextColor="{StaticResource UserActionAccent}" FontFamily="IconFont" Text="{StaticResource AddQuestionnaireIcon}" FontSize="20" VerticalOptions="CenterAndExpand"
+                    Command="{Binding AddQuestionnaireCommand}"/>
+
+            <CollectionView Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding QuestionnaireViewModels}">
+                <CollectionView.Header>
+                    <StackLayout>
+                        <Label Text="{x:Static res:AppResources.General}" Style="{StaticResource SectionHeader}"/>
+                        <Label Text="{Binding DateOfBirthString, StringFormat={x:Static res:AppResources.DateOfBirthFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding DateOfEntryString, StringFormat={x:Static res:AppResources.DateOfEntryFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Programme, StringFormat={x:Static res:AppResources.ProgrammeFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Focus, StringFormat={x:Static res:AppResources.FocusFormat}}" Style="{StaticResource BodyText}"/>
+
+                        <Label Text="{x:Static res:AppResources.Images}" Style="{StaticResource SectionHeader}"/>
+                        <Grid RowDefinitions="auto" ColumnDefinitions="*">
+                            <CarouselView IndicatorView="ImagesIndicatorView" ItemsSource="{Binding ImageURIs}" HeightRequest="128">
+                                <CarouselView.Triggers>
+                                    <DataTrigger TargetType="{x:Type CarouselView}" Binding="{Binding ImageCount}" Value="{StaticResource Zero}">
+                                        <Setter Property="HeightRequest" Value="22"/>
+                                    </DataTrigger>
+                                </CarouselView.Triggers>
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate x:DataType="{x:Null}">
+                                        <ff:CachedImage Source="{Binding}" Aspect="AspectFit" DownsampleToViewSize="True"/>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                                <CarouselView.EmptyView>
+                                    <Label Text="{x:Static res:AppResources.NothingToShowHere}" Style="{StaticResource BodyText}"/>
+                                </CarouselView.EmptyView>
+                            </CarouselView>
+                            <IndicatorView x:Name="ImagesIndicatorView" IndicatorColor="{AppThemeBinding Light={StaticResource UnselectedTextColourLight}, Dark={StaticResource UnselectedTextColourDark}}" 
+                           BackgroundColor="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}" SelectedIndicatorColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" 
+                           VerticalOptions="End" HeightRequest="24" HideSingle="True" IsVisible="{Binding ImageCount, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource One}}"/>
+                        </Grid>
+
+                        <Label Text="{x:Static res:AppResources.Contact}" Style="{StaticResource SectionHeader}"/>
+                        <Label Text="{Binding Email, StringFormat={x:Static res:AppResources.EmailFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding MobilePhone, StringFormat={x:Static res:AppResources.MobilePhoneFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding HomePhone, StringFormat={x:Static res:AppResources.HomePhoneFormat}}" Style="{StaticResource BodyText}"/>
+
+                        <Label Text="{x:Static res:AppResources.Address}" Style="{StaticResource SectionHeader}"/>
+                        <Label Text="{Binding Address.Line1, StringFormat={x:Static res:AppResources.LineOneFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Address.Line2, StringFormat={x:Static res:AppResources.LineTwoFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Address.Line3, StringFormat={x:Static res:AppResources.LineThreeFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Address.City, StringFormat={x:Static res:AppResources.CityFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Address.Country, StringFormat={x:Static res:AppResources.CountryFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Address.ZipCode, StringFormat={x:Static res:AppResources.ZipCodeFormat}}" Style="{StaticResource BodyText}"/>
+
+                        <Label Text="{x:Static res:AppResources.School}" Style="{StaticResource SectionHeader}"/>
+                        <Label Text="{Binding School.Name, StringFormat={x:Static res:AppResources.NameFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding School.Grade, StringFormat={x:Static res:AppResources.GradeFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding School.OpeningTimes, StringFormat={x:Static res:AppResources.OpeningTimesFormat}}" Style="{StaticResource BodyText}"/>
+
+                        <Label Text="{x:Static res:AppResources.Health}" Style="{StaticResource SectionHeader}"/>
+                        <Label Text="{Binding Health.DoctorClinicName, StringFormat={x:Static res:AppResources.DoctorClinicNameFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Health.Allergies, StringFormat={x:Static res:AppResources.AllergiesFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding Health.BloodType, StringFormat={x:Static res:AppResources.BloodTypeFormat}}" Style="{StaticResource BodyText}"/>
+
+                        <Label Text="{x:Static res:AppResources.Family}" Style="{StaticResource SectionHeader}"/>
+                        <Label Text="{Binding MamaDPI, StringFormat={x:Static res:AppResources.MamaDPIFormat}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding PapaDPI, StringFormat={x:Static res:AppResources.PapaDPIFormat}}" Style="{StaticResource BodyText}"/>
+
+                        <Label Text="Global Care" Style="{StaticResource SectionHeader}"/>
+                        <Label Text="{x:Static res:AppResources.NothingToShowHere}" IsVisible="{Binding GlobalCareEnabled, Converter={StaticResource NOTConverter}}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{Binding GlobalCare.Reference, StringFormat={x:Static res:AppResources.ReferenceFormat}}" IsVisible="{Binding GlobalCareEnabled}" Style="{StaticResource BodyText}"/>
+                        <Label Text="{x:Static res:AppResources.Sponsors}" IsVisible="{Binding GlobalCareEnabled}" Style="{StaticResource BodyText}"/>
+                        <StackLayout Margin="8,0" BindableLayout.ItemsSource="{Binding GlobalCare.Sponsors}" IsVisible="{Binding GlobalCareEnabled}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type x:String}">
+                                    <Label Text="{Binding}" Style="{StaticResource BodyText}"/>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                            <BindableLayout.EmptyView>
+                                <Label Text="{x:Static res:AppResources.NothingToShowHere}" Style="{StaticResource BodyText}"/>
+                            </BindableLayout.EmptyView>
+                        </StackLayout>
+
+                        <Label Text="{x:Static res:AppResources.AdditionalInfo}" Style="{StaticResource SectionHeader}"/>
+                        <StackLayout Margin="8,0" BindableLayout.ItemsSource="{Binding AdditionalInfo}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type models:AdditionalChildInfoItem}">
+                                    <Label Style="{StaticResource BodyText}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}: {1}">
+                                                <Binding Path="Name"/>
+                                                <Binding Path="Value"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                            <BindableLayout.EmptyView>
+                                <Label Text="{x:Static res:AppResources.NothingToShowHere}" Style="{StaticResource BodyText}"/>
+                            </BindableLayout.EmptyView>
+                        </StackLayout>
+
+                        <Label Text="{x:Static res:AppResources.Questionnaires}" Style="{StaticResource SectionHeader}" Margin="0,8,0,4"/>
+                    </StackLayout>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type cvm:QuestionnaireCardViewModel}">
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}"
+                                       CornerRadius="12" touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChildDetailViewModel}}, Path=QuestionnaireTappedCommand}" 
+                                       touch:TouchEff.CommandParameter="{Binding}" touch:TouchEff.NativeAnimation="True">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding TagViewModels}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="{x:Type cvm:CardTagViewModel}">
+                                            <Label FontSize="20" Text="{Binding Glyph}" TextColor="{Binding Colour}" FontFamily="IconFont"/>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                                <Label Style="{StaticResource BodyText}" Text="•" Margin="4,0,6,4"/>
+                                <Label Style="{StaticResource BodyText}" Margin="0,0,0,4" Text="{Binding DateCreatedString, StringFormat={x:Static cres:AppResources.QuestionnaireCompletedDateStringFormat}}"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                    <StackLayout>
+                        <Label Margin="0,8,0,0" Style="{StaticResource BodyText}" FontSize="12" HorizontalTextAlignment="Center">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{x:Static res:AppResources.CreatedFormat}">
+                                    <Binding Path="CreatedDateString"/>
+                                    <Binding Path="CreatedBy"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+
+                        <Label Margin="0,0,0,32" Style="{StaticResource BodyText}" FontSize="12" HorizontalTextAlignment="Center">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{x:Static res:AppResources.ModifiedFormat}">
+                                    <Binding Path="ModifiedDateString"/>
+                                    <Binding Path="ModifiedBy"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                    </StackLayout>
+                </CollectionView.Footer>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

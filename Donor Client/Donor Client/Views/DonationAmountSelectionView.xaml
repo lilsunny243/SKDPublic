@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dialogs:DialogView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dialogs="clr-namespace:AiForms.Dialogs.Abstractions;assembly=AiForms.Dialogs.Abstractions"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels" ProportionalWidth="1" ProportionalHeight="1"
+             xmlns:cmodels="clr-namespace:SKD.Common.Models;assembly=SKD.Common"
+             ControlTemplate="{StaticResource DialogTemplate}"
+             x:DataType="{x:Type vm:ProjectDetailViewModel}"
+             xmlns:utils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             x:Class="DonorClient.Views.DonationAmountSelectionView">
+    <dialogs:DialogView.Resources>
+        <x:Double x:Key="Quarter">0.25</x:Double>
+        <x:Double x:Key="Zero">0</x:Double>
+        <x:Double x:Key="Hundred">100</x:Double>
+        <utils:AccentColourGradientConverter x:Key="GradientConverter"/>
+    </dialogs:DialogView.Resources>
+    <dialogs:DialogView.Content>
+        <Grid RowDefinitions="*" ColumnDefinitions="*">
+            <StackLayout x:Name="MainSL" Margin="8">
+                <Label FontFamily="LexendDecaRegular" FontSize="24" Text="How much would you like to donate?"/>
+                <Entry Keyboard="Numeric" Text="{Binding DonationAmount, Converter={StaticResource CurrencyInputConverter}}"
+                       Placeholder="₤ Amount to donate">
+                    <Entry.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,8,0,0"/>
+                        </OnPlatform>
+                    </Entry.Margin>
+                </Entry>
+                <Label FontFamily="LemonMilkRegular" Margin="0,12,0,0" Text="Recommended Amounts:"/>
+                <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+                    <StackLayout BindableLayout.ItemsSource="{Binding CostBreakdownComponents}">
+                        <StackLayout.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Command" Value="{Binding AddDonationAmountCommand, Source={RelativeSource AncestorType={x:Type vm:ProjectDetailViewModel}}}"/>
+                                <Setter Property="CommandParameter" Value="{Binding UnitCost}"/>
+                                <Setter Property="Text">
+                                    <MultiBinding StringFormat="{}{0}  •  ₤{1}">
+                                        <Binding Path="NameEn"/>
+                                        <Binding Path="UnitCost" Converter="{StaticResource CurrencyConverter}"/>
+                                    </MultiBinding>
+                                </Setter>
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="BorderWidth" Value="1"/>
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </Style>
+                        </StackLayout.Resources>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type cmodels:CostBreakdownComponent}">
+                                <StackLayout>
+                                    <Button HeightRequest="44" Margin="0,8,0,4" CornerRadius="22"/>
+                                    <FlexLayout Direction="Row" Wrap="Wrap"  BindableLayout.ItemsSource="{Binding Children}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate x:DataType="{x:Type cmodels:CostBreakdownSubcomponent}">
+                                                <Button Margin="0,0,8,8" Padding="16,0" HeightRequest="40" CornerRadius="20"/>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </FlexLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+                <Label Style="{StaticResource BodyText}" Margin="0,16" Text="{Binding DonationAmount, 
+                    Converter={StaticResource CurrencyConverter}, 
+                    ConverterParameter={StaticResource Quarter},
+                    StringFormat='As you have gift aid enabled, this project will recieve an extra ₤{0} at no cost to you!'}">
+                    <Label.IsVisible>
+                        <MultiBinding Converter="{StaticResource ANDConverter}">
+                            <Binding Path="DonationAmount" Converter="{StaticResource GreaterThanConverter}" ConverterParameter="{StaticResource Zero}"/>
+                            <Binding Path="GiftAidEnabled"/>
+                        </MultiBinding>
+                    </Label.IsVisible>
+                </Label>
+                <Button Text="Confirm" Clicked="ConfirmButton_Clicked" VerticalOptions="End" Style="{StaticResource ConfirmButton}"
+                        Background="{Binding AccentColour, Converter={StaticResource GradientConverter}}" IsEnabled="{Binding DonationAmount, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource Hundred}}"/>
+            </StackLayout>
+            <StackLayout x:Name="ThankSL" InputTransparent="True" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Image HorizontalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="IconFont" Glyph="{StaticResource DonationBundleIcon}" Color="{Binding AccentColour}" Size="128"/>
+                    </Image.Source>
+                </Image>
+                <Label Text="Thank You!!!" HorizontalTextAlignment="Center" FontSize="40" FontFamily="LemonMilkMedium" TextColor="{Binding AccentColour}"/>
+            </StackLayout>
+        </Grid>
+    </dialogs:DialogView.Content>
+</dialogs:DialogView>

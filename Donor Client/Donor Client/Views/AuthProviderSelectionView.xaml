@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dialogs:DialogView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             OverlayColor="{AppThemeBinding Light={StaticResource DialogBackgroundColourLight}, Dark={StaticResource DialogBackgroundColourDark}}"
+             xmlns:dialogs="clr-namespace:AiForms.Dialogs.Abstractions;assembly=AiForms.Dialogs.Abstractions"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             ProportionalWidth="1" ProportionalHeight="1" 
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             x:Class="DonorClient.Views.AuthProviderSelectionView">
+    <dialogs:DialogView.Content>
+        <Grid RowDefinitions="*,auto,auto,*" ColumnDefinitions="*" RowSpacing="16">
+            <Label Text="Please sign in to your existing account:" FontFamily="LemonMilkLight" VerticalTextAlignment="End"
+                   FontSize="20" HorizontalOptions="CenterAndExpand" WidthRequest="320" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" HorizontalTextAlignment="Center"/>
+            <StackLayout x:Name="ButtonSL" Grid.Row="1" Spacing="1" Margin="16">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:LoginButtonViewModel}">
+                        <Frame touch:TouchEff.NativeAnimation="True" Opacity="0"
+                               touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LoginViewModel}}, Path=AuthenticateWithPendingCredentialCommand}"
+                               touch:TouchEff.CommandParameter="{Binding Provider}" Margin="16,2,24,2" HorizontalOptions="Center" CornerRadius="{OnPlatform iOS=0, Android=100}" BackgroundColor="Transparent" Padding="12">
+                            <StackLayout Orientation="Horizontal" Spacing="12" FlowDirection="LeftToRight">
+                                <Image Aspect="AspectFit">
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="IconFont" Size="26" Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" Glyph="{Binding Glyph}"/>
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="{Binding Text}" FontFamily="LemonMilkMedium" BackgroundColor="Transparent" HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+            <Label x:Name="InformPendingCredentialLinkLabel" Grid.Row="2" 
+                   VerticalTextAlignment="Start" FontFamily="LexendDecaRegular" 
+                   FontSize="14" HorizontalOptions="CenterAndExpand" WidthRequest="320" HorizontalTextAlignment="Center"/>
+            <Button Grid.Row="3" Margin="32" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Clicked="CloseButton_Clicked" Padding="16,0" FontSize="15" BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" BorderWidth="1" HeightRequest="48" CornerRadius="24"  Text="Sign in with a different account"/>
+        </Grid>
+    </dialogs:DialogView.Content>
+</dialogs:DialogView>

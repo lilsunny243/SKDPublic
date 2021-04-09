@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="DonorClient.Views.ProjectDetailPage"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:models="clr-namespace:SKD.Common.Models;assembly=SKD.Common"
+             xmlns:res="clr-namespace:SKD.Common.Resources;assembly=SKD.Common"
+             xmlns:cutils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             x:DataType="{x:Type vm:ProjectDetailViewModel}"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}">
+    <Shell.TitleView>
+        <StackLayout Padding="0,-6,68,0">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="0,-6,68,0"/>
+                    <On Platform="iOS" Value="0,-6,48,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <ScrollView Style="{StaticResource PageTitleSV}">
+                <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+            </ScrollView>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <x:Int32 x:Key="One">1</x:Int32>
+        <x:Int32 x:Key="Zero">0</x:Int32>
+        <Style TargetType="{x:Type Label}" x:Key="SectionHeader">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+        </Style>
+        <cutils:AccentColourGradientConverter x:Key="GradientConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,auto" ColumnDefinitions="*" RowSpacing="0">
+            <ScrollView>
+                <Grid RowDefinitions="240,*" ColumnDefinitions="*">
+                    <CarouselView IndicatorView="ImagesIndicatorView" ItemsSource="{Binding ImageURIs}">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Null}">
+                                <ff:CachedImage Source="{Binding}" Aspect="AspectFill" DownsampleToViewSize="True"/>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView x:Name="ImagesIndicatorView" IndicatorColor="{AppThemeBinding Light={StaticResource UnselectedTextColourLight}, Dark={StaticResource UnselectedTextColourDark}}" 
+                           BackgroundColor="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}" SelectedIndicatorColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" 
+                           VerticalOptions="End" HeightRequest="24" HideSingle="True" IsVisible="{Binding ImageCount, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource One}}"/>
+                    <StackLayout Grid.Row="1" Padding="16,8,16,0" Spacing="4">
+                        <StackLayout Orientation="Horizontal" Spacing="8">
+                            <StackLayout.Resources>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+                                    <Setter Property="VerticalTextAlignment" Value="Center"/>
+                                    <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="Margin" Value="0,-4,0,0"/>
+                                </Style>
+                            </StackLayout.Resources>
+                            <Label Text="{Binding PartnerName}"/>
+                            <Label Text=" • "/>
+                            <StackLayout Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsUrgent}">
+                                <Image VerticalOptions="Center">
+                                    <Image.Source>
+                                        <FontImageSource Glyph="{StaticResource ErrorIcon}" Color="{StaticResource ErrorAccent}" FontFamily="IconFont" Size="20"/>
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="{x:Static res:AppResources.Urgent}" HeightRequest="24" FontFamily="LemonMilkMedium" FontSize="14" VerticalTextAlignment="Center" TextColor="{StaticResource ErrorAccent}" Margin="0"/>
+                            </StackLayout>
+                            <Label IsVisible="{Binding IsUrgent}" Text=" • "/>
+                            <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding Tags}" Spacing="8">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="{x:Type cvm:ProjectDetailTagViewModel}">
+                                        <Image VerticalOptions="Center">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="{Binding Glyph}" Color="{Binding Colour}" FontFamily="IconFont" Size="20"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                        <Label Style="{StaticResource ProgressLabel}" 
+                           Scale="1.14285714" AnchorX="0" AnchorY="0">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{x:Static res:AppResources.ProgressLabelFormat}">
+                                    <Binding Path="Raised" Converter="{StaticResource CurrencyConverter}"/>
+                                    <Binding Path="Target" Converter="{StaticResource CurrencyConverter}"/>
+                                </MultiBinding>
+                            </Label.Text>
+                            <Label.Triggers>
+                                <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static models:ProjectStatus.Pending}">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                        <cviews:TransitioningProgressBar Margin="0,6"
+                                 BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark=#000000}" 
+                                 HeightRequest="4" ProgressColor="{Binding AccentColour}" Progress="{Binding Progress}">
+                        </cviews:TransitioningProgressBar>
+
+                        <Label Text="Description" Style="{StaticResource SectionHeader}" Margin="0,4,0,0"/>
+                        <Label Style="{StaticResource BodyText}" FontFamily="LexendDecaRegular" Text="{Binding Description}"/>
+
+                        <Label Text="Impact Measurement" Style="{StaticResource SectionHeader}" Margin="0,10,0,0"/>
+                        <StackLayout BindableLayout.ItemsSource="{Binding Tags}" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type cvm:ProjectDetailTagViewModel}">
+                                    <StackLayout Spacing="4" Margin="0,2,0,0">
+                                        <StackLayout Orientation="Horizontal" Spacing="8">
+                                            <Image VerticalOptions="Center">
+                                                <Image.Source>
+                                                    <FontImageSource Glyph="{Binding Glyph}" Color="{Binding Colour}" FontFamily="IconFont" Size="20"/>
+                                                </Image.Source>
+                                            </Image>
+                                            <Label Text="{Binding Text}" HeightRequest="24" FontFamily="LemonMilkMedium" FontSize="13" VerticalTextAlignment="Center"/>
+                                        </StackLayout>
+                                        <Label Margin="28,-6,0,0" Text="{Binding Explanation}" Style="{StaticResource BodyText}"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+
+                        <Label Text="Cost Breakdown" Style="{StaticResource SectionHeader}" Margin="0,12,0,1"/>
+                        <StackLayout BindableLayout.ItemsSource="{Binding CostBreakdownComponents}">
+                            <StackLayout.Resources>
+                                <cutils:EqualityConverter x:Key="EachGroupConverter" TrueValue="Each" FalseValue="Group"/>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="VerticalTextAlignment" Value="Center"/>
+                                    <Setter Property="VerticalOptions" Value="Fill"/>
+                                </Style>
+                            </StackLayout.Resources>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type models:CostBreakdownComponent}">
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{StaticResource SubDirRightArrowIcon}" FontFamily="IconFont" FontSize="22" WidthRequest="24"/>
+                                            <Label Margin="0,1,0,0">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0}  ×  {1}  =  ₤{2}  (₤{3} {4})">
+                                                        <Binding Path="NameEn"/>
+                                                        <Binding Path="Quantity"/>
+                                                        <MultiBinding Converter="{StaticResource ProductConverter}">
+                                                            <Binding Path="Quantity"/>
+                                                            <Binding Path="UnitCost" Converter="{StaticResource CurrencyConverter}"/>
+                                                        </MultiBinding>
+                                                        <Binding Path="UnitCost" Converter="{StaticResource CurrencyConverter}"/>
+                                                        <Binding Path="Children" ConverterParameter="{x:Null}" Converter="{StaticResource EachGroupConverter}"/>
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout BindableLayout.ItemsSource="{Binding Children}">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate x:DataType="{x:Type models:CostBreakdownSubcomponent}">
+                                                    <StackLayout Orientation="Horizontal" Padding="30,-4,0,-1">
+                                                        <Label Text="{StaticResource SubDirRightArrowIcon}" FontFamily="IconFont" FontSize="22" WidthRequest="24"/>
+                                                        <Label Margin="0,1,0,0">
+                                                            <Label.Text>
+                                                                <MultiBinding StringFormat="{}{0}  ×  {1}  =  ₤{2}  (₤{3} Each)">
+                                                                    <Binding Path="NameEn"/>
+                                                                    <Binding Path="Quantity"/>
+                                                                    <MultiBinding Converter="{StaticResource ProductConverter}">
+                                                                        <Binding Path="Quantity"/>
+                                                                        <Binding Path="UnitCost" Converter="{StaticResource CurrencyConverter}"/>
+                                                                    </MultiBinding>
+                                                                    <Binding Path="UnitCost" Converter="{StaticResource CurrencyConverter}"/>
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+
+                        <Label Text="Project Timeline" Style="{StaticResource SectionHeader}" Margin="0,8,0,0"/>
+                        <StackLayout BindableLayout.ItemsSource="{Binding UpdateViewModels}" Style="{StaticResource ProjectUpdateSL}" Margin="-16,0">
+                            <StackLayout.Resources>
+                                <cutils:TernaryConverter x:Key="EmptyIconConverter" TrueValue="{StaticResource DonationBundleIcon}" FalseValue="{StaticResource LockIcon}"/>
+                                <cutils:TernaryConverter x:Key="EmptyTextConverter" TrueValue="Thank you for donating to this project! At the moment we don't have any progress updates for you but we'll let you know when something happens!"
+                                                     FalseValue="You can unlock progress updates for this project by donating to it."/>
+                            </StackLayout.Resources>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type cvm:ProjectUpdateCardViewModel}">
+                                    <cviews:ProjectUpdateCard ForSpecificProject="True" Padding="16,0" ViewModel="{Binding}"/>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                            <BindableLayout.EmptyView>
+                                <StackLayout HorizontalOptions="CenterAndExpand" Spacing="8" Padding="16">
+                                    <Label Text="{Binding UserHasDonated, Converter={StaticResource EmptyIconConverter}}" FontFamily="IconFont" FontSize="28" HorizontalTextAlignment="Center"/>
+                                    <Label Style="{StaticResource BodyText}" Text="{Binding UserHasDonated, Converter={StaticResource EmptyTextConverter}}" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </BindableLayout.EmptyView>
+                        </StackLayout>
+                        <Grid RowDefinitions="auto" ColumnDefinitions="auto, *" RowSpacing="0" Padding="0,0,0,8" Margin="0,-4,0,0" ColumnSpacing="16">
+                            <Grid RowDefinitions="*,auto,*" ColumnDefinitions="auto" HeightRequest="{Binding Source={x:Reference CardFrame}, Path=Height}" RowSpacing="0">
+                                <BoxView IsVisible="{Binding UpdateViewModels.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource Zero}}"
+                                                 Style="{StaticResource ProjectUpdateLine}"/>
+                                <Image Grid.Row="1" HorizontalOptions="CenterAndExpand">
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="IconFont" Glyph="{StaticResource ProjectCreatedIcon}" Size="24"
+                                                             Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                            <Frame x:Name="CardFrame" Grid.Column="1" VerticalOptions="Center" BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}"
+                                           CornerRadius="18" Padding="0" BorderColor="Transparent" Margin="0,6">
+                                <StackLayout IsClippedToBounds="True" Padding="16">
+                                    <Label FontSize="13" Text="{Binding DatePublishedString, StringFormat={x:Static res:AppResources.ProjectDatePublishedStringFormat}}" FontFamily="LemonMilkLight"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
+            <Button Grid.Row="1" Text="Donate" Command="{Binding DonateCommand}" TextColor="{StaticResource PrimaryTextColourDark}"
+                    Background="{Binding AccentColour, Converter={StaticResource GradientConverter}}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

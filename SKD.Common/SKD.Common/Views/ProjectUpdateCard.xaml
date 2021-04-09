@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SKD.Common.ViewModels"
+             x:DataType="{x:Type vm:ProjectUpdateCardViewModel}"
+             xmlns:res="clr-namespace:SKD.Common.Resources"
+             xmlns:views="clr-namespace:SKD.Common.Views"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="SKD.Common.Views.ProjectUpdateCard">
+    <ContentView.Triggers>
+        <DataTrigger TargetType="{x:Type ContentView}" Binding="{Binding IsDraft}" Value="True">
+            <Setter TargetName="MetaLabel" Property="Label.Text" Value="{x:Static res:AppResources.Draft}"/>
+            <Setter TargetName="MetaLabel" Property="Label.TextColor" Value="{StaticResource UserActionAccent}"/>
+            <Setter TargetName="IconImage" Property="Image.Source">
+                <FontImageSource Size="24" FontFamily="IconFont" Glyph="{StaticResource DraftProjectUpdateIcon}"
+                                 Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+            </Setter>
+        </DataTrigger>
+        <DataTrigger TargetType="{x:Type ContentView}" Binding="{Binding IsPending}" Value="True">
+            <Setter TargetName="MetaLabel" Property="Label.Text" Value="{x:Static res:AppResources.PendingUpdate}"/>
+            <Setter TargetName="MetaLabel" Property="Label.TextColor" Value="{StaticResource PendingAccent}"/>
+            <Setter TargetName="IconImage" Property="Image.Source">
+                <FontImageSource Size="24" FontFamily="IconFont" Glyph="{StaticResource PendingIcon}"
+                                 Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+            </Setter>
+        </DataTrigger>
+        <DataTrigger TargetType="{x:Type ContentView}" Binding="{Binding PublishedMarksCompletion}" Value="True">
+            <Setter TargetName="MetaLabel" Property="Label.TextColor" Value="{StaticResource SuccessAccent}"/>
+            <Setter TargetName="MetaLabel" Property="Label.Text" Value="{Binding DateString, StringFormat={x:Static res:AppResources.CompletedProjectUpdateStringFormat}}"/>
+            <Setter TargetName="IconImage" Property="Image.Source">
+                <FontImageSource Size="24" FontFamily="IconFont" Glyph="{StaticResource CompletedProjectUpdateIcon}"
+                                 Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+            </Setter>
+        </DataTrigger>
+    </ContentView.Triggers>
+    <ContentView.Resources>
+        <x:Int32 x:Key="Zero">0</x:Int32>
+        <x:Int32 x:Key="One">1</x:Int32>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid RowDefinitions="auto" ColumnDefinitions="auto, *" ColumnSpacing="16">
+            <Grid RowDefinitions="*,auto,*" ColumnDefinitions="auto" HeightRequest="{Binding Source={x:Reference CardFrame}, Path=Height}" RowSpacing="0">
+                <BoxView IsVisible="{Binding Index, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource Zero}}"
+                     Style="{StaticResource ProjectUpdateLine}"/>
+                <Image x:Name="IconImage" Grid.Row="1" HorizontalOptions="CenterAndExpand">
+                    <Image.Source>
+                        <FontImageSource Size="24" FontFamily="IconFont" Glyph="{StaticResource PublishedProjectUpdateIcon}"
+                                         Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                    </Image.Source>
+                </Image>
+                <BoxView Grid.Row="2" Style="{StaticResource ProjectUpdateLine}">
+                    <BoxView.IsVisible>
+                        <MultiBinding Converter="{StaticResource ORConverter}">
+                            <Binding Path="NotLast"/>
+                            <Binding Path="ForSpecificProject" Source="{RelativeSource AncestorType={x:Type views:ProjectUpdateCard}}"/>
+                        </MultiBinding>
+                    </BoxView.IsVisible>
+                </BoxView>
+            </Grid>
+            <Frame Grid.Column="1" x:Name="CardFrame" VerticalOptions="Center" 
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}"
+                   CornerRadius="18" Padding="0" BorderColor="Transparent" Margin="0,6">
+                <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" ColumnDefinitions="*" IsClippedToBounds="True" Padding="0,0,0,16">
+                    <CarouselView IsVisible="{Binding ImageCount, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource Zero}}"
+                                  IndicatorView="ImagesIndicatorView" HeightRequest="180" ItemsSource="{Binding ImageURIs}">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Null}">
+                                <ff:CachedImage Source="{Binding}" Aspect="AspectFill" DownsampleToViewSize="True"/>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView x:Name="ImagesIndicatorView" IndicatorColor="{AppThemeBinding Light={StaticResource UnselectedTextColourLight}, Dark={StaticResource UnselectedTextColourDark}}" 
+                           BackgroundColor="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}" SelectedIndicatorColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" 
+                           VerticalOptions="End" HeightRequest="24" HideSingle="True" IsVisible="{Binding ImageCount, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource One}}"/>
+                    <Label Grid.Row="1" Margin="16,8,16,-8" IsVisible="{Binding NotForSpecificProject, Source={RelativeSource AncestorType={x:Type views:ProjectUpdateCard}}}" Text="{Binding ProjectNameEn}" FontSize="16" FontFamily="LemonMilkMedium"/>
+                    <Label x:Name="MetaLabel" Margin="16,8,16,0" FontSize="13" Grid.Row="2" FontFamily="LemonMilkLight" Text="{Binding DateString, StringFormat={x:Static res:AppResources.PublishedProjectUpdateStringFormat}}"/>
+                    <Label Margin="16,0" Grid.Row="3" Text="{Binding Caption}" Style="{StaticResource BodyText}"/>
+                    <Label Grid.Row="4" Margin="16,8,16,0" IsVisible="{Binding AnyQuestionnaires}" FontSize="13" FontFamily="LemonMilkLight" Text="{x:Static res:AppResources.Questionnaires}"/>
+                    <BoxView Grid.Row="1" Grid.RowSpan="5" BackgroundColor="Transparent"
+                             touch:TouchEff.NativeAnimation="True" touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type views:ProjectUpdateCard}}, Path=TappedCommand}"
+                             touch:TouchEff.CommandParameter="{Binding Source}"/>
+                    <StackLayout Grid.Row="5" Margin="16,0" Spacing="8" IsVisible="{Binding AnyQuestionnaires}" BindableLayout.ItemsSource="{Binding QuestionnaireTabViewModels}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:QuestionnaireTabViewModel}">
+                                <views:QuestionnaireTab IsNested="True"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

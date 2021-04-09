@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dialogs:DialogView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             x:DataType="{x:Type vm:ChildDetailViewModel}"
+             xmlns:dialogs="clr-namespace:AiForms.Dialogs.Abstractions;assembly=AiForms.Dialogs.Abstractions"
+             x:Class="PartnerClient.Views.ChildEditView"
+             xmlns:nado="http://sharpnado.com"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:models="clr-namespace:PartnerClient.Models"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             ProportionalWidth="1" ProportionalHeight="1"
+             ControlTemplate="{StaticResource DialogTemplate}">
+    <dialogs:DialogView.Resources>
+        <Style TargetType="{x:Type Label}" x:Key="SectionHeader">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+        </Style>
+        <Style TargetType="{x:Type Entry}">
+            <Setter Property="ReturnType" Value="Next"/>
+            <Setter Property="Margin">
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="4,-4,0,0"/>
+                    <On Platform="iOS" Value="4,0,0,0"/>
+                </OnPlatform>
+            </Setter>
+        </Style>
+    </dialogs:DialogView.Resources>
+    <dialogs:DialogView.Content>
+        <Grid RowDefinitions="*, auto">
+            <ScrollView Orientation="Vertical">
+                <StackLayout>
+                    <Label Text="{x:Static res:AppResources.General}" Style="{StaticResource SectionHeader}"/>
+                    <Entry Text="{Binding FirstNames}" Placeholder="{x:Static res:AppResources.FirstNames}"/>
+                    <Entry Text="{Binding LastNames}" Placeholder="{x:Static res:AppResources.LastNames}"/>
+                    <Entry Text="{Binding DateOfBirthString}" Placeholder="{x:Static res:AppResources.DateOfBirth}"/>
+                    <Entry Text="{Binding DateOfEntryString}" Placeholder="{x:Static res:AppResources.DateOfEntry}"/>
+                    <Entry Text="{Binding Programme}" Placeholder="{x:Static res:AppResources.Programme}"/>
+                    <Entry Text="{Binding Focus}" Placeholder="{x:Static res:AppResources.Focus}" ReturnType="Done"/>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static res:AppResources.Images}" VerticalOptions="CenterAndExpand" Style="{StaticResource SectionHeader}" HorizontalOptions="FillAndExpand"/>
+                        <Button Text="{StaticResource AddIcon}" Padding="4" Margin="0,0,-4,-4" BackgroundColor="Transparent" 
+                       HorizontalOptions="End" FontFamily="IconFont" FontSize="24" WidthRequest="32"
+                       VerticalOptions="Center" Command="{Binding AddImageCommand}"/>
+                    </StackLayout>
+                    <nado:HorizontalListView HeightRequest="72" HorizontalOptions="FillAndExpand" ItemsSource="{Binding EditImageViewModels}" 
+                                     ItemHeight="72" ItemWidth="108" ItemSpacing="8" EnableDragAndDrop="True">
+                        <nado:HorizontalListView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:ChildEditImageViewModel}">
+                                <nado:DraggableViewCell>
+                                    <ContentView>
+                                        <Grid RowDefinitions="auto,*" ColumnDefinitions="auto,*,auto">
+                                            <ff:CachedImage touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChildDetailViewModel}}, Path=SetProfileImageCommand}" 
+                                                            touch:TouchEff.NativeAnimation="True" touch:TouchEff.CommandParameter="{Binding UID}" Grid.RowSpan="2" Grid.ColumnSpan="3" Source="{Binding Source}" Aspect="AspectFill"/>
+                                            <Label Text="{StaticResource AccountStarIcon}" IsVisible="{Binding IsProfileImage}" BackgroundColor="{StaticResource UserActionAccent}" TextColor="{StaticResource PrimaryTextColourDark}"
+                                                   FontFamily="IconFont" FontSize="18" WidthRequest="26" Padding="0,0,2,0" HeightRequest="24" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                            <Button Grid.Column="2" Text="{StaticResource CloseIcon}" Padding="2" BackgroundColor="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}" 
+                                                FontFamily="IconFont" FontSize="18" CommandParameter="{Binding}" WidthRequest="24" HeightRequest="24"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChildDetailViewModel}}, Path=RemoveImageCommand}"/>
+                                        </Grid>
+                                    </ContentView>
+                                </nado:DraggableViewCell>
+                            </DataTemplate>
+                        </nado:HorizontalListView.ItemTemplate>
+                    </nado:HorizontalListView>
+
+                    <Label Text="{x:Static res:AppResources.Contact}" Style="{StaticResource SectionHeader}"/>
+                    <Entry Text="{Binding Email}" Placeholder="{x:Static res:AppResources.Email}"/>
+                    <Entry Text="{Binding MobilePhone}" Placeholder="{x:Static res:AppResources.MobilePhone}"/>
+                    <Entry Text="{Binding HomePhone}" Placeholder="{x:Static res:AppResources.HomePhone}" ReturnType="Done"/>
+
+                    <Label Text="{x:Static res:AppResources.Address}" Style="{StaticResource SectionHeader}"/>
+                    <Entry Text="{Binding Address.Line1}" Placeholder="{x:Static res:AppResources.LineOne}"/>
+                    <Entry Text="{Binding Address.Line2}" Placeholder="{x:Static res:AppResources.LineTwo}"/>
+                    <Entry Text="{Binding Address.Line3}" Placeholder="{x:Static res:AppResources.LineThree}"/>
+                    <Entry Text="{Binding Address.City}" Placeholder="{x:Static res:AppResources.City}"/>
+                    <Entry Text="{Binding Address.Country}" Placeholder="{x:Static res:AppResources.Country}"/>
+                    <Entry Text="{Binding Address.ZipCode}" Placeholder="{x:Static res:AppResources.ZipCode}" ReturnType="Done"/>
+
+                    <Label Text="{x:Static res:AppResources.School}" Style="{StaticResource SectionHeader}"/>
+                    <Entry Text="{Binding School.Name}" Placeholder="{x:Static res:AppResources.Name}"/>
+                    <Entry Text="{Binding School.Grade}" Placeholder="{x:Static res:AppResources.Grade}"/>
+                    <Entry Text="{Binding School.OpeningTimes}" Placeholder="{x:Static res:AppResources.OpeningTimes}" ReturnType="Done"/>
+
+                    <Label Text="{x:Static res:AppResources.Health}" Style="{StaticResource SectionHeader}"/>
+                    <Entry Text="{Binding Health.DoctorClinicName}" Placeholder="{x:Static res:AppResources.DoctorClinicName}"/>
+                    <Entry Text="{Binding Health.Allergies}" Placeholder="{x:Static res:AppResources.Allergies}"/>
+                    <Entry Text="{Binding Health.BloodType}" Placeholder="{x:Static res:AppResources.BloodType}" ReturnType="Done"/>
+
+                    <Label Text="{x:Static res:AppResources.Family}" Style="{StaticResource SectionHeader}"/>
+                    <Entry Text="{Binding MamaDPI}" Placeholder="{x:Static res:AppResources.MamaDPI}"/>
+                    <Entry Text="{Binding PapaDPI}" Placeholder="{x:Static res:AppResources.PapaDPI}" ReturnType="Done"/>
+
+                    <StackLayout Orientation="Horizontal" Spacing="8">
+                        <Label Text="Global Care" Style="{StaticResource SectionHeader}"/>
+                        <CheckBox IsChecked="{Binding GlobalCareEnabled}">
+                            <CheckBox.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="0,-2,0,0"/>
+                                    <On Platform="Android" Value="0,2,0,0"/>
+                                </OnPlatform>
+                            </CheckBox.Margin>
+                        </CheckBox>
+                    </StackLayout>
+                    <Entry Text="{Binding GlobalCare.Reference}" Placeholder="{x:Static res:AppResources.Reference}" IsVisible="{Binding GlobalCareEnabled}"/>
+                    <StackLayout Orientation="Horizontal" IsVisible="{Binding GlobalCareEnabled}">
+                        <Label Text="{x:Static res:AppResources.Sponsors}" FontFamily="LemonMilkLight" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" Style="{StaticResource BodyText}"/>
+                        <Button Text="{StaticResource AddIcon}" Padding="4" Margin="0,0,-4,-4" BackgroundColor="Transparent" 
+                       HorizontalOptions="End" FontFamily="IconFont" FontSize="24" WidthRequest="32"
+                       VerticalOptions="Center" Command="{Binding AddSponsorCommand}"/>
+                    </StackLayout>
+                    <StackLayout Margin="4,0,0,0" BindableLayout.ItemsSource="{Binding EditGlobalCareSponsors}" IsVisible="{Binding GlobalCareEnabled}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:EditableGCSponsor}">
+                                <StackLayout Orientation="Horizontal" Margin="0,-12,0,4">
+                                    <Entry Text="{Binding Name}" HorizontalOptions="FillAndExpand" Placeholder="{x:Static res:AppResources.Name}"/>
+                                    <Button WidthRequest="48" Margin="-4,0,0,0" HorizontalOptions="End" Text="{StaticResource DeleteIcon}" FontFamily="IconFont" BackgroundColor="Transparent" FontSize="20"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChildDetailViewModel}}, Path=RemoveSponsorCommand}" CommandParameter="{Binding}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static res:AppResources.AdditionalInfo}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" Style="{StaticResource SectionHeader}"/>
+                        <Button Text="{StaticResource AddIcon}" Padding="4" Margin="0,0,-4,-4" BackgroundColor="Transparent" 
+                       HorizontalOptions="End" FontFamily="IconFont" FontSize="24" WidthRequest="32"
+                       VerticalOptions="Center" Command="{Binding AddInfoCommand}"/>
+                    </StackLayout>
+                    <StackLayout BindableLayout.ItemsSource="{Binding AdditionalInfo}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type models:AdditionalChildInfoItem}">
+                                <StackLayout Orientation="Horizontal" Margin="0,-12,0,4">
+                                    <Entry Text="{Binding Name}" HorizontalOptions="FillAndExpand" Placeholder="{x:Static res:AppResources.Name}"/>
+                                    <Entry Text="{Binding Value}" HorizontalOptions="FillAndExpand" Placeholder="{x:Static res:AppResources.Value}"/>
+                                    <Button WidthRequest="48" Margin="-4,0,0,0" Text="{StaticResource DeleteIcon}" FontFamily="IconFont" BackgroundColor="Transparent" FontSize="20"
+                                            HorizontalOptions="End" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChildDetailViewModel}}, Path=RemoveInfoCommand}" CommandParameter="{Binding}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <Button Grid.Row="1" Text="{x:Static res:AppResources.Save}" Clicked="SaveButton_Clicked" Style="{StaticResource ConfirmButton}"/>
+        </Grid>
+    </dialogs:DialogView.Content>
+</dialogs:DialogView>

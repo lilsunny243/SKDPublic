@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             xmlns:views="clr-namespace:DonorClient.Views"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:utils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:cmodels="clr-namespace:SKD.Common.Models;assembly=SKD.Common"
+             x:DataType="{x:Type vm:CurrentBundleViewModel}"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="DonorClient.Views.CurrentBundlePage"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android">0,-6,16,0</On>
+                    <On Platform="iOS">0,-6,-4,0</On>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <utils:PathMorphConverter x:Key="BundleEnvelopeConverter" MinT="0" MaxT="1">
+            <utils:PathMorphStopCollection>
+                <utils:PathMorphStop Offset="0" Data="m 25.623651,6.143512 c 2.891377,-2.808706 19.561622,-2.808706 22.452999,0 2.891452,2.808698 -7.614573,10.298648 -5.10474,16.852298 2.509833,6.55365 19.398021,15.475495 21.184681,24.121949 1.78665,8.646378 -3.10669,23.130557 -10.464766,27.756623 -7.358061,4.62614 -26.325302,4.62614 -33.683363,-8e-6 -7.358061,-4.626065 -12.2514022,-19.110244 -10.4647727,-27.756623 1.7867047,-8.646453 18.6748667,-17.568291 21.1846997,-24.121941 2.509834,-6.55365 -6.243759,-14.291663 -5.104738,-16.852298 z"/>
+                <utils:PathMorphStop Offset="1" Data="m 8.6573568,14.925021 c 18.8612682,0 37.7225362,0 56.5838042,0 0,0 5.66799,-0.19133 5.74748,4.85387 0.0795,5.0452 0.0125,37.18897 0,42.50363 -0.0125,5.31466 -5.74748,5.17746 -5.74748,5.17746 -18.861268,0 -37.722536,0 -56.5838042,0 0,0 -5.887049,0.34341 -5.912897,-5.17746 -0.02585,-5.52087 -0.141214,-37.23515 0,-42.50363 0.141214,-5.26849 5.912897,-4.85387 5.912897,-4.85387 z"/>
+            </utils:PathMorphStopCollection>
+        </utils:PathMorphConverter>
+        <utils:PathMorphConverter x:Key="HeartEnvelopeConverter" MinT="0" MaxT="1">
+            <utils:PathMorphStopCollection>
+                <utils:PathMorphStop Offset="0" Data="m 37.229344,48.772833 c 4.26507,-11.500145 20.899147,0 0,14.785577 -20.898845,-14.785577 -4.265071,-26.285723 0,-14.785577 z"/>
+                <utils:PathMorphStop Offset="1" Data="m 37.48107,12.607951 c 71.26745,0 3.662667,28.62955 0,28.62955 -3.662667,0 -71.267453,-28.62955 0,-28.62955 z"/>
+            </utils:PathMorphStopCollection>
+        </utils:PathMorphConverter>
+        <x:Int32 x:Key="Zero">0</x:Int32>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,auto,auto" ColumnDefinitions="*" RowSpacing="8" Padding="16">
+            <StackLayout Spacing="16" Grid.RowSpan="3" VerticalOptions="CenterAndExpand" IsVisible="False">
+                <StackLayout.Triggers>
+                    <DataTrigger TargetType="{x:Type StackLayout}" Binding="{Binding DonationViewModels.Count}" Value="0">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </StackLayout.Triggers>
+                <Label Text="{StaticResource TelescopeIcon}" FontFamily="IconFont" FontSize="24" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                <Label Text="When you add a donation, it'll show up here!" Style="{StaticResource BodyText}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            </StackLayout>
+
+            <ScrollView IsVisible="{Binding DonationViewModels.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource Zero}}" Margin="6">
+                <StackLayout>
+                    <Label Style="{StaticResource BodyText}" Text="Donations:"/>
+                    <StackLayout BindableLayout.ItemsSource="{Binding DonationViewModels}"
+                            BindableLayout.ItemTemplate="{StaticResource BundlePageDonationTemplate}" Spacing="{OnPlatform Android=16, iOS=0}">
+                    </StackLayout>
+                    <Label Style="{StaticResource BodyText}" Text="Summary:">
+                        <Label.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0,12,0,0"/>
+                            </OnPlatform>
+                        </Label.Margin>
+                    </Label>
+                    <Grid RowDefinitions="auto,auto,auto,auto,8,auto,auto,8,auto" ColumnDefinitions="*,auto" Margin="8,0,8,8" RowSpacing="6">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+                                <Setter Property="FontSize" Value="18"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Label Text="Donations"/>
+                        <Label Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding Amount, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}"/>
+
+                        <Label Grid.Row="1" Text="Stripe Processing Fee" IsVisible="{Binding CoverStripeFee}"/>
+                        <Label Grid.Row="1" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding StripeFee, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}" IsVisible="{Binding CoverStripeFee}"/>
+
+                        <Label Grid.Row="2" Text="Stripe Processing Fee" TextColor="{StaticResource ErrorAccent}"/>
+                        <Label Grid.Row="2" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding StripeFee, StringFormat='-  £{0}', Converter={StaticResource CurrencyConverter}}" TextColor="{StaticResource ErrorAccent}"/>
+
+                        <Label Grid.Row="3" Text="Gift Aid" TextColor="{StaticResource SuccessAccent}" IsVisible="{Binding GiftAidEnabled}"/>
+                        <Label Grid.Row="3" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding AmountAfterFee, StringFormat='+  £{0}', Converter={StaticResource CurrencyConverter}, ConverterParameter={StaticResource GiftAidCoefficient}}" TextColor="{StaticResource SuccessAccent}" IsVisible="{Binding GiftAidEnabled}"/>
+
+                        <BoxView Grid.Row="4" Grid.ColumnSpan="2" Opacity="0.4" HeightRequest="1" VerticalOptions="CenterAndExpand" Margin="0,3,0,0" BackgroundColor="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+                        <Label Grid.Row="5" Text="Total Received by Charity"/>
+                        <Label Grid.Row="5" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding TotalReceived, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}"/>
+                        <Label Grid.Row="6" Text="Total Payed by You"/>
+                        <Label Grid.Row="6" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding TotalPayed, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}"/>
+                        <BoxView Grid.Row="7" Grid.ColumnSpan="2" Opacity="0.4" HeightRequest="1" VerticalOptions="CenterAndExpand" Margin="0,3,0,0" BackgroundColor="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+
+                        <StackLayout Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding CoverStripeFee}" Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}">
+                                <CheckBox.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="0,0,-8,0"/>
+                                    </OnPlatform>
+                                </CheckBox.Margin>
+                            </CheckBox>
+                            <Label Text="I would like to cover the Stripe processing fee." Style="{StaticResource BodyText}">
+                                <Label.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="0,12,-8,0"/>
+                                        <On Platform="Android" Value="0,4,0,0"/>
+                                    </OnPlatform>
+                                </Label.Margin>
+                            </Label>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            <views:NativePayButton Grid.Row="1" HeightRequest="48" AppleCommand="{Binding ApplePayCommand}" 
+                                   GoogleCommand="{Binding GooglePayCommand}" IsEnabled="{Binding CanConfirm}"
+                                   AppleClicked="ConfirmButton_Clicked" GoogleClicked="ConfirmButton_Clicked">
+                <views:NativePayButton.IsVisible>
+                    <MultiBinding Converter="{StaticResource ANDConverter}">
+                        <Binding Path="DonationViewModels.Count" Converter="{StaticResource GreaterThanConverter}" ConverterParameter="{StaticResource Zero}"/>
+                        <MultiBinding Converter="{StaticResource ORConverter}">
+                            <Binding Path="CanUseApplePay"/>
+                            <Binding Path="CanUseGooglePay"/>
+                        </MultiBinding>
+                    </MultiBinding>
+                </views:NativePayButton.IsVisible>
+            </views:NativePayButton>
+            <Button Grid.Row="2" IsVisible="{Binding DonationViewModels.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource Zero}}"
+                    Command="{Binding SelectCardCommand}" Text="Donate with Card" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColourDark}, Dark={StaticResource PrimaryTextColourLight}}" 
+                    BackgroundColor="{AppThemeBinding Light={x:Static Color.Black}, Dark={x:Static Color.White}}" Clicked="ConfirmButton_Clicked" CornerRadius="4" HeightRequest="48" FontSize="16">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Button.TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourDark}, Dark={StaticResource PrimaryTextColourLight}}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="Button.TextColor" Value="{AppThemeBinding Light={StaticResource DisabledTextColourDark}, Dark={StaticResource DisabledTextColourLight}}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+            <Grid Opacity="0" IsVisible="False" Grid.RowSpan="3" Margin="-16" BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource ChromeBackgroundColourDark}}">
+                <Grid.Triggers>
+                    <DataTrigger TargetType="{x:Type Grid}" Binding="{Binding Confirmed}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <cviews:FadeTriggerAction Direction="In"/>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <cviews:FadeTriggerAction Direction="Out"/>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Grid.Triggers>
+                <AbsoluteLayout x:Name="BundleEnvelope" WidthRequest="73" HeightRequest="82" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Path AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1" Data="{Binding Source={RelativeSource AncestorType={x:Type views:CurrentBundlePage}}, Path=EnvelopeAnimationValue, Converter={StaticResource BundleEnvelopeConverter}}" 
+                          StrokeThickness="6" StrokeLineCap="Round" StrokeLineJoin="Round">
+                        <Path.Stroke>
+                            <SolidColorBrush Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                        </Path.Stroke>
+                    </Path>
+                    <Path AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1" Data="{Binding Source={RelativeSource AncestorType={x:Type views:CurrentBundlePage}}, Path=EnvelopeAnimationValue, Converter={StaticResource HeartEnvelopeConverter}}"
+                          StrokeThickness="1" StrokeLineCap="Round" StrokeLineJoin="Round">
+                        <Path.Fill>
+                            <SolidColorBrush Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                        </Path.Fill>
+                        <Path.Stroke>
+                            <SolidColorBrush Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                        </Path.Stroke>
+                    </Path>
+                </AbsoluteLayout>
+                <Label x:Name="ThankYouLabel" Text="Thank You!!!" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="40" FontFamily="LemonMilkMedium"/>
+                <StackLayout x:Name="StatusSL" HeightRequest="160" WidthRequest="160" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Spacing="8"
+                             touch:TouchEff.Command="{Binding AuthorisePaymentCommand}" touch:TouchEff.NativeAnimation="True">
+                    <StackLayout.Clip>
+                        <EllipseGeometry RadiusX="80" RadiusY="80" Center="80,80"/>
+                    </StackLayout.Clip>
+                    <StackLayout.Triggers>
+                        <DataTrigger TargetType="{x:Type StackLayout}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.RequiresAction}">
+                            <Setter Property="BackgroundColor" Value="{StaticResource UserActionAccent}"/>
+                        </DataTrigger>
+                    </StackLayout.Triggers>
+                    <Image Style="{StaticResource BigStripeStatusImage}" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand"/>
+                    <Label Style="{StaticResource BigStripeStatusLabel}" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

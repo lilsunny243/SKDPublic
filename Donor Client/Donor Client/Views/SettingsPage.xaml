@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:cmodels="clr-namespace:SKD.Common.Models;assembly=SKD.Common"
+             xmlns:themes="clr-namespace:SKD.Common.Themes;assembly=SKD.Common"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             x:DataType="{x:Type vm:SettingsViewModel}"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}"
+             x:Class="DonorClient.Views.SettingsPage">
+    <Shell.TitleView>
+        <StackLayout Padding="0,-6,68,0" Orientation="Horizontal">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="0,-6,68,0"/>
+                    <On Platform="iOS" Value="0,-6,48,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <Style x:Key="SettingNameLabel" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*, auto" ColumnDefinitions="*">
+            <CollectionView ItemsSource="{Binding PaymentMethodViewModels}" Margin="16">
+                <CollectionView.Header>
+                    <StackLayout>
+
+                        <!--#region General -->
+                        <Label Text="General" Style="{StaticResource SettingNameLabel}"/>
+                        <Entry Text="{Binding UserName}" Placeholder="Username">
+                            <Entry.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="Android" Value="0,-12,0,8"/>
+                                    <On Platform="iOS" Value="0,0,4,8"/>
+                                </OnPlatform>
+                            </Entry.Margin>
+                        </Entry>
+                        <!--#endregion-->
+
+                        <!--#region Theme -->
+                        <Label Text="Theme" Style="{StaticResource SettingNameLabel}"/>
+                        <cviews:SwitchButtons x:TypeArguments="themes:Theme" ItemsSource="{Binding ThemeButtonViewModels}" 
+                                              Command="{Binding ChangeThemeCommand}" ButtonBackgroundColor="{AppThemeBinding 
+                            Light={StaticResource ButtonBackgroundColourLight}, 
+                            Dark={StaticResource ButtonBackgroundColourDark}}"/>
+                        <!--#endregion-->
+
+                        <!--#region PaymentInfo-->
+                        <Label Text="Payment Methods" Style="{StaticResource SettingNameLabel}" Margin="0,12,0,6"/>
+                    </StackLayout>
+                </CollectionView.Header>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="6"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:PaymentMethodViewModel}">
+                        <Frame Margin="6,0" BackgroundColor="Transparent" BorderColor="Transparent" Padding="0" CornerRadius="8">
+                            <SwipeView HeightRequest="48" BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundColourLight}, Dark={StaticResource PageBackgroundColourDark}}" HorizontalOptions="FillAndExpand">
+                                <Grid RowDefinitions="*,*" ColumnDefinitions="auto,*" ColumnSpacing="12" RowSpacing="0">
+                                    <ff:CachedImage Grid.RowSpan="2" Source="{Binding IconImageSource}" Margin="4"/>
+                                    <Label Grid.Column="1" Text="{Binding LastFourDigits, StringFormat='Ending with {0}'}" VerticalTextAlignment="End" FontFamily="LexendDecaRegular"/>
+                                    <Label Grid.Row="1" Grid.Column="1" FontSize="12" Text="{Binding ExpiryString}" FontFamily="LemonMilkLight" VerticalTextAlignment="Start">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding IsExpired}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <StackLayout Grid.RowSpan="2" Grid.Column="1" HorizontalOptions="End" Orientation="Horizontal" VerticalOptions="Start" Margin="8">
+                                        <Image Style="{StaticResource StripeStatusImage}"/>
+                                        <Label Style="{StaticResource StripeStatusLabel}"/>
+                                    </StackLayout>
+                                    <BoxView Grid.RowSpan="2" Grid.ColumnSpan="2" 
+                                                         touch:TouchEff.Command="{Binding AuthoriseCommand}"
+                                                         touch:TouchEff.NativeAnimation="True"
+                                                         IsVisible="False"
+                                                         BackgroundColor="Transparent">
+                                        <BoxView.Triggers>
+                                            <DataTrigger TargetType="{x:Type BoxView}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.RequiresAction}">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                </Grid>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem IsDestructive="True" BackgroundColor="{StaticResource ErrorAccent}" IconImageSource="{FontImage Glyph={StaticResource DeleteIcon}, Color=#EEE, Size=32, FontFamily=IconFont}"
+                                                               Command="{Binding DeleteCommand}"/>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <SwipeView.Triggers>
+                                    <DataTrigger TargetType="{x:Type SwipeView}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.RequiresAction}">
+                                        <Setter Property="RightItems">
+                                            <SwipeItems>
+                                                <SwipeItem IsDestructive="True" BackgroundColor="{StaticResource ErrorAccent}" IconImageSource="{FontImage Glyph={StaticResource DeleteIcon}, Color=#EEE, Size=32, FontFamily=IconFont}"
+                                                               Command="{Binding DeleteCommand}"/>
+                                                <SwipeItem BackgroundColor="{StaticResource UserActionAccent}" IconImageSource="{FontImage Glyph={StaticResource AuthoriseIcon}, Color=#EEE, Size=32, FontFamily=IconFont}"
+                                                               Command="{Binding AuthoriseCommand}"/>
+                                            </SwipeItems>
+                                        </Setter>
+                                    </DataTrigger>
+                                </SwipeView.Triggers>
+                            </SwipeView>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <!--#endregion-->
+                <CollectionView.Footer>
+                    <StackLayout Padding="{OnPlatform Android='0', iOS='0,8,0,0'}">
+                        <Button Text="Add a payment method" Command="{Binding AddPaymentMethodCommand}" CornerRadius="8"/>
+                        <!--#region GiftAid -->
+                        <Expander State="Collapsed" Margin="0,12,0,0">
+                            <Expander.Header>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Gift Aid" Style="{StaticResource SettingNameLabel}" HorizontalOptions="FillAndExpand"/>
+                                    <Label Text="{StaticResource ChevronDownIcon}" FontFamily="IconFont" FontSize="18" VerticalTextAlignment="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="{x:Type Label}" Value="{x:Static ExpanderState.Expanding}"
+                                                     Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=State}">
+                                                <DataTrigger.EnterActions>
+                                                    <cviews:RotateTriggerAction Rotation="180"/>
+                                                </DataTrigger.EnterActions>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="{x:Type Label}" Value="{x:Static ExpanderState.Collapsing}"
+                                                     Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=State}">
+                                                <DataTrigger.EnterActions>
+                                                    <cviews:RotateTriggerAction Rotation="0"/>
+                                                </DataTrigger.EnterActions>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Text="{StaticResource InfoIcon}" FontFamily="IconFont" FontSize="16" VerticalTextAlignment="Center"/>
+                                </StackLayout>
+                            </Expander.Header>
+                            <StackLayout Spacing="4">
+                                <Label Text="•  Gift Aid enables Street Kids Direct UK to receive an additional 25p for every ₤1 that you donate - at no extra cost to you!" Style="{StaticResource BodyText}"/>
+                                <Label Text="•  Gift Aid is reclaimed by the charity from the tax you pay for the current tax year." Style="{StaticResource BodyText}"/>
+                                <Label Text="•  If you choose to opt-in, some details are required to identify you as a current UK taxpayer." Style="{StaticResource BodyText}"/>
+                                <Label Text="•  Choosing to opt-in will affect any donations made in the last 4 years and those going forward." Style="{StaticResource BodyText}"/>
+                                <Label Text="•  Opting-out will behave similarly, however with past donations, it will only affect those where Gift Aid is unclaimed. (A 'Pending' status means that it is already in the process of being claimed and cannot be revoked)." Style="{StaticResource BodyText}"/>
+                            </StackLayout>
+                        </Expander>
+                        <Label Text="Disabled" TextColor="{StaticResource ErrorAccent}" Style="{StaticResource BodyText}" Margin="0,-8,0,0">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="{x:Type Label}" Binding="{Binding GiftAidEnabled}" Value="True">
+                                    <Setter Property="Text" Value="Enabled"/>
+                                    <Setter Property="TextColor" Value="{StaticResource SuccessAccent}"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Button Text="Edit Details" Command="{Binding EditGiftAidCommand}" CornerRadius="8"/>
+                        <!--#endregion-->
+                        <!--#region Connected Accounts-->
+                        <Label Text="Connected Accounts" Style="{StaticResource SettingNameLabel}" Margin="0,12,0,0"/>
+                        <StackLayout BindableLayout.ItemsSource="{Binding AuthProviderButtonViewModels}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type vm:LinkableAuthButtonViewModel}">
+                                    <StackLayout Orientation="Horizontal" Spacing="24">
+                                        <Image Aspect="AspectFit" VerticalOptions="CenterAndExpand">
+                                            <Image.Source>
+                                                <FontImageSource FontFamily="IconFont" Size="22" Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" Glyph="{Binding Glyph}"/>
+                                            </Image.Source>
+                                        </Image>
+                                        <Label Text="{Binding Text}" FontFamily="LemonMilkMedium" HorizontalTextAlignment="Center"
+                                                       VerticalTextAlignment="Center" FontSize="16" VerticalOptions="CenterAndExpand"/>
+                                        <Button Text="Link" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SettingsViewModel}}, Path=ToggleLinkAuthProviderCommand}" BackgroundColor="Transparent"
+                                                        CommandParameter="{Binding}" FontFamily="LemonMilkRegular" HorizontalOptions="EndAndExpand" HeightRequest="36" CornerRadius="18" TextColor="{StaticResource SuccessAccent}">
+                                            <Button.Triggers>
+                                                <DataTrigger TargetType="{x:Type Button}" Binding="{Binding IsLinked}" Value="True">
+                                                    <Setter Property="Text" Value="Unlink"/>
+                                                    <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                                                </DataTrigger>
+                                            </Button.Triggers>
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroupList>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal">
+                                                            <VisualState.Setters>
+                                                                <Setter Property="Opacity" Value="1"/>
+                                                            </VisualState.Setters>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Disabled">
+                                                            <VisualState.Setters>
+                                                                <Setter Property="Opacity" Value="0.5"/>
+                                                            </VisualState.Setters>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateGroupList>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </Button>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                        <!--#endregion-->
+                    </StackLayout>
+                </CollectionView.Footer>
+            </CollectionView>
+            <Button Grid.Row="1" HorizontalOptions="Fill" Text="Sign Out" Command="{Binding SignOutCommand}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

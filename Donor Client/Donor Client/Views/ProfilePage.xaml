@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DonorClient.Views.ProfilePage"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             xmlns:utils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             x:DataType="{x:Type vm:ProfileViewModel}"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}">
+    <Shell.TitleView>
+        <StackLayout Padding="48,-6,8,0" Orientation="Horizontal" Spacing="12">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="48,-6,8,0"/>
+                    <On Platform="iOS" Value="48,-6,-8,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+            <Button Text="{StaticResource SettingsIcon}" FontFamily="IconFont" BackgroundColor="Transparent"
+                    HorizontalOptions="End" VerticalOptions="Center" WidthRequest="48" HeightRequest="48"
+                    FontSize="22" Command="{Binding SettingsCommand}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="AmountCaptionLabel" BasedOn="{StaticResource BodyText}">
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,4,0,-8"/>
+        </Style>
+        <Style TargetType="Label" x:Key="AmountLabel" BasedOn="{StaticResource AmountCaptionLabel}">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style TargetType="Label" x:Key="SectionNameLabel">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView Padding="16">
+            <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" ColumnDefinitions="*,*,*">
+                <Label Grid.ColumnSpan="3" Text="Your All-Time Stats" Style="{StaticResource SectionNameLabel}"/>
+                <Label Grid.Row="1" Text="Donated" Style="{StaticResource AmountCaptionLabel}"/>
+                <Label Grid.Row="2" Text="{Binding TotalDonated, StringFormat='₤{0}', Converter={StaticResource CurrencyConverter}}"
+                   Style="{StaticResource AmountLabel}"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="Gift Aid" Style="{StaticResource AmountCaptionLabel}"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding TotalGiftAid, StringFormat='₤{0}', Converter={StaticResource CurrencyConverter}}"
+                   Style="{StaticResource AmountLabel}"/>
+                <Label Grid.Row="1" Grid.Column="2" Text="Total" Style="{StaticResource AmountCaptionLabel}"/>
+                <Label Grid.Row="2" Grid.Column="2" Text="{Binding TotalContribution, StringFormat='₤{0}', Converter={StaticResource CurrencyConverter}}"
+                   Style="{StaticResource AmountLabel}"/>
+
+                <Expander Grid.Row="3" Grid.ColumnSpan="3" State="Collapsed" Margin="0,12,0,8">
+                    <Expander.Header>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Donation History" Style="{StaticResource SectionNameLabel}" HorizontalOptions="FillAndExpand"/>
+                            <Label Text="{StaticResource ChevronDownIcon}" FontFamily="IconFont" FontSize="18" VerticalTextAlignment="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="{x:Type Label}" Value="{x:Static ExpanderState.Expanding}"
+                                                     Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=State}">
+                                        <DataTrigger.EnterActions>
+                                            <cviews:RotateTriggerAction Rotation="180"/>
+                                        </DataTrigger.EnterActions>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="{x:Type Label}" Value="{x:Static ExpanderState.Collapsing}"
+                                                     Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=State}">
+                                        <DataTrigger.EnterActions>
+                                            <cviews:RotateTriggerAction Rotation="0"/>
+                                        </DataTrigger.EnterActions>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                    </Expander.Header>
+                    <StackLayout BindableLayout.ItemsSource="{Binding BundleViewModels}" Margin="0,16,0,8" Spacing="12">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:DonationBundleCardViewModel}">
+                                <Frame CornerRadius="18" BackgroundColor="{AppThemeBinding 
+                                    Light={StaticResource CardBackgroundColourLight}, 
+                                    Dark={StaticResource CardBackgroundColourDark}}"
+                                    touch:TouchEff.NativeAnimation="True" touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=BundleCardTappedCommand}" touch:TouchEff.CommandParameter="{Binding UID}">
+                                    <Grid RowDefinitions="auto,auto,auto">
+                                        <Label Text="{Binding DateString}" Style="{StaticResource BodyText}" FontSize="13" FontFamily="LemonMilkLight" VerticalOptions="Center"/>
+                                        <StackLayout HorizontalOptions="End" Orientation="Horizontal" VerticalOptions="Start">
+                                            <Image Style="{StaticResource StripeStatusImage}"/>
+                                            <Label Style="{StaticResource StripeStatusLabel}"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Row="1" Orientation="Horizontal">
+                                            <StackLayout.Resources>
+                                                <utils:TernaryConverter x:Key="GiftAidColourConverter" TrueValue="{StaticResource SuccessAccent}" FalseValue="{StaticResource PendingAccent}"/>
+                                            </StackLayout.Resources>
+                                            <Label Text="{Binding TotalPayed, StringFormat='Donated ₤{0}', Converter={StaticResource CurrencyConverter}}" Style="{StaticResource BodyText}"/>
+                                            <Label Text="{Binding GiftAidAmount, StringFormat='+ ₤{0}', Converter={StaticResource CurrencyConverter}}" 
+                                                   Style="{StaticResource BodyText}" IsVisible="{Binding GiftAidEnabled}" 
+                                                   TextColor="{Binding GiftAidClaimed, Converter={StaticResource GiftAidColourConverter}}"/>
+                                        </StackLayout>
+                                        <Label Grid.Row="2" Text="{Binding LastFour, StringFormat='Card Ending {0}'}" Style="{StaticResource BodyText}" IsVisible="{Binding UsedCard}"/>
+                                        <Label Grid.Row="2" Text="Apple Pay" Style="{StaticResource BodyText}" IsVisible="{Binding UsedApplePay}"/>
+                                        <Label Grid.Row="2" Text="Google Pay" Style="{StaticResource BodyText}" IsVisible="{Binding UsedGooglePay}"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </Expander>
+
+                <Label Grid.Row="4" Grid.ColumnSpan="3" Text="Shared Timeline" Style="{StaticResource SectionNameLabel}"/>
+                <StackLayout Grid.Row="5" Grid.ColumnSpan="3" BindableLayout.ItemsSource="{Binding UpdateViewModels}" Style="{StaticResource ProjectUpdateSL}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type cvm:ProjectUpdateCardViewModel}">
+                            <cviews:ProjectUpdateCard ForSpecificProject="False" ViewModel="{Binding}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

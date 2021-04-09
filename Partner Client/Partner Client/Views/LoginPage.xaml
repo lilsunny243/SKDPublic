@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:nado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             x:DataType="{x:Type vm:LoginViewModel}"
+             xmlns:cutils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             xmlns:utils="clr-namespace:PartnerClient.Utils"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             x:Class="PartnerClient.Views.LoginPage" x:Name="Mama">
+    <ContentPage.Resources>
+        <cutils:DoubleToDouble_SignInLogoRotationConverter x:Key="Rot" PageHeight="{Binding Source={x:Reference Mama}, Path=Height}"/>
+        <Style TargetType="Image" x:Key="ChevronImage">
+            <Setter Property="Source">
+                <FontImageSource Size="40" Glyph="{StaticResource ChevronUpIcon}" FontFamily="IconFont" Color="#EEE"/>
+            </Setter>
+            <Setter Property="Margin" Value="0,-20,0,0"/>
+        </Style>
+        <x:Double x:Key="Half">0.5</x:Double>
+        <Style TargetType="{x:Type Entry}">
+            <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="Margin" >
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android">0,-4,0,0</On>
+                    <On Platform="iOS">0,4,0,0</On>
+                </OnPlatform>
+                </Setter>
+        </Style>
+        <Style TargetType="{x:Type Label}" x:Key="IconLabel">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontFamily" Value="IconFont"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="MainLayout" Padding="0">
+            <AbsoluteLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </AbsoluteLayout.GestureRecognizers>
+            <ff:CachedImage x:Name="BackgrndImage" Opacity="0" Source="login_background.jpg" AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1" Aspect="AspectFill" Margin="0"/>
+            <nado:MaterialFrame x:Name="MaterialFrame" Opacity="0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,1" Margin="0"/>
+            <StackLayout x:Name="TitleSL" Opacity="0" TranslationY="200" AbsoluteLayout.LayoutFlags="YProportional,WidthProportional" AbsoluteLayout.LayoutBounds="0,0.35,1,-1" Spacing="0" AnchorY="0">
+                <Label FontSize="48" CharacterSpacing="1" FontFamily="LemonMilkLight" Margin="0,-8" Style="{StaticResource BodyText}" Text="Street Kids" HorizontalTextAlignment="Center" VerticalTextAlignment="End" VerticalOptions="Center"/>
+                <Label FontSize="72" CharacterSpacing="3" FontFamily="LemonMilkMedium" Margin="0,-8" Style="{StaticResource BodyText}" Text="Direct" HorizontalTextAlignment="Center"/>
+                <Label FontSize="35" CharacterSpacing="2.5" FontFamily="LemonMilkRegular" Margin="0,-8" Style="{StaticResource BodyText}" Text="{x:Static res:AppResources.ForPartners}" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+            <StackLayout x:Name="InputSL" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1.1,1,0.5" Padding="32,0" Spacing="4">
+                <cviews:SwitchButtons x:Name="SwitchButtons" x:TypeArguments="x:Boolean" ItemsSource="{Binding SwitchButtonItems}" 
+                                      Command="{Binding SwitchButtonCommand}" Margin="0,-8,0,8" HeightRequest="48"
+                                      ButtonBackgroundColor="{AppThemeBinding 
+                                        Light={StaticResource VeryTranslucentControlBackgroundColourLight}, 
+                                        Dark={StaticResource VeryTranslucentControlBackgroundColourDark}}"/>
+                <StackLayout Orientation="Horizontal" Spacing="12">
+                    <Label Text="{StaticResource EmailIcon}" Style="{StaticResource IconLabel}"/>
+                    <Entry x:Name="EmailEntry" Placeholder="{x:Static res:AppResources.EmailPlaceholder}" ReturnType="Next" Keyboard="Email" Text="{Binding Email}"
+                           Focused="Entry_Focused" Unfocused="Entry_Unfocused"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Spacing="12">
+                    <Label Text="{StaticResource PasswordIcon}" Style="{StaticResource IconLabel}"/>
+                    <Entry x:Name="PasswordEntry" Placeholder="{x:Static res:AppResources.PasswordPlaceholder}" IsPassword="True" Text="{Binding Password}" 
+                           ReturnCommand="{Binding AuthenticateCommand}" ReturnType="Done" Focused="Entry_Focused" Unfocused="Entry_Unfocused">
+                        <Entry.Triggers>
+                            <DataTrigger TargetType="{x:Type Entry}" Binding="{Binding SignUp}" Value="True">
+                                <Setter Property="ReturnCommand" Value="{x:Null}"/>
+                                <Setter Property="ReturnType" Value="Next"/>
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
+                </StackLayout>
+                <StackLayout x:Name="PasswordConfirmationSL" Spacing="4">
+                    <StackLayout Orientation="Horizontal" Spacing="12" HorizontalOptions="FillAndExpand">
+                        <Label Text="{StaticResource PasswordIcon}" Style="{StaticResource IconLabel}"/>
+                        <Entry x:Name="PasswordConfirmationEntry" Placeholder="{x:Static res:AppResources.ConfirmPasswordPlaceholder}" IsPassword="True" Text="{Binding PasswordConfirmation}"
+                           ReturnCommand="{Binding AuthenticateCommand}" ReturnType="Done" Focused="Entry_Focused" Unfocused="Entry_Unfocused"/>
+                    </StackLayout>
+                    <Label x:Name="PasswordStrengthLabel" Opacity="0" TextColor="{StaticResource ErrorAccent}" FontSize="12" FontFamily="LemonMilkLight" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding PasswordStrength}" Value="{x:Static utils:PasswordStrengthTier.Strong}">
+                                <Setter Property="TextColor" Value="{StaticResource SuccessAccent}"/>
+                                <Setter Property="Text" Value="{x:Static res:AppResources.PSStrong}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding PasswordStrength}" Value="{x:Static utils:PasswordStrengthTier.Medium}">
+                                <Setter Property="TextColor" Value="{StaticResource PendingAccent}"/>
+                                <Setter Property="Text" Value="{x:Static res:AppResources.PSMedium}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding PasswordStrength}" Value="{x:Static utils:PasswordStrengthTier.Weak}">
+                                <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                                <Setter Property="Text" Value="{x:Static res:AppResources.PSWeak}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding PasswordStrength}" Value="{x:Static utils:PasswordStrengthTier.Invalid}">
+                                <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                                <Setter Property="Text" Value="{x:Static res:AppResources.PSInvalid}"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </StackLayout>
+                <Frame x:Name="Button" HeightRequest="48" Margin="8,-8,8,8" BackgroundColor="Transparent" CornerRadius="24" Padding="0" BorderColor="Transparent"
+                   touch:TouchEff.NativeAnimation="True" touch:TouchEff.Command="{Binding AuthenticateCommand}" IsEnabled="{Binding InputsValid}">
+                    <Label Text="{x:Static res:AppResources.Login}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="LemonMilkLight" FontSize="16">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding InputsValid}" Value="False">
+                                <Setter Property="Opacity" Value="0.7"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding SignUp}" Value="True">
+                                <Setter Property="Text" Value="{x:Static res:AppResources.SignUp}"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Frame>
+            </StackLayout>
+
+            <StackLayout x:Name="ChevronSL" Opacity="0" Spacing="0" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.6,-1,-1" AnchorY="1" TranslationY="-64">
+                <Image Style="{StaticResource ChevronImage}" Opacity="0.6"/>
+                <Image Style="{StaticResource ChevronImage}" Opacity="0.6"/>
+                <Image Style="{StaticResource ChevronImage}"/>
+            </StackLayout>
+            <Image x:Name="LogoImage" HorizontalOptions="Center" Source="colour_logo.png" Aspect="AspectFit"
+                   AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,80,80"
+                   Rotation="{Binding Source={RelativeSource Mode=Self}, Path=TranslationY, Converter={StaticResource Rot}}">
+                <Image.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+                </Image.GestureRecognizers>
+            </Image>
+            
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

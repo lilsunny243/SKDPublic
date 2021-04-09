@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:PartnerClient.Views"
+       xmlns:res="clr-namespace:PartnerClient.Resources"
+       xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+       Title="PartnerClient"
+       x:Class="PartnerClient.AppShell">
+
+    <TabBar Route="Loading" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate cviews:LoadingPage}"/>
+        </Tab>
+    </TabBar>
+
+    <TabBar Route="Login" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:LoginPage}"/>
+        </Tab>
+    </TabBar>
+
+    <TabBar Route="InvalidAuth" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:InvalidAuthPage}"/>
+        </Tab>
+    </TabBar>
+
+    <TabBar Route="Onboarding" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:OnboardingPage}"/>
+        </Tab>
+    </TabBar>
+
+    <TabBar Route="Home">
+        <Tab Route="Projects" Title="{x:Static res:AppResources.Projects}">
+            <Tab.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{StaticResource ProjectsIcon}"/>
+            </Tab.Icon>
+            <ShellContent Route="List" ContentTemplate="{DataTemplate views:ProjectsPage}"/>
+        </Tab>
+        <Tab Route="Team" Title="{x:Static res:AppResources.Team}">
+            <Tab.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{StaticResource TeamIcon}"/>
+            </Tab.Icon>
+            <ShellContent Route="Overview" ContentTemplate="{DataTemplate views:TeamPage}"/>
+        </Tab>
+        <Tab Route="Kids" Title="{x:Static res:AppResources.Kids}">
+            <Tab.Icon>
+                <FontImageSource FontFamily="IconFont" Glyph="{StaticResource KidsIcon}"/>
+            </Tab.Icon>
+            <ShellContent Route="List" ContentTemplate="{DataTemplate views:KidsPage}"/>
+        </Tab>
+    </TabBar>
+
+</Shell>

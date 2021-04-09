@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             xmlns:nado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:utils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             x:DataType="{x:Type vm:LoginViewModel}"
+             x:Name="Mama" BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource ChromeBackgroundColourDark}}"
+             x:Class="DonorClient.Views.LoginPage">
+    <ContentPage.Resources>
+        <utils:DoubleToDouble_SignInLogoRotationConverter x:Key="Rot" PageHeight="{Binding Source={x:Reference Mama}, Path=Height}"/>
+        <Style TargetType="Image" x:Key="ChevronImage">
+            <Setter Property="Source">
+                <FontImageSource Size="40" Glyph="{StaticResource ChevronUpIcon}" FontFamily="IconFont" Color="#EEE"/>
+            </Setter>
+            <Setter Property="Margin" Value="0,-20,0,0"/>
+        </Style>
+        <x:Double x:Key="Half">0.5</x:Double>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="MainLayout" Padding="0">
+            <ff:CachedImage x:Name="BackgrndImage" Opacity="0" Source="login_background.jpg" AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1" Aspect="AspectFill" Margin="0"/>
+            <nado:MaterialFrame x:Name="MaterialFrame" Opacity="0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,1" Margin="0"/>
+            <StackLayout x:Name="TitleSL" Opacity="0" TranslationY="200" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0.25,1,0.5" Spacing="0">
+                <Label FontSize="48" CharacterSpacing="1" FontFamily="LemonMilkLight" Margin="0,-8" Style="{StaticResource BodyText}" Text="Street Kids" HorizontalTextAlignment="Center" VerticalTextAlignment="End" VerticalOptions="FillAndExpand"/>
+                <Label FontSize="72" CharacterSpacing="3" FontFamily="LemonMilkMedium" Margin="0,-8" Style="{StaticResource BodyText}" Text="Direct" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+            <StackLayout x:Name="ButtonSL" BindableLayout.ItemsSource="{Binding ButtonViewModels}" Spacing="8" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1.05,1,0.5">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:LoginButtonViewModel}">
+                        <Frame touch:TouchEff.NativeAnimation="True" Opacity="0"
+                               touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LoginViewModel}}, Path=AuthenticateCommand}"
+                               touch:TouchEff.CommandParameter="{Binding Provider}" Margin="16,0,24,0" HorizontalOptions="Start" CornerRadius="{OnPlatform Android=24, iOS=20}"
+                               BorderColor="{Binding AccentColour}" BackgroundColor="{StaticResource ButtonBackgroundColourLight}"
+                               Padding="12,8,16,8">
+                            <StackLayout Orientation="Horizontal" Spacing="16" FlowDirection="LeftToRight">
+                                <Image Aspect="AspectFit">
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="IconFont" Size="26" Color="{StaticResource PrimaryTextColourLight}" Glyph="{Binding Glyph}"/>
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="{Binding Text}" FontFamily="LemonMilkMedium" HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center" FontSize="18" TextColor="{StaticResource PrimaryTextColourLight}"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+            <StackLayout x:Name="ChevronSL" Opacity="0" Spacing="0" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.6,-1,-1" AnchorY="1" TranslationY="-64">
+                <Image Style="{StaticResource ChevronImage}" Opacity="0.6"/>
+                <Image Style="{StaticResource ChevronImage}" Opacity="0.6"/>
+                <Image Style="{StaticResource ChevronImage}"/>
+            </StackLayout>
+            <Image x:Name="LogoImage" HorizontalOptions="Center" Source="colour_logo.png" Aspect="AspectFit"
+                   AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,80,80"
+                   Rotation="{Binding Source={RelativeSource Mode=Self}, Path=TranslationY, Converter={StaticResource Rot}}">
+                <Image.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:DataType="{x:Type vm:TeamViewModel}"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             xmlns:views="clr-namespace:PartnerClient.Views"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             x:Class="PartnerClient.Views.TeamPage">
+    <Shell.TitleView>
+        <StackLayout Padding="48,-6,8,0" Orientation="Horizontal" Spacing="12">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="48,-6,8,0"/>
+                    <On Platform="iOS" Value="60,-6,0,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+            <Button Text="{StaticResource SettingsIcon}" FontFamily="IconFont" BackgroundColor="Transparent"
+                    HorizontalOptions="End" VerticalOptions="Center" WidthRequest="48" HeightRequest="48"
+                    FontSize="22" Command="{Binding SettingsCommand}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <LinearItemsLayout x:Key="ItemsLayout" ItemSpacing="12" Orientation="Vertical"/>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,auto,auto" ColumnDefinitions="*">
+            <CollectionView ItemsSource="{Binding MembersAndRequests}" Margin="16"
+                            ItemsLayout="{StaticResource ItemsLayout}" IsGrouped="True">
+                <CollectionView.ItemTemplate>
+                    <views:TeamMemberTemplateSelector>
+                        <views:TeamMemberTemplateSelector.MemberTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:TeamMemberViewModel}">
+                                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}" 
+                                   Padding="0" BorderColor="Transparent" CornerRadius="18" Margin="0">
+                                    <StackLayout Orientation="Horizontal" Padding="16,12">
+                                        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                            <Label FontSize="16" Text="{Binding Name}"/>
+                                            <Label Text="{Binding Email}" Margin="0,0,0,6"/>
+                                        </StackLayout>
+                                        <Button Text="{StaticResource TransferOwnershipIcon}" VerticalOptions="CenterAndExpand"
+                                                    HorizontalOptions="End" BackgroundColor="Transparent" FontSize="24"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TeamViewModel}}, Path=TransferOwnershipCommand}"
+                                                    CommandParameter="{Binding Source}" FontFamily="IconFont" Margin="0,0,-12,0"
+                                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:TeamViewModel}}, Path=IsTeamLeader}"/>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </views:TeamMemberTemplateSelector.MemberTemplate>
+                        <views:TeamMemberTemplateSelector.MemberRequestTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:TeamMemberRequestViewModel}">
+                                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}" 
+                                   Padding="0" BorderColor="Transparent" CornerRadius="18" Margin="0">
+                                    <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="*, auto, auto" Padding="16,12">
+                                        <Label Grid.ColumnSpan="3" FontSize="16" Text="{Binding Name}"/>
+                                        <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding Email}"/>
+                                        <Button Grid.Row="2" Grid.Column="1" Text="{x:Static res:AppResources.Accept}" TextColor="{StaticResource SuccessAccent}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TeamViewModel}}, 
+                                            Path=AcceptJoinRequestCommand}" CommandParameter="{Binding UID}" BackgroundColor="Transparent" Margin="-8,-10"/>
+                                        <Button Grid.Row="2" Grid.Column="2" Text="{x:Static res:AppResources.Reject}" TextColor="{StaticResource ErrorAccent}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TeamViewModel}}, 
+                                            Path=RejectJoinRequestCommand}" CommandParameter="{Binding UID}" BackgroundColor="Transparent" Margin="-10"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </views:TeamMemberTemplateSelector.MemberRequestTemplate>
+                    </views:TeamMemberTemplateSelector>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Header>
+                    <StackLayout Spacing="8">
+                        <Label Text="{x:Static res:AppResources.Leader}" FontFamily="LemonMilkRegular"/>
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}" 
+                                   Padding="0" BorderColor="Transparent" CornerRadius="18">
+                            <StackLayout Padding="16,12">
+                                <Label FontSize="16" Text="{Binding Leader.Name}"/>
+                                <Label Text="{Binding Leader.Email}" Margin="0,0,0,6"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </CollectionView.Header>
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate x:DataType="utils:Grouping(x:String,x:String)">
+                        <StackLayout>
+                            <Label FontFamily="LemonMilkRegular" Margin="0,8,0,0">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} • {1}">
+                                        <Binding Path="Name"/>
+                                        <Binding Path="Count"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+            </CollectionView>
+            <Label Grid.Row="1" Text="{Binding AuthCode, StringFormat={x:Static res:AppResources.TeamCodeFormat}}" FontFamily="LexendDecaRegular" FontSize="16"
+            Margin="8" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            <Button Grid.Row="2" Text="{x:Static res:AppResources.LeaveTeam}" Command="{Binding LeaveTeamCommand}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

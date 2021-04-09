@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:res="clr-namespace:SKD.Common.Resources"
+             xmlns:models="clr-namespace:SKD.Common.Models;assembly=SKD.Common"
+             x:DataType="{x:Type cvm:ProjectCardViewModel}"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:st="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common" HeightRequest="{Binding Source={x:Reference InfoView}, Path=Height, Mode=OneWay}"
+             CompressedLayout.IsHeadless="True"
+             x:Class="SKD.Common.Views.ProjectCard">
+    <ContentView.Resources>
+        <x:Int32 x:Key="Zero">0</x:Int32>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Frame VerticalOptions="Fill" CornerRadius="18" Padding="0" BorderColor="Transparent">
+
+            <AbsoluteLayout x:Name="InfoAl" BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}" IsClippedToBounds="True" AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                        FlowDirection="RightToLeft" Margin="0">
+                <StackLayout x:Name="InfoView" IsClippedToBounds="True" FlowDirection="LeftToRight" AbsoluteLayout.LayoutFlags="WidthProportional"
+                                        AbsoluteLayout.LayoutBounds="0,0,1,-1" Padding="16" Spacing="4" Orientation="Vertical" VerticalOptions="StartAndExpand" 
+                                        MinimumHeightRequest="244"
+                                        touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type cviews:ProjectCard}}, Path=TappedCommand}"
+                                        touch:TouchEff.CommandParameter="{Binding Source}" touch:TouchEff.NativeAnimation="True">
+                    <Label VerticalTextAlignment="Center" Text="{Binding Name}" HorizontalOptions="Start" FontSize="20" Scale="0.9" AnchorX="0" AnchorY="0" FontFamily="LemonMilkMedium"
+                           />
+                    <StackLayout Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsUrgent}" Margin="0,0,0,4"
+                                 >
+                        <Image VerticalOptions="Center">
+                            <Image.Source>
+                                <FontImageSource Glyph="{StaticResource ErrorIcon}" Color="{StaticResource ErrorAccent}" FontFamily="IconFont" Size="20"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{x:Static res:AppResources.Urgent}" HeightRequest="24" FontFamily="LemonMilkMedium" FontSize="14" VerticalTextAlignment="Center" TextColor="{StaticResource ErrorAccent}"/>
+                    </StackLayout>
+                    <Label x:Name="ProgressLabel" Style="{StaticResource ProgressLabel}"
+                           >
+                        <Label.Text>
+                            <MultiBinding StringFormat="{x:Static res:AppResources.ProgressLabelFormat}">
+                                <Binding Path="Raised" Converter="{StaticResource CurrencyConverter}"/>
+                                <Binding Path="Target" Converter="{StaticResource CurrencyConverter}"/>
+                            </MultiBinding>
+                        </Label.Text>
+                        <Label.Triggers>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static models:ProjectStatus.Pending}">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static models:ProjectStatus.Draft}">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <cviews:TransitioningProgressBar Margin="0,4" HorizontalOptions="Start" WidthRequest="{Binding Source={x:Reference ProgressLabel}, Path=Width, Mode=OneWay}"
+                                                     BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource PageBackgroundColourDark}}" 
+                                                     HeightRequest="4" ProgressColor="{Binding AccentColour}" Progress="{Binding Progress}"
+                                                     >
+                        <cviews:TransitioningProgressBar.Triggers>
+                            <DataTrigger TargetType="{x:Type cviews:TransitioningProgressBar}" Binding="{Binding Status}" Value="{x:Static models:ProjectStatus.Pending}">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type cviews:TransitioningProgressBar}" Binding="{Binding Status}" Value="{x:Static models:ProjectStatus.Draft}">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                        </cviews:TransitioningProgressBar.Triggers>
+                    </cviews:TransitioningProgressBar>
+                    <FlexLayout BindableLayout.ItemsSource="{Binding Tags}" Margin="0,2,0,0" Wrap="Wrap" Direction="Row">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type cvm:CardTagViewModel}">
+                                <Frame Padding="0,0,12,4" CompressedLayout.IsHeadless="True">
+                                    <StackLayout Orientation="Horizontal" Spacing="8">
+                                        <Image VerticalOptions="Center">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="{Binding Glyph}" Color="{Binding Colour}" FontFamily="IconFont" Size="20"/>
+                                            </Image.Source>
+                                        </Image>
+                                        <Label LineBreakMode="NoWrap" Text="{Binding Text}" HeightRequest="24" FontFamily="LemonMilkMedium" FontSize="13" VerticalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </StackLayout>
+                <Frame AbsoluteLayout.LayoutFlags="None" AbsoluteLayout.LayoutBounds="8,8,-1,48" BackgroundColor="Transparent" CornerRadius="24" Padding="0"
+                       IsVisible="{Binding ImageCount, Converter={StaticResource GreaterThanConverter}, ConverterParameter={StaticResource Zero}}"
+                       touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type cviews:ProjectCard}}, Path=ImageButtonCommand}" touch:TouchEff.NativeAnimation="True">
+                    <StackLayout Orientation="Horizontal" BackgroundColor="Transparent" Spacing="6" FlowDirection="LeftToRight" Padding="12,8">
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource FontFamily="IconFont" Size="24" Glyph="{StaticResource ImageIcon}" Color="{Binding AccentColour}"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{Binding ImageCount}" FontFamily="LemonMilkRegular" FontSize="15" VerticalTextAlignment="Center"/>
+                    </StackLayout>
+                </Frame>
+            </AbsoluteLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             x:DataType="{x:Type vm:ProjectCreationViewModel}"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:nado="http://sharpnado.com"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="PartnerClient.Views.ProjectCreationPage">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+            <Setter Property="Margin" Value="0,12,0,10"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="12">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android">0,-6,8,0</On>
+                    <On Platform="iOS">20,0,0,0</On>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{x:Static res:AppResources.CreateProject}" Style="{StaticResource PageTitle}"/>
+            <Button WidthRequest="48" HorizontalOptions="End" BackgroundColor="Transparent"
+                    Command="{Binding DeleteDraftCommand}" Text="{StaticResource DeleteIcon}" FontFamily="IconFont" FontSize="22"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,48" ColumnDefinitions="*,*" ColumnSpacing="0">
+            <ScrollView Orientation="Vertical" Grid.ColumnSpan="2">
+                <StackLayout Padding="16" Spacing="4">
+                    <Label Text="{x:Static res:AppResources.CoreInfo}" Margin="0,8,0,0">
+                        <Label.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="Android">0,12,0,0</On>
+                                <On Platform="iOS">0,12,0,12</On>
+                            </OnPlatform>
+                        </Label.Margin>
+                    </Label>
+                    <Entry Placeholder="{x:Static res:AppResources.ProjectNamePlaceholder}" Text="{Binding Name}"/>
+                    <Editor Placeholder="{x:Static res:AppResources.ProjectDescriptionPlaceholder}" Text="{Binding Description}" AutoSize="TextChanges">
+                        <Editor.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS">0,6,0,4</On>
+                            </OnPlatform>
+                        </Editor.Margin>
+                    </Editor>
+                    <StackLayout Orientation="Horizontal" HeightRequest="32" Spacing="4">
+                        <StackLayout.Triggers>
+                            <DataTrigger TargetType="{x:Type StackLayout}" Binding="{Binding IsUrgent}" Value="True">
+                                <Setter TargetName="UrgentLabel" Property="Label.Text" Value="{x:Static res:AppResources.UrgentE}"/>
+                                <Setter TargetName="UrgentLabel" Property="Label.TextColor" Value="{StaticResource ErrorAccent}"/>
+                                <Setter TargetName="UrgentCheckbox" Property="CheckBox.Color" Value="{StaticResource ErrorAccent}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="{x:Type StackLayout}" Binding="{Binding IsUrgent}" Value="False">
+                                <Setter TargetName="UrgentCheckbox" Property="CheckBox.Color" Value="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+                            </DataTrigger>
+                        </StackLayout.Triggers>
+                        <CheckBox x:Name="UrgentCheckbox" IsChecked="{Binding IsUrgent}" VerticalOptions="CenterAndExpand"/>
+                        <Label x:Name="UrgentLabel" Text="{x:Static res:AppResources.UrgentQ}" VerticalTextAlignment="Center" Margin="0,0,0,4" VerticalOptions="FillAndExpand"
+                                           LineBreakMode="NoWrap" FontFamily="LexendDecaRegular" FontSize="15"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static res:AppResources.Images}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand"/>
+                        <Button Text="{StaticResource AddIcon}" Padding="4" Margin="0,0,-4,-4" BackgroundColor="Transparent" 
+                       HorizontalOptions="End" FontFamily="IconFont" FontSize="24" WidthRequest="32"
+                       VerticalOptions="Center" Command="{Binding AddImageCommand}"/>
+                    </StackLayout>
+                    <Grid RowDefinitions="72" ColumnDefinitions="*">
+                        <nado:HorizontalListView HorizontalOptions="FillAndExpand" ItemsSource="{Binding ImageViewModels}" 
+                                     ItemHeight="72" ItemWidth="108" ItemSpacing="8" EnableDragAndDrop="True">
+                            <nado:HorizontalListView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type vm:ProjectCreationImageViewModel}">
+                                    <nado:DraggableViewCell>
+                                        <ContentView>
+                                            <Grid RowDefinitions="auto,*" ColumnDefinitions="*,auto">
+                                                <ff:CachedImage Grid.RowSpan="2" Grid.ColumnSpan="2" Source="{Binding Source}" Aspect="AspectFill"/>
+                                                <Button Grid.Column="1" Text="{StaticResource CloseIcon}" Padding="2" BackgroundColor="{AppThemeBinding Light={StaticResource TranslucentControlBackgroundColourLight}, Dark={StaticResource TranslucentControlBackgroundColourDark}}" 
+                                                FontFamily="IconFont" FontSize="18" CommandParameter="{Binding}" HorizontalOptions="EndAndExpand" WidthRequest="24" HeightRequest="24" VerticalOptions="StartAndExpand"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjectCreationViewModel}}, Path=RemoveImageCommand}"/>
+                                            </Grid>
+                                        </ContentView>
+                                    </nado:DraggableViewCell>
+                                </DataTemplate>
+                            </nado:HorizontalListView.ItemTemplate>
+                        </nado:HorizontalListView>
+                        <Label FontFamily="LexendDecaRegular" Text="{x:Static res:AppResources.ProjectCreationImageHint}" IsVisible="False" TranslationY="-8"
+                       VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="{x:Type Label}" Binding="{Binding ImageViewModels.Count}" Value="0">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Grid>
+
+                    <Label Text="{x:Static res:AppResources.ImpactMeasurement}"/>
+                    <StackLayout BindableLayout.ItemsSource="{Binding IMAViewModels}" Spacing="4">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:ProjectCreationIMAViewModel}">
+                                <StackLayout Spacing="4">
+                                    <StackLayout Orientation="Horizontal" HeightRequest="32" Spacing="4">
+                                        <CheckBox IsChecked="{Binding IsSelected}" VerticalOptions="CenterAndExpand" Color="{Binding Colour}"/>
+                                        <Image VerticalOptions="CenterAndExpand" Margin="0,0,5,0">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="{Binding Glyph}" FontFamily="IconFont" Size="18" Color="{Binding Colour}"/>
+                                            </Image.Source>
+                                        </Image>
+                                        <Label Text="{Binding Text}" VerticalTextAlignment="Center" Margin="0,0,0,4" VerticalOptions="FillAndExpand"
+                                                       FontFamily="LexendDecaRegular" FontSize="15" HorizontalOptions="FillAndExpand"/>
+                                        <cviews:IconSwapToggleButton TrueIcon="{StaticResource FilledStarIcon}" FalseIcon="{StaticResource EmptyStarIcon}" VerticalOptions="Start" Margin="0,-8,0,0"
+                                                                     Color="{Binding Colour}" IsToggled="{Binding IsStarred}" AllowUntoggle="False" IsVisible="{Binding IsSelected}" FontSize="24"/>
+                                    </StackLayout>
+                                    <Editor Text="{Binding Explanation}" IsVisible="{Binding IsSelected}" Margin="0,-12,0,8"
+                                                    Placeholder="{x:Static res:AppResources.Explanation}" AutoSize="TextChanges">
+                                        <Editor.Margin>
+                                            <OnPlatform x:TypeArguments="Thickness">
+                                                <On Platform="Android">0,-12,0,8</On>
+                                                <On Platform="iOS">0,0,0,8</On>
+                                            </OnPlatform>
+                                        </Editor.Margin>
+                                    </Editor>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <Label Text="{Binding Target, Converter={StaticResource CurrencyConverter}, StringFormat={x:Static res:AppResources.TargetFormat}}"
+                       Margin="0,10,0,-8" FontSize="16" FontFamily="LemonMilkMedium"/>
+                    <StackLayout Orientation="Horizontal" Margin="0,-8,0,-16">
+                        <Label Text="{x:Static res:AppResources.CostBreakdown}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand"/>
+                        <Button Text="{StaticResource AddIcon}" BackgroundColor="Transparent" 
+                       HorizontalOptions="End" FontFamily="IconFont" FontSize="24" WidthRequest="32"
+                       VerticalOptions="Center" Command="{Binding AddCostBreakdownComponentCommand}" Padding="{OnPlatform iOS=4, Android=0}" Margin="0,0,-4,0">
+                        </Button>
+                    </StackLayout>
+                    <CollectionView ItemsSource="{Binding CostBreakdownBuilderComponents}" IsGrouped="True" VerticalOptions="Start">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="4" Orientation="Vertical"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.GroupHeaderTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:CostBreakdownBuilderComponent}">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout.Padding>
+                                        <OnPlatform x:TypeArguments="Thickness">
+                                            <On Platform="iOS">0,16,0,0</On>
+                                        </OnPlatform>
+                                    </StackLayout.Padding>
+                                    <Label Text="{StaticResource SubDirRightArrowIcon}" FontFamily="IconFont" FontSize="24" WidthRequest="24"/>
+                                    <Entry Text="{Binding Name}" Placeholder="{x:Static res:AppResources.Name}" HorizontalOptions="FillAndExpand"/>
+                                    <Entry Placeholder="{x:Static res:AppResources.CostPlaceholder}" Keyboard="Numeric"
+                                       IsEnabled="{Binding IsShallow}">
+                                        <Entry.Triggers>
+                                            <DataTrigger TargetType="{x:Type Entry}" Binding="{Binding IsShallow}" Value="True">
+                                                <Setter Property="Text" Value="{Binding UnitCost, Converter={StaticResource CurrencyInputConverter}}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="{x:Type Entry}" Binding="{Binding IsShallow}" Value="False">
+                                                <Setter Property="Text" Value="{Binding CalculatedCost, Mode=OneWay, Converter={StaticResource CurrencyConverter}, StringFormat='₤{0}'}"/>
+                                            </DataTrigger>
+                                        </Entry.Triggers>
+                                    </Entry>
+                                    <Entry Text="{Binding Quantity, Converter={StaticResource IntInputConverter}}" Placeholder="{x:Static res:AppResources.Qty}" Keyboard="Numeric"/>
+                                    <Button Text="{StaticResource DeleteIcon}" FontSize="24" WidthRequest="36"
+                                        BackgroundColor="Transparent" FontFamily="IconFont" Margin="-4,0" Padding="{OnPlatform iOS=4}"
+                                        CommandParameter="{Binding}" HorizontalOptions="End"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjectCreationViewModel}}, Path=RemoveCostBreakdownItemCommand}"/>
+                                    <Button Text="{StaticResource AddIcon}" WidthRequest="32" Margin="0,0,-4,0" BackgroundColor="Transparent" Padding="{OnPlatform iOS=4, Android=0}"
+                                        HorizontalOptions="End" FontFamily="IconFont" FontSize="24"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjectCreationViewModel}}, Path=AddCostBreakdownSubcomponentCommand}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.GroupHeaderTemplate>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type vm:CostBreakdownBuilderSubcomponent}">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout.Padding>
+                                        <OnPlatform x:TypeArguments="Thickness">
+                                            <On Platform="Android">32,-4,0,0</On>
+                                            <On Platform="iOS">32,8,0,0</On>
+                                        </OnPlatform>
+                                    </StackLayout.Padding>
+                                    <Label Text="{StaticResource SubDirRightArrowIcon}" FontFamily="IconFont" FontSize="24" WidthRequest="24"/>
+                                    <Entry Text="{Binding Name}" Placeholder="{x:Static res:AppResources.Name}" HorizontalOptions="FillAndExpand"/>
+                                    <Entry Text="{Binding UnitCost, Converter={StaticResource CurrencyInputConverter}}" Placeholder="{x:Static res:AppResources.CostPlaceholder}" Keyboard="Numeric"/>
+                                    <Entry Text="{Binding Quantity, Converter={StaticResource IntInputConverter}}" Placeholder="{x:Static res:AppResources.Qty}" Keyboard="Numeric"/>
+                                    <Button Text="{StaticResource DeleteIcon}" FontSize="24" WidthRequest="36"
+                                        BackgroundColor="Transparent" FontFamily="IconFont" Margin="0,0,-6,0" Padding="{OnPlatform iOS=4}"
+                                        HorizontalOptions="End" CommandParameter="{Binding}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProjectCreationViewModel}}, Path=RemoveCostBreakdownItemCommand}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+            <Button x:Name="SaveButton" Grid.Row="1" Text="{x:Static res:AppResources.Save}" Command="{Binding SubmitCommand}">
+                <Button.CommandParameter>
+                    <x:Boolean>True</x:Boolean>
+                </Button.CommandParameter>
+                <Button.Triggers>
+                    <DataTrigger TargetType="{x:Type Button}" Binding="{Binding IsTeamLeader}" Value="False">
+                        <Setter Property="Grid.ColumnSpan" Value="2"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="1" IsVisible="{Binding IsTeamLeader}" Text="{x:Static res:AppResources.Submit}" Command="{Binding SubmitCommand}">
+                <Button.CommandParameter>
+                    <x:Boolean>False</x:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dialogs:DialogView xmlns="http://xamarin.com/schemas/2014/forms" 
+             x:DataType="{x:Type vm:ProjectUpdateCreationViewModel}"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             ProportionalWidth="1" ProportionalHeight="1"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             ControlTemplate="{StaticResource DialogTemplate}"
+             xmlns:dialogs="clr-namespace:AiForms.Dialogs.Abstractions;assembly=AiForms.Dialogs.Abstractions"
+             x:Class="PartnerClient.Views.QuestionnaireSelectionView">
+    <dialogs:DialogView.Content>
+        <Grid RowDefinitions="*,auto" ColumnDefinitions="*">
+            <CollectionView IsGrouped="True" ItemsSource="{Binding QuestionnaireSelection}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="2" Orientation="Vertical" VerticalItemSpacing="6" HorizontalItemSpacing="6"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:QuestionnaireTabSelectionGroup}">
+                        <StackLayout Spacing="0" Margin="0,8,0,4">
+                            <Label Text="{Binding ChildFirstNames}" Style="{StaticResource BodyText}"/>
+                            <Label Text="{Binding ChildLastNames}" Style="{StaticResource BodyText}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:QuestionnaireTabSelectionViewModel}">
+                        <Frame Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}" CornerRadius="12">
+                            <Grid Padding="8" RowSpacing="0" RowDefinitions="auto,auto" ColumnDefinitions="auto,*" ColumnSpacing="8">
+                                <CheckBox IsChecked="{Binding IsSelected}" Grid.RowSpan="2" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding DateCreatedString}" Grid.Column="1" Style="{StaticResource BodyText}"/>
+                                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding TagViewModels}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="{x:Type cvm:CardTagViewModel}">
+                                            <Label FontSize="20" Text="{Binding Glyph}" TextColor="{Binding Colour}" FontFamily="IconFont"/>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Grid.Row="1" Text="{x:Static res:AppResources.Done}" Clicked="DoneButton_Clicked" Style="{StaticResource ConfirmButton}"/>
+        </Grid>
+    </dialogs:DialogView.Content>
+</dialogs:DialogView>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:vm="clr-namespace:SKD.Common.ViewModels"
+             x:DataType="{x:Type vm:QuestionnaireTabViewModel}"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:SKD.Common.Resources"
+             xmlns:views="clr-namespace:SKD.Common.Views"
+             x:Class="SKD.Common.Views.QuestionnaireTab">
+    <ContentView.Content>
+        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}"
+               CornerRadius="12" touch:TouchEff.Command="{Binding TappedCommand}" touch:TouchEff.NativeAnimation="True" Padding="0">
+            <Frame.Triggers>
+                <DataTrigger TargetType="{x:Type Frame}" Binding="{Binding Source={RelativeSource AncestorType={x:Type views:QuestionnaireTab}}, Path=IsNested}" Value="True">
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource NestedCardBackgroundColourLight}, Dark={StaticResource NestedCardBackgroundColourDark}}"/>
+                </DataTrigger>
+            </Frame.Triggers>
+            <Grid RowDefinitions="auto,auto" ColumnDefinitions="auto,auto,*" Padding="12">
+                <Label Style="{StaticResource BodyText}" LineBreakMode="WordWrap" Grid.ColumnSpan="3">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="ChildFirstNames"/>
+                            <Binding Path="ChildLastNames"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <StackLayout Grid.Row="1" VerticalOptions="CenterAndExpand" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding TagViewModels}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type vm:CardTagViewModel}">
+                            <Image>
+                                <Image.Source>
+                                    <FontImageSource Size="20" Glyph="{Binding Glyph}" Color="{Binding Colour}" FontFamily="IconFont"/>
+                                </Image.Source>
+                            </Image>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource BodyText}" Text="•" Margin="4,0,6,4" VerticalTextAlignment="Center"/>
+                <Label Grid.Row="1" Grid.Column="2" Style="{StaticResource BodyText}" Margin="0,0,0,4" VerticalTextAlignment="Center" Text="{Binding DateCreatedString, StringFormat={x:Static res:AppResources.QuestionnaireCompletedDateStringFormat}}"/>
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

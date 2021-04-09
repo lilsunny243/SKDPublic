@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChildHealth" xml:space="preserve">
+    <value>Salud Infantil</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="ChristianFaith" xml:space="preserve">
+    <value>Fe Cristiana</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="CommunityRelations" xml:space="preserve">
+    <value>Relaciones con la comunidad</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="ConstructiveUseOfTime" xml:space="preserve">
+    <value>Uso constructivo del tiempo</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="Education" xml:space="preserve">
+    <value>Educación</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="FamilyRelationships" xml:space="preserve">
+    <value>Relaciones familiares</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="PositiveValues" xml:space="preserve">
+    <value>Valores positivos</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="ProgressLabelFormat" xml:space="preserve">
+    <value>Recaudado £{0} de objetivo £{1}</value>
+    <comment>Project Card / Details Page</comment>
+  </data>
+  <data name="ResponsibleLimits" xml:space="preserve">
+    <value>Límites responsables</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="SelfEsteemAndDreams" xml:space="preserve">
+    <value>Autoestima y sueños</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="SocialIdentity" xml:space="preserve">
+    <value>Identidad social</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="UnknownIMA" xml:space="preserve">
+    <value>Desconocido - Por favor, actualice</value>
+    <comment>Impact Measurement Area</comment>
+  </data>
+  <data name="Urgent" xml:space="preserve">
+    <value>Urgente</value>
+    <comment>Project Card / Details Page</comment>
+  </data>
+  <data name="ProjectDatePublishedStringFormat" xml:space="preserve">
+    <value>Proyecto publicado • {0}</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="CompletedProjectUpdateStringFormat" xml:space="preserve">
+    <value>Proyecto completado • {0}</value>
+    <comment>Project Update Card</comment>
+  </data>
+  <data name="Draft" xml:space="preserve">
+    <value>Borrador</value>
+    <comment>Project Update Card</comment>
+  </data>
+  <data name="PendingUpdate" xml:space="preserve">
+    <value>Actualización pendiente</value>
+    <comment>Project Update Card</comment>
+  </data>
+  <data name="PublishedProjectUpdateStringFormat" xml:space="preserve">
+    <value>Actualización • {0}</value>
+    <comment>Project Update Card</comment>
+  </data>
+  <data name="ForOrganisation" xml:space="preserve">
+    <value>Para la organización</value>
+    <comment>Questionnaire Page</comment>
+  </data>
+  <data name="Questionnaire" xml:space="preserve">
+    <value>Cuestionario</value>
+    <comment>Questionnaire Page</comment>
+  </data>
+  <data name="QuestionnaireCompletedDateStringFormat" xml:space="preserve">
+    <value>Completado {0}</value>
+    <comment>Questionnaire Tab</comment>
+  </data>
+  <data name="Questionnaires" xml:space="preserve">
+    <value>Cuestionarios</value>
+    <comment>Project Update Card</comment>
+  </data>
+</root>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:utils="clr-namespace:SKD.Common.Utils;assembly=SKD.Common"
+             xmlns:views="clr-namespace:PartnerClient.Views"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             x:DataType="{x:Type vm:ChildCardViewModel}"
+             x:Class="PartnerClient.Views.ChildCard">
+    <ContentView.Resources>
+        <utils:TernaryConverter x:Key="YesNoConverter" TrueValue="{x:Static res:AppResources.Yes}" FalseValue="{x:Static res:AppResources.No}"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Frame CornerRadius="18" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundColourLight}, Dark={StaticResource CardBackgroundColourDark}}">
+            <Grid RowDefinitions="auto" ColumnDefinitions="*, auto">
+                <Grid RowDefinitions="auto,auto,auto" ColumnSpacing="16" Padding="16,16,8,16" Grid.ColumnSpan="2" ColumnDefinitions="48,48,*,auto"
+                  touch:TouchEff.Command="{Binding Source={RelativeSource AncestorType={x:Type views:ChildCard}}, Path=TappedCommand}"
+                  touch:TouchEff.CommandParameter="{Binding Source}" touch:TouchEff.NativeAnimation="True">
+                    <Grid Grid.RowSpan="2" Scale="0.5" AnchorX="0" AnchorY="0" BackgroundColor="{StaticResource UserActionAccent}" Grid.ColumnSpan="2" RowDefinitions="96" ColumnDefinitions="96" 
+                          VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Margin="0,0,0,-48">
+                        <Grid.Clip>
+                            <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48"/>
+                        </Grid.Clip>
+                        <Image Margin="20" Source="{FontImage Glyph={StaticResource ProfileIcon}, FontFamily=IconFont, Size=56, Color={StaticResource PrimaryTextColourDark}}"/>
+                        <ff:CachedImage Aspect="AspectFill" DownsampleToViewSize="True" IsVisible="{Binding HasProfileImage}" Source="{Binding ImageURL}"/>
+                    </Grid>
+                    <Label Grid.Row="2" Text="{Binding RegNumber, StringFormat='№ {0}'}" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" Style="{StaticResource BodyText}"/>
+
+                    <Label Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding FirstNames}" Style="{StaticResource BodyText}"/>
+                    <Label Grid.Row="1" Margin="0,-4,0,0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LastNames}" Style="{StaticResource BodyText}"/>
+
+                    <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource BodyText}" Text="{Binding GlobalCareEnabled, StringFormat='Global Care: {0}', Converter={StaticResource YesNoConverter}}"/>
+                </Grid>
+                <Button WidthRequest="48" Margin="8" Grid.Column="1" BackgroundColor="Transparent" TextColor="{StaticResource UserActionAccent}" FontFamily="IconFont" Text="{StaticResource AddQuestionnaireIcon}" FontSize="20" VerticalOptions="CenterAndExpand"
+                        Command="{Binding AddQuestionnaireCommand}"/>
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

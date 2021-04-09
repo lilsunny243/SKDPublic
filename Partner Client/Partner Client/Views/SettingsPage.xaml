@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cviews="clr-namespace:SKD.Common.Views;assembly=SKD.Common"
+             xmlns:cmodels="clr-namespace:SKD.Common.Models;assembly=SKD.Common"
+             xmlns:themes="clr-namespace:SKD.Common.Themes;assembly=SKD.Common"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             x:DataType="{x:Type vm:SettingsViewModel}"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="PartnerClient.Views.SettingsPage"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}">
+    <Shell.TitleView>
+        <StackLayout Padding="0,-6,68,0" Orientation="Horizontal">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS" Value="0,-6,48,0"/>
+                    <On Platform="Android" Value="0,-6,68,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <Style x:Key="SettingNameLabel" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="LemonMilkLight"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*, auto" ColumnDefinitions="*">
+            <ScrollView>
+                <StackLayout Padding="16">
+
+                    <!--#region Accont -->
+                    <Label Text="{x:Static res:AppResources.Account}" Style="{StaticResource SettingNameLabel}"/>
+                    <Entry Text="{Binding UserName}" Placeholder="Username">
+                        <Entry.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="Android" Value="0,-12,0,4"/>
+                                <On Platform="iOS" Value="0,0,0,4"/>
+                            </OnPlatform>
+                        </Entry.Margin>
+                    </Entry>
+                    <Button Margin="0,0,0,8" Text="{x:Static res:AppResources.ChangePassword}" CornerRadius="12" Command="{Binding ChangePasswordCommand}"/>
+                    <!--#endregion-->
+
+                    <!--#region Theme -->
+                    <Label Text="{x:Static res:AppResources.Theme}" Style="{StaticResource SettingNameLabel}"/>
+                    <cviews:SwitchButtons x:TypeArguments="themes:Theme" ItemsSource="{Binding ThemeButtonViewModels}" 
+                                              Command="{Binding ChangeThemeCommand}" ButtonBackgroundColor="{AppThemeBinding 
+                            Light={StaticResource ButtonBackgroundColourLight}, 
+                            Dark={StaticResource ButtonBackgroundColourDark}}"/>
+                    <!--#endregion-->
+
+                </StackLayout>
+            </ScrollView>
+            <Button Grid.Row="1" HorizontalOptions="Fill" Text="{x:Static res:AppResources.SignOut}" Command="{Binding SignOutCommand}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

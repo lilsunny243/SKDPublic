@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SKD.Common.Views.LoadingPage" 
+             BackgroundColor="{AppThemeBinding 
+                Light={StaticResource ChromeBackgroundColourLight}, 
+                Dark={StaticResource ChromeBackgroundColourDark}}">
+    <ContentPage.Content>
+        <ActivityIndicator WidthRequest="56" HeightRequest="56" HorizontalOptions="Center" VerticalOptions="Center"
+                           Color="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, 
+                                                   Dark={StaticResource PrimaryTextColourDark}}"
+                          IsRunning="True"/>
+    </ContentPage.Content>
+</ContentPage>

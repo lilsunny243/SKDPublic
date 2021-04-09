@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cmodels="clr-namespace:SKD.Common.Models;assembly=SKD.Common"
+             xmlns:models="clr-namespace:DonorClient.Models"
+             xmlns:common="clr-namespace:SKD.Common.Themes;assembly=SKD.Common"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             xmlns:cvm="clr-namespace:SKD.Common.ViewModels;assembly=SKD.Common"
+             x:Class="DonorClient.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <common:Resources/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <x:String x:Key="BrowseIcon">&#xFB54;</x:String>
+            <x:String x:Key="AuthoriseIcon">&#xF00B;</x:String>
+
+            <x:String x:Key="GoogleIcon">&#xF2AD;</x:String>
+            <x:String x:Key="MicrosoftIcon">&#xF372;</x:String>
+            <x:String x:Key="AppleIcon">&#xF035;</x:String>
+            <x:String x:Key="FacebookIcon">&#xF20D;</x:String>
+            <x:String x:Key="TwitterIcon">&#xF544;</x:String>
+            <x:String x:Key="GitHubIcon">&#xF2A4;</x:String>
+            <x:String x:Key="ChevronUpIcon">&#xF143;</x:String>
+
+            <Style TargetType="{x:Type Image}" x:Key="StripeStatusImage">
+                <Style.Triggers>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Pending}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource PendingIcon}, Color={StaticResource PendingAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Processing}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource ProcessingIcon}, Color={StaticResource PendingAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.RequiresAction}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource AuthoriseIcon}, Color={StaticResource UserActionAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Succeeded}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource SuccessIcon}, Color={StaticResource SuccessAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Failed}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource ErrorIcon}, Color={StaticResource ErrorAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            
+            <Style TargetType="{x:Type Image}" x:Key="BigStripeStatusImage">
+                <Style.Triggers>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Pending}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource PendingIcon}, Color={StaticResource PendingAccent}, Size=48, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Processing}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource ProcessingIcon}, Color={StaticResource PendingAccent}, Size=48, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.RequiresAction}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource AuthoriseIcon}, Color={StaticResource PrimaryTextColourDark}, Size=48, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Succeeded}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource SuccessIcon}, Color={StaticResource SuccessAccent}, Size=48, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Failed}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource ErrorIcon}, Color={StaticResource ErrorAccent}, Size=48, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="{x:Type Image}" x:Key="GiftAidStateImage">
+                <Style.Triggers>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Unclaimed}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource DonationBundleIcon}, Color={StaticResource PendingAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Pending}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource PendingIcon}, Color={StaticResource PendingAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Claimed}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource SuccessIcon}, Color={StaticResource SuccessAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Image}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Ineligible}">
+                        <Setter Property="Source" Value="{FontImage Glyph={StaticResource ErrorIcon}, Color={StaticResource ErrorAccent}, Size=17, FontFamily=IconFont}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="{x:Type Label}" x:Key="StripeStatusLabel">
+                <Style.Triggers>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Pending}">
+                        <Setter Property="Text" Value="Pending"/>
+                        <Setter Property="TextColor" Value="{StaticResource PendingAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Processing}">
+                        <Setter Property="Text" Value="Processing"/>
+                        <Setter Property="TextColor" Value="{StaticResource PendingAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.RequiresAction}">
+                        <Setter Property="Text" Value="Authorise"/>
+                        <Setter Property="TextColor" Value="{StaticResource UserActionAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Succeeded}">
+                        <Setter Property="Text" Value="Verified"/>
+                        <Setter Property="TextColor" Value="{StaticResource SuccessAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Failed}">
+                        <Setter Property="Text" Value="Failed"/>
+                        <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="FontFamily" Value="LemonMilkLight"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="{x:Type Label}" x:Key="GiftAidStateLabel">
+                <Style.Triggers>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Unclaimed}">
+                        <Setter Property="Text" Value="Unclaimed"/>
+                        <Setter Property="TextColor" Value="{StaticResource PendingAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Pending}">
+                        <Setter Property="Text" Value="Pending"/>
+                        <Setter Property="TextColor" Value="{StaticResource PendingAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Claimed}">
+                        <Setter Property="Text" Value="Claimed"/>
+                        <Setter Property="TextColor" Value="{StaticResource SuccessAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding GiftAidState}" Value="{x:Static models:GiftAidState.Ineligible}">
+                        <Setter Property="Text" Value="Ineligible"/>
+                        <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="FontFamily" Value="LemonMilkLight"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="{x:Type Label}" x:Key="BigStripeStatusLabel">
+                <Style.Triggers>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Pending}">
+                        <Setter Property="Text" Value="Pending"/>
+                        <Setter Property="TextColor" Value="{StaticResource PendingAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Processing}">
+                        <Setter Property="Text" Value="Processing"/>
+                        <Setter Property="TextColor" Value="{StaticResource PendingAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.RequiresAction}">
+                        <Setter Property="Text" Value="Authorise"/>
+                        <Setter Property="TextColor" Value="{StaticResource PrimaryTextColourDark}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Succeeded}">
+                        <Setter Property="Text" Value="Verified"/>
+                        <Setter Property="TextColor" Value="{StaticResource SuccessAccent}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding Status}" Value="{x:Static cmodels:StripeStatus.Failed}">
+                        <Setter Property="Text" Value="Failed"/>
+                        <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="FontFamily" Value="LemonMilkMedium"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <DataTemplate x:Key="BundlePageDonationTemplate" x:DataType="{x:Type vm:DonationViewModel}">
+                <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="auto, *, auto" ColumnSpacing="16" RowSpacing="4" Padding="8,0">
+                    <Grid.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="8,0"/>
+                            <On Platform="iOS" Value="32,16,32,0"/>
+                        </OnPlatform>
+                    </Grid.Padding>
+                    <Label Text="{Binding ProjectName}" FontFamily="LemonMilkRegular" FontSize="18" Grid.ColumnSpan="2"/>
+                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding Tags}" Spacing="6">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type cvm:CardTagViewModel}">
+                                <Image>
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="IconFont" Size="22" Color="{Binding Colour}" Glyph="{Binding Glyph}"/>
+                                    </Image.Source>
+                                </Image>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Grid.Row="1" Spacing="4">
+                        <StackLayout.Resources>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+                                <Setter Property="FontSize" Value="18"/>
+                            </Style>
+                        </StackLayout.Resources>
+                        <Label Text="{Binding Amount, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}"/>
+                        <Label Text="{Binding Amount, StringFormat='+ £{0}', Converter={StaticResource CurrencyConverter}, ConverterParameter={StaticResource GiftAidCoefficient}}" 
+                                           TextColor="{StaticResource SuccessAccent}" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:BaseDonationBundleViewModel}}, Path=GiftAidEnabled}"/>
+                        <Label Text="•" Margin="12,0,0,0"/>
+                    </StackLayout>
+                    <Button Grid.Column="2" Grid.RowSpan="2" Text="{StaticResource CloseIcon}" FontFamily="IconFont" WidthRequest="24" FontSize="24" BackgroundColor="Transparent" Padding="{OnPlatform Android=4, iOS=0}"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CurrentBundleViewModel}}, Path=RemoveDonationCommand}" CommandParameter="{Binding Source}"
+                            IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:BaseDonationBundleViewModel}}, Path=Confirmed, Converter={StaticResource NOTConverter}}"/>
+                    <BoxView IsVisible="{Binding NotLast}" Grid.Row="2" Margin="0,12,0,0" Opacity="0.4" HeightRequest="1" Grid.ColumnSpan="3" BackgroundColor="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+                </Grid>
+            </DataTemplate>
+            <x:Double x:Key="GiftAidCoefficient">0.25</x:Double>
+            <x:Double x:Key="TotalPlusGiftAidCoefficient">1.25</x:Double>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

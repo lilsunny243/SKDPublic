@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             x:DataType="{x:Type vm:InvalidAuthViewModel}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, 
+                Dark={StaticResource ChromeBackgroundColourDark}}"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             Shell.NavBarIsVisible="False"
+             x:Class="PartnerClient.Views.InvalidAuthPage">
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,auto,auto,auto,auto,*" ColumnDefinitions="*">
+            <Button Text="{StaticResource LogoutIcon}" FontFamily="IconFont" Command="{Binding LogoutCommand}"
+                    HorizontalOptions="End" VerticalOptions="Start" BackgroundColor="Transparent" FontSize="24"
+                    Margin="0,4,0,0">
+                <Button.Padding>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,32,24,0"/>
+                    </OnPlatform>
+                </Button.Padding>
+            </Button>
+            <Label Grid.Row="1" FontSize="48" TextColor="{StaticResource UserActionAccent}" HorizontalOptions="CenterAndExpand"
+                       Text="{StaticResource EmailIcon}" FontFamily="IconFont"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                <Label.Triggers>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding EmailVerified}" Value="True">
+                        <Setter Property="Text" Value="{StaticResource ErrorIcon}"/>
+                        <Setter Property="TextColor" Value="{StaticResource ErrorAccent}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <Label Grid.Row="2" Text="{x:Static res:AppResources.EmailVerifSent}" FontFamily="LexendDecaRegular" FontSize="18"
+                       HorizontalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                <Label.Triggers>
+                    <DataTrigger TargetType="{x:Type Label}" Binding="{Binding EmailVerified}" Value="True">
+                        <Setter Property="Text" Value="{x:Static res:AppResources.AccessDeniedNotPartner}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <Button Grid.Row="3" Text="{x:Static res:AppResources.Resend}" Command="{Binding ResendCommand}" BackgroundColor="Transparent">
+                <Button.Triggers>
+                    <DataTrigger TargetType="{x:Type Button}" Binding="{Binding EmailVerified}" Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button Grid.Row="4" Text="{x:Static res:AppResources.Refresh}" Command="{Binding RefreshCommand}" BackgroundColor="Transparent">
+                <Button.Triggers>
+                    <DataTrigger TargetType="{x:Type Button}" Binding="{Binding EmailVerified}" Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PartnerClient.ViewModels"
+             x:DataType="{x:Type vm:KidsViewModel}"
+             xmlns:views="clr-namespace:PartnerClient.Views"
+             xmlns:res="clr-namespace:PartnerClient.Resources"
+             x:Class="PartnerClient.Views.KidsPage"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}">
+    <Shell.TitleView>
+        <StackLayout Padding="{OnPlatform Android='0,-6,16,0', iOS='0,-8,0,0'}" Orientation="Horizontal">
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,auto" ColumnDefinitions="*">
+            <CollectionView ItemsSource="{Binding KidViewModels}" Margin="16">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:ChildCardViewModel}">
+                        <views:ChildCard ViewModel="{Binding}" TappedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:KidsViewModel}}, Path=CardTappedCommand}"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Grid.Row="1" Text="{x:Static res:AppResources.AddChild}" Command="{Binding AddChildCommand}"/>
+        </Grid>
+        <!--<Grid RowDefinitions="auto,*,auto" ColumnDefinitions="*" Padding="16">
+            <Switch IsToggled="{Binding ThemeSwitchState}" HorizontalOptions="Start" Margin="8" ThumbColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}" OnColor="{AppThemeBinding Light={StaticResource PrimaryTextColourLight}, Dark={StaticResource PrimaryTextColourDark}}"/>
+            <StackLayout Grid.Row="1">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                    <cviews:Face FaceType="Default" Value="{Binding Source={x:Reference slider}, Path=Value}"/>
+                    <cviews:Face FaceType="Shock" Value="{Binding Source={x:Reference slider}, Path=Value}"/>
+                    <cviews:Face FaceType="Understanding" Value="{Binding Source={x:Reference slider}, Path=Value}"/>
+                </StackLayout>
+                <cviews:FaceSlider x:Name="slider"/>
+            </StackLayout>
+            <Button Grid.Row="2" Text="Sign Out" Command="{Binding SignOutCommand}"/>
+        </Grid>-->
+    </ContentPage.Content>
+</ContentPage>

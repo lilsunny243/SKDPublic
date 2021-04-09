@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SKD.Common.ViewModels"
+             xmlns:res="clr-namespace:SKD.Common.Resources"
+             xmlns:views="clr-namespace:SKD.Common.Views"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             x:DataType="{x:Type vm:QuestionnaireViewModel}"
+             x:Class="SKD.Common.Views.QuestionnaireViewPage"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="0,-6,68,0"/>
+                    <On Platform="iOS" Value="0,-6,48,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <DataTemplate x:Key="SliderTemplate" x:DataType="{x:Type vm:QuestionnaireAnswerViewModel}">
+            <StackLayout Padding="8,0,8,8">
+                <Label Text="{x:Static res:AppResources.ForOrganisation}" Style="{StaticResource BodyText}" FontFamily="LemonMilkRegular" IsVisible="{Binding ForOrganisation}"/>
+                <Label Text="{Binding QuestionText}" Style="{StaticResource BodyText}"/>
+                <views:FaceSlider Value="{Binding SliderValue}" InputTransparent="True" CascadeInputTransparent="True"/>
+                <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding Options}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type x:String}">
+                            <Label FontFamily="LemonMilkLight" FontSize="8" Padding="0" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" Text="{Binding}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </StackLayout>
+        </DataTemplate>
+        <DataTemplate x:Key="OptionsTemplate" x:DataType="{x:Type vm:QuestionnaireAnswerViewModel}">
+            <StackLayout Padding="8,0,8,8">
+                <Label Text="{x:Static res:AppResources.ForOrganisation}" Style="{StaticResource BodyText}" FontFamily="LemonMilkRegular" IsVisible="{Binding ForOrganisation}"/>
+                <Label Text="{Binding QuestionText}" Style="{StaticResource BodyText}"/>
+                <Label Text="{Binding OptionText}" Margin="8,0" Style="{StaticResource BodyText}"/>
+            </StackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <CollectionView Margin="16" ItemsSource="{Binding AnswerGroups}" IsGrouped="True">
+            <CollectionView.Header>
+                <Grid RowDefinitions="auto,auto" ColumnDefinitions="*,auto" RowSpacing="4" ColumnSpacing="4">
+                    <Label Text="{Binding ChildFirstNames}" Style="{StaticResource BodyText}"/>
+                    <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ChildLastNames}" Style="{StaticResource BodyText}"/>
+                    <Label Grid.Column="1" Text="{Binding DateString}" Style="{StaticResource BodyText}"/>
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="{x:Type vm:QuestionnaireAnswerGroup}">
+                    <StackLayout Orientation="Horizontal" HeightRequest="32" Spacing="4">
+                        <Image VerticalOptions="CenterAndExpand" Margin="0,0,5,0">
+                            <Image.Source>
+                                <FontImageSource Glyph="{Binding IMAGlyph}" FontFamily="IconFont" Size="18" Color="{Binding IMAColour}"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{Binding IMAText}" VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"
+                                                       FontFamily="LemonMilkMedium" FontSize="15" HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.ItemTemplate>
+                <views:QuestionnaireAnswerTemplateSelector SliderTemplate="{StaticResource SliderTemplate}" OptionsTemplate="{StaticResource OptionsTemplate}"/>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

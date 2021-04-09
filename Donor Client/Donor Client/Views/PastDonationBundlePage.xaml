@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}, Path=ViewModel}"
+             x:DataType="{x:Type vm:PastDonationBundleViewModel}"
+             Shell.BackButtonBehavior="{StaticResource DefaultBackButtonBehaviour}"
+             x:Class="DonorClient.Views.PastDonationBundlePage" Padding="16">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="Android" Value="0,-6,68,0"/>
+                    <On Platform="iOS" Value="0,-6,48,0"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <Label Text="{Binding Title}" Style="{StaticResource PageTitle}"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout Spacing="8">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS" Value="24"/>
+                </OnPlatform>
+            </StackLayout.Padding>
+            <StackLayout.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+                    <Setter Property="FontSize" Value="16"/>
+                </Style>
+            </StackLayout.Resources>
+            <StackLayout Orientation="Horizontal" Spacing="8">
+                <Label FontSize="13" FontFamily="LemonMilkLight" Text="Processed"/>
+                <Label FontSize="13" FontFamily="LemonMilkLight" Text="{Binding DateString}"/>
+            </StackLayout>
+            <Label Style="{StaticResource BodyText}" Text="Status:"/>
+            <StackLayout Orientation="Horizontal" Margin="8,0">
+                <Label Text="Payment:"/>
+                <Image Margin="0,5,0,0" Style="{StaticResource StripeStatusImage}">
+                    <Image.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="0,5,0,0"/>
+                        </OnPlatform>
+                    </Image.Margin>
+                </Image>
+                <Label Margin="0,5,0,0" Style="{StaticResource StripeStatusLabel}">
+                    <Label.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="0,5,0,0"/>
+                        </OnPlatform>
+                    </Label.Margin>
+                </Label>
+                <Label Text=" • "/>
+                <Label Text="{Binding LastFour, StringFormat='Card Ending {0}'}" AnchorX="0" AnchorY="0" Scale="1.14285714" FontSize="14" IsVisible="{Binding UsedCard}"/>
+                <Label Text="Apple Pay" AnchorX="0" AnchorY="0" Scale="1.14285714" FontSize="14" IsVisible="{Binding UsedApplePay}"/>
+                <Label Text="Google Pay" AnchorX="0" AnchorY="0" Scale="1.14285714" FontSize="14" IsVisible="{Binding UsedGooglePay}"/>
+            </StackLayout>
+            <StackLayout Margin="8,0" IsVisible="{Binding GiftAidEnabled}" Orientation="Horizontal" Spacing="8">
+                <Label Text="Gift Aid:"/>
+                <Image Style="{StaticResource GiftAidStateImage}">
+                    <Image.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="0,5,0,0"/>
+                        </OnPlatform>
+                    </Image.Margin>
+                </Image>
+                <Label Style="{StaticResource GiftAidStateLabel}">
+                    <Label.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="0,5,0,0"/>
+                        </OnPlatform>
+                    </Label.Margin>
+                </Label>
+            </StackLayout>
+            <Label Margin="8,0" IsVisible="{Binding GiftAidUnclaimed}" Text="Don't be alarmed!!! We usually collect Gift Aid in batches only a few times per year - we promise we're grateful :)" Style="{StaticResource BodyText}"/>
+            <Label Margin="0,4,0,0" Style="{StaticResource BodyText}" Text="Donations:">
+                <Label.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,4,0,-8"/>
+                    </OnPlatform>
+                </Label.Margin>
+            </Label>
+
+            <StackLayout BindableLayout.ItemsSource="{Binding DonationViewModels}" Spacing="{OnPlatform Android=16, iOS=0}"
+                            BindableLayout.ItemTemplate="{StaticResource BundlePageDonationTemplate}"/>
+
+            <Label Style="{StaticResource BodyText}" Text="Summary:">
+                <Label.Padding>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,8,0,0"/>
+                    </OnPlatform>
+                </Label.Padding>
+            </Label>
+            <Grid RowDefinitions="auto,auto,auto,auto,8,auto,auto,8" ColumnDefinitions="*,auto" Margin="8,0,8,8" RowSpacing="6">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="FontFamily" Value="LexendDecaRegular"/>
+                        <Setter Property="FontSize" Value="18"/>
+                    </Style>
+                </Grid.Resources>
+                <Label Text="Donations"/>
+                <Label Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding Amount, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}"/>
+
+                <Label Grid.Row="1" Text="Stripe Processing Fee" IsVisible="{Binding CoverStripeFee}"/>
+                <Label Grid.Row="1" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding StripeFee, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}" IsVisible="{Binding CoverStripeFee}"/>
+
+                <Label Grid.Row="2" Text="Stripe Processing Fee" TextColor="{StaticResource ErrorAccent}"/>
+                <Label Grid.Row="2" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding StripeFee, StringFormat='-  £{0}', Converter={StaticResource CurrencyConverter}}" TextColor="{StaticResource ErrorAccent}"/>
+
+                <Label Grid.Row="3" Text="Gift Aid" TextColor="{StaticResource SuccessAccent}" IsVisible="{Binding GiftAidEnabled}"/>
+                <Label Grid.Row="3" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding AmountAfterFee, StringFormat='+  £{0}', Converter={StaticResource CurrencyConverter}, ConverterParameter={StaticResource GiftAidCoefficient}}" TextColor="{StaticResource SuccessAccent}" IsVisible="{Binding GiftAidEnabled}"/>
+
+                <BoxView Grid.Row="4" Grid.ColumnSpan="2" Opacity="0.4" HeightRequest="1" VerticalOptions="CenterAndExpand" Margin="0,3,0,0" BackgroundColor="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+                <Label Grid.Row="5" Text="Total Received by Charity"/>
+                <Label Grid.Row="5" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding TotalReceived, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}"/>
+                <Label Grid.Row="6" Text="Total Payed by You"/>
+                <Label Grid.Row="6" HorizontalTextAlignment="End" Grid.Column="1" Text="{Binding TotalPayed, StringFormat='£{0}', Converter={StaticResource CurrencyConverter}}"/>
+                <BoxView Grid.Row="7" Grid.ColumnSpan="2" Opacity="0.4" HeightRequest="1" VerticalOptions="CenterAndExpand" Margin="0,3,0,0" BackgroundColor="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

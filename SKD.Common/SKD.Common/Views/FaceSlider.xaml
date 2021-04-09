@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SKD.Common.Views.FaceSlider" Margin="16,0"
+             xmlns:cviews="clr-namespace:SKD.Common.Views">
+    <ContentView.Content>
+        <Grid RowDefinitions="auto" ColumnDefinitions="*" x:DataType="{x:Type cviews:FaceSlider}" 
+              BindingContext="{Binding Source={RelativeSource AncestorType={x:Type cviews:FaceSlider}}}">
+            <Slider HorizontalOptions="FillAndExpand" Value="{Binding Value}" Minimum="-1" Maximum="1" VerticalOptions="Center" Margin="-16,0" MaximumTrackColor="{AppThemeBinding Light={StaticResource DisabledTextColourLight}, Dark={StaticResource DisabledTextColourDark}}">
+                <Slider.Triggers>
+                    <DataTrigger TargetType="{x:Type Slider}" Binding="{Binding FaceType}" Value="{x:Static cviews:FaceType.Default}">
+                        <Setter Property="MinimumTrackColor" Value="{Binding Value, Converter={StaticResource DefaultFaceColourConverter}}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Slider}" Binding="{Binding FaceType}" Value="{x:Static cviews:FaceType.Shock}">
+                        <Setter Property="MinimumTrackColor" Value="{Binding Value, Converter={StaticResource ShockFaceColourConverter}}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type Slider}" Binding="{Binding FaceType}" Value="{x:Static cviews:FaceType.Understanding}">
+                        <Setter Property="MinimumTrackColor" Value="{Binding Value, Converter={StaticResource UnderstandingFaceColourConverter}}"/>
+                    </DataTrigger>
+                </Slider.Triggers>
+            </Slider>
+            <cviews:Face Value="{Binding Value}" FaceType="{Binding FaceType}" HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True" Scale="0.8">
+                <cviews:Face.TranslationX>
+                    <MultiBinding Converter="{StaticResource ProductConverter}" ConverterParameter="0.5">
+                        <Binding Path="Value" FallbackValue="0"/>
+                        <Binding Path="Width" FallbackValue="0"/>
+                    </MultiBinding>
+                </cviews:Face.TranslationX>
+            </cviews:Face>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

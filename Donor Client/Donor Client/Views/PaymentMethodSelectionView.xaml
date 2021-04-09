@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dialogs:DialogView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DonorClient.ViewModels"
+             ControlTemplate="{StaticResource OpaqueDialogTemplate}"
+             ProportionalWidth="1" ProportionalHeight="1"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:dialogs="clr-namespace:AiForms.Dialogs.Abstractions;assembly=AiForms.Dialogs.Abstractions"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             x:DataType="{x:Type vm:CurrentBundleViewModel}"
+             x:Class="DonorClient.Views.PaymentMethodSelectionView">
+  <dialogs:DialogView.Content>
+        <Grid RowDefinitions="*,auto" Padding="0,32" ColumnDefinitions="*">
+            <CollectionView ItemsSource="{Binding PaymentMethodViewModels}" SelectedItem="{Binding SelectedPaymentMethodViewModel}" SelectionMode="Single">
+                <CollectionView.EmptyView>
+                    <StackLayout Spacing="12" Padding="{OnPlatform Android='0', iOS='20,36,20,0'}">
+                        <Label Text="You haven't added any payment methods yet, please go to settings to add a payment method." Style="{StaticResource BodyText}" HorizontalTextAlignment="Center"/>
+                        <Button Text="Go to settings!" Clicked="SettingsButton_Clicked" CornerRadius="12" Command="{Binding SettingsCommand}"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="6"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type vm:PaymentMethodViewModel}">
+                        <Grid BackgroundColor="{AppThemeBinding Light={StaticResource ChromeBackgroundColourLight}, Dark={StaticResource ChromeBackgroundColourDark}}" RowDefinitions="*" ColumnDefinitions="auto,*,auto" ColumnSpacing="12" RowSpacing="0" HeightRequest="48">
+                            <ff:CachedImage Source="{Binding IconImageSource}" Margin="4"/>
+                            <Label Grid.Column="1" Text="{Binding LastFourDigits, StringFormat='Ending with {0}'}" VerticalTextAlignment="Center" FontFamily="LexendDecaRegular"/>
+                            <Image x:Name="SelectedIndicator" IsVisible="False" Grid.Column="2" Source="{FontImage Glyph={StaticResource SuccessIcon}, FontFamily=IconFont, Color={StaticResource SuccessAccent}, Size=20}" Margin="0,0,16,0"/>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Selected" TargetType="{x:Type Grid}">
+                                        <VisualState.Setters>
+                                            <Setter TargetName="SelectedIndicator" Property="Image.IsVisible">True</Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Grid.Row="1" Text="Confirm" Clicked="ConfirmButton_Clicked" Style="{StaticResource ConfirmButton}">
+                <Button.IsEnabled>
+                    <MultiBinding Converter="{StaticResource ANDConverter}">
+                        <Binding Path="CanConfirm"/>
+                        <Binding Path="CanConfirmCard"/>
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+        </Grid>
+    </dialogs:DialogView.Content>
+</dialogs:DialogView>

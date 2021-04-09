@@ -1,0 +1,815 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmPasswordPlaceholder" xml:space="preserve">
+    <value>Confirmar la contraseña</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="EmailPlaceholder" xml:space="preserve">
+    <value>Correo</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Contraseña</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="ForPartners" xml:space="preserve">
+    <value>Para Socios</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="AccessDeniedNotPartner" xml:space="preserve">
+    <value>Acceso denegado: debe tener una cuenta de socio para usar esta aplicación.</value>
+    <comment>Invalid Auth Page</comment>
+  </data>
+  <data name="AuthError" xml:space="preserve">
+    <value>Error de autenticación</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="EmailVerifSent" xml:space="preserve">
+    <value>Se ha enviado su correo electrónico de verificación.</value>
+    <comment>Invalid Auth Page</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Iniciar sesión</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Cerrar sesión</value>
+    <comment>General</comment>
+  </data>
+  <data name="Okay" xml:space="preserve">
+    <value>Aceptar</value>
+    <comment>General</comment>
+  </data>
+  <data name="PSInvalid" xml:space="preserve">
+    <value>Contraseña incorrecta</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="PSMedium" xml:space="preserve">
+    <value>Fuerza de contraseña: Medio</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="PSStrong" xml:space="preserve">
+    <value>Fuerza de la contraseña: Fuerte</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="PSWeak" xml:space="preserve">
+    <value>Fuerza de contraseña: Débil</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Resend" xml:space="preserve">
+    <value>Reenviar</value>
+    <comment>Invalid Auth Page</comment>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Registrarse</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Explanation" xml:space="preserve">
+    <value>Explicación</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+    <comment>General</comment>
+  </data>
+  <data name="TransferOwnershipMessage" xml:space="preserve">
+    <value>¿Hacer {0} el líder del grupo?</value>
+    <comment>Team Page</comment>
+  </data>
+  <data name="TransferOwnershipTitle" xml:space="preserve">
+    <value>Transferencia del Dueño</value>
+    <comment>Team Page</comment>
+  </data>
+  <data name="Untitled" xml:space="preserve">
+    <value>sin título</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="DeleteDraftMessage" xml:space="preserve">
+    <value>¿Está seguro de que desea eliminar este borrador?</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="DeleteDraftTitle" xml:space="preserve">
+    <value>Eliminar borrador</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>SÍ</value>
+    <comment>General</comment>
+  </data>
+  <data name="CostSubcomponentStringFormat" xml:space="preserve">
+    <value>{0} × {1} á ₤{2} (₤{3} Cada uno)</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="CreateProgressUpdate" xml:space="preserve">
+    <value>Crear actualización de progreso</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="Each" xml:space="preserve">
+    <value>Cada</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Grupo</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="CaptionPlaceholder" xml:space="preserve">
+    <value>Título</value>
+    <comment>Project Update Creation Page</comment>
+  </data>
+  <data name="CoreInfo" xml:space="preserve">
+    <value>Información básica</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Crear proyecto</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="ProjectCompleteE" xml:space="preserve">
+    <value>¡Proyecto completo!</value>
+    <comment>Project Update Creation Page</comment>
+  </data>
+  <data name="ProjectCompleteQ" xml:space="preserve">
+    <value>¿Proyecto completado?</value>
+    <comment>Project Update Creation Page</comment>
+  </data>
+  <data name="ProjectCreationImageHint" xml:space="preserve">
+    <value>Agregue al menos una imagen.</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="ProjectDescriptionPlaceholder" xml:space="preserve">
+    <value>Descripción del proyecto</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="ProjectNamePlaceholder" xml:space="preserve">
+    <value>Nombre del proyecto</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="ProjectUpdateImageHint" xml:space="preserve">
+    <value>La adición de imágenes para actualizaciones de progreso es opcional, pero se recomienda.</value>
+    <comment>Project Update Creation Page</comment>
+  </data>
+  <data name="UrgentE" xml:space="preserve">
+    <value>¡Urgente!</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="UrgentQ" xml:space="preserve">
+    <value>¿Urgente?</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="EditProgressUpdate" xml:space="preserve">
+    <value>Editar actualización de progreso</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="ProgressUpdate" xml:space="preserve">
+    <value>Actualización de progreso</value>
+    <comment>Project Update Creation Page</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>NO</value>
+    <comment>General</comment>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Dirección</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contacto</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="DateOfBirthFormat" xml:space="preserve">
+    <value>Fecha de nacimiento: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="DateOfEntryFormat" xml:space="preserve">
+    <value>Fecha de entrada: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="EmailFormat" xml:space="preserve">
+    <value>Correo electrónico: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="FocusFormat" xml:space="preserve">
+    <value>Enfoque: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Generales</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="HomePhoneFormat" xml:space="preserve">
+    <value>Teléfono del hogar: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>Imágenes</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="MobilePhoneFormat" xml:space="preserve">
+    <value>Teléfono móvil: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="ProgrammeFormat" xml:space="preserve">
+    <value>Programa: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="CityFormat" xml:space="preserve">
+    <value>Ciudad: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="CountryFormat" xml:space="preserve">
+    <value>País: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="LineOneFormat" xml:space="preserve">
+    <value>Línea 1: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="LineThreeFormat" xml:space="preserve">
+    <value>Línea 3: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="LineTwoFormat" xml:space="preserve">
+    <value>Línea 2: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="NothingToShowHere" xml:space="preserve">
+    <value>Nada que mostrar aquí...</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="ZipCodeFormat" xml:space="preserve">
+    <value>Código Postal: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="AdditionalInfo" xml:space="preserve">
+    <value>Información adicional</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="AllergiesFormat" xml:space="preserve">
+    <value>Alergias: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="BloodTypeFormat" xml:space="preserve">
+    <value>Tipo de sangre: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="CreatedFormat" xml:space="preserve">
+    <value>Creado el {0} por {1}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="DoctorClinicNameFormat" xml:space="preserve">
+    <value>Nombre del médico/clínica: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Family" xml:space="preserve">
+    <value>Familia</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="GradeFormat" xml:space="preserve">
+    <value>Grado: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>Mantenimiento</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="MamaDPIFormat" xml:space="preserve">
+    <value>DPI de la Mamá: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="ModifiedFormat" xml:space="preserve">
+    <value>Ultima modificación en {0} por {1}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="NameFormat" xml:space="preserve">
+    <value>Nombre: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="OpeningTimesFormat" xml:space="preserve">
+    <value>Horario: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="PapaDPIFormat" xml:space="preserve">
+    <value>DPI del Papá: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="ReferenceFormat" xml:space="preserve">
+    <value>Referencia: {0}</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="School" xml:space="preserve">
+    <value>Escuela</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Sponsors" xml:space="preserve">
+    <value>Patrocinadores: </value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Respuesta</value>
+    <comment>Questionnaire Creation Page</comment>
+  </data>
+  <data name="CostBreakdown" xml:space="preserve">
+    <value>Análisis de costes</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="ImpactMeasurement" xml:space="preserve">
+    <value>Medición de impacto</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="Questionnaires" xml:space="preserve">
+    <value>Cuestionarios</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Preguntas</value>
+    <comment>Questionnaire Creation Page</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Enviar</value>
+    <comment>Project Creation Page</comment>
+  </data>
+  <data name="SelectCategories" xml:space="preserve">
+    <value>Seleccionar categorías</value>
+    <comment>Questionnaire Creation Page</comment>
+  </data>
+  <data name="ChooseStrongerPassword" xml:space="preserve">
+    <value>Por favor, elija una contraseña más fuerte.</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Contraseña activa</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="CurrentPasswordPrompt" xml:space="preserve">
+    <value>Introduce tu contraseña actual.</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nueva contraseña</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="NewPasswordPrompt" xml:space="preserve">
+    <value>Introduce tu nueva contraseña.</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="WeakPassword" xml:space="preserve">
+    <value>Contraseña débil</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>¿Olvidaste la contraseña?</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="ForgotPasswordPrompt" xml:space="preserve">
+    <value>¿Desea que se envíe un correo electrónico de restablecimiento de contraseña a {0}?</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Cuenta</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Tema</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="Allergies" xml:space="preserve">
+    <value>Alergias</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="BloodType" xml:space="preserve">
+    <value>Grupo sanguíneo</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Ciudad</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>País</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Fecha de nacimiento</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="DateOfEntry" xml:space="preserve">
+    <value>Fecha de entrada</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="DoctorClinicName" xml:space="preserve">
+    <value>Nombre del médico /clínica</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Focus" xml:space="preserve">
+    <value>Foco</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Grade" xml:space="preserve">
+    <value>Calificación</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="HomePhone" xml:space="preserve">
+    <value>Teléfono particular</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="LineOne" xml:space="preserve">
+    <value>Línea 1</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="LineThree" xml:space="preserve">
+    <value>Línea 3</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="LineTwo" xml:space="preserve">
+    <value>Línea 2</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="MamaDPI" xml:space="preserve">
+    <value>DPI de la Mamá</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="MobilePhone" xml:space="preserve">
+    <value>Teléfono móvil</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>name</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="OpeningTimes" xml:space="preserve">
+    <value>Horarios de apertura</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="PapaDPI" xml:space="preserve">
+    <value>DPI del Papá</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Programme" xml:space="preserve">
+    <value>Programa</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>Referencia</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Código postal</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="AddChild" xml:space="preserve">
+    <value>Agregar elemento secundario</value>
+    <comment>Kids Page</comment>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>[hX26g]Valor</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="FirstNames" xml:space="preserve">
+    <value>Nombres</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="LastNames" xml:space="preserve">
+    <value>Apellidos</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Administración</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="AlexisHouse" xml:space="preserve">
+    <value>Casa Alexis</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Budget" xml:space="preserve">
+    <value>Presupuesto</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Centro</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="EmployeeContract" xml:space="preserve">
+    <value>Contrato de empleado</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="EmployeeEvaluation" xml:space="preserve">
+    <value>Evaluación de empleados</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="ImpactEvaluation" xml:space="preserve">
+    <value>Evaluación de impacto</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Induction" xml:space="preserve">
+    <value>Inducción</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="JobProfile" xml:space="preserve">
+    <value>Perfil de trabajo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Mentoring" xml:space="preserve">
+    <value>Mentoring</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="PastoralPlan" xml:space="preserve">
+    <value>Plan Pastoral para Empleados y Voluntarios</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Presentación del programa</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Prevention" xml:space="preserve">
+    <value>Prevención</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="ProceduresAndResponsabilites" xml:space="preserve">
+    <value>Procedimientos y Responsabilidades</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Reach" xml:space="preserve">
+    <value>Alcance</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="ReportStructure" xml:space="preserve">
+    <value>Estructura del informe basada en OMRE</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="RiskAssessment" xml:space="preserve">
+    <value>Evaluación de riesgos</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Securities" xml:space="preserve">
+    <value>Valores</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="TrainingPlan" xml:space="preserve">
+    <value>Plan de Capacitación</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VisitsEvaluationAndAcknowledgement" xml:space="preserve">
+    <value>Visitas • Evaluación y Reconocimiento</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VisitsInformationPage" xml:space="preserve">
+    <value>Visitas • Paquete de información</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VisitsPlanAndPurpose" xml:space="preserve">
+    <value>Visitas • Plan y propósito de visitas</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VisitsPresentationAndTour" xml:space="preserve">
+    <value>Visitas • Presentación y Tour</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VisitsWaiverForm" xml:space="preserve">
+    <value>Visitas • Formulario de exención</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersApplicationProcess" xml:space="preserve">
+    <value>Voluntarios • Proceso de Solicitud</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersAssessmentsAndIncentives" xml:space="preserve">
+    <value>Voluntarios • Evaluaciones e Incentivos</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersCareAndSupportPlan" xml:space="preserve">
+    <value>Voluntarios • Plan de Cuidado y Apoyo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersProfile" xml:space="preserve">
+    <value>Voluntarios • Perfil</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersSelectionProcess" xml:space="preserve">
+    <value>Voluntarios • Proceso de Selección</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersTraningPlan" xml:space="preserve">
+    <value>Voluntarios • Plan de Capacitación</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersValuesAndProcedures" xml:space="preserve">
+    <value>Voluntarios • Valores y Procedimientos</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="VolunteersWorkPlan" xml:space="preserve">
+    <value>Voluntarios • Plan de Trabajo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="WorkManual" xml:space="preserve">
+    <value>Manual de trabajo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="WorkPlanOMRE" xml:space="preserve">
+    <value>Plan de Trabajo / OMRE</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="YoungBoys" xml:space="preserve">
+    <value>Jóvenes</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Actualizar</value>
+    <comment>Invalid Auth Page</comment>
+  </data>
+  <data name="ApplicationPendingMessage" xml:space="preserve">
+    <value>Su solicitud está pendiente.</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="AreasOfWork" xml:space="preserve">
+    <value>Zonas de trabajo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="AvailableDocumentsMessage" xml:space="preserve">
+    <value>Marque la casilla correspondiente para cada documento que pueda proporcionar.</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="CreateTeam" xml:space="preserve">
+    <value>Crear equipo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documentos</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Nombre completo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="JoinTeam" xml:space="preserve">
+    <value>Unirse al equipo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="OrganisationDetails" xml:space="preserve">
+    <value>Detalles de la organización</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Número de teléfono</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="TeamCode" xml:space="preserve">
+    <value>Cód. equipo</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="YourDetails" xml:space="preserve">
+    <value>Tus datos</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Listo</value>
+    <comment>General</comment>
+  </data>
+  <data name="ActiveProjects" xml:space="preserve">
+    <value>Proyectos activos</value>
+    <comment>Projects Page</comment>
+  </data>
+  <data name="ChildDetails" xml:space="preserve">
+    <value>Detalles del niño</value>
+    <comment>Child Details Page</comment>
+  </data>
+  <data name="CompletedProjects" xml:space="preserve">
+    <value>Proyectos terminados</value>
+    <comment>Projects Page</comment>
+  </data>
+  <data name="CreateApplication" xml:space="preserve">
+    <value>Crear aplicación</value>
+    <comment>Projects Page</comment>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Oscuro</value>
+    <comment>Theme</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descripción</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="DraftApplications" xml:space="preserve">
+    <value>Proyecto de solicitudes</value>
+    <comment>Projects Page</comment>
+  </data>
+  <data name="Kids" xml:space="preserve">
+    <value>Niños</value>
+    <comment>Shell</comment>
+  </data>
+  <data name="Leader" xml:space="preserve">
+    <value>Relleno</value>
+    <comment>Team Page</comment>
+  </data>
+  <data name="LeaveTeam" xml:space="preserve">
+    <value>Salir del equipo</value>
+    <comment>Team Page</comment>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Claro</value>
+    <comment>Theme</comment>
+  </data>
+  <data name="MemberRequests" xml:space="preserve">
+    <value>Solicitudes de miembros</value>
+    <comment>Team Page</comment>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Miembros</value>
+    <comment>Team Page</comment>
+  </data>
+  <data name="PendingApplications" xml:space="preserve">
+    <value>Solicitudes pendientes</value>
+    <comment>Projects Page</comment>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Proyectos</value>
+    <comment>Shell</comment>
+  </data>
+  <data name="ProjectTimeline" xml:space="preserve">
+    <value>Línea de tiempo del proyecto</value>
+    <comment>Project Detail Page</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configuración</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Sistema</value>
+    <comment>Theme</comment>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>Equipo</value>
+    <comment>Shell</comment>
+  </data>
+  <data name="TeamCodeFormat" xml:space="preserve">
+    <value>Su código de equipo es {0}</value>
+    <comment>Team Page</comment>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filtros</value>
+    <comment>Projects Page</comment>
+  </data>
+  <data name="AuthCodeFormat" xml:space="preserve">
+    <value>Su código de autorización está {0}</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirmar</value>
+    <comment>General</comment>
+  </data>
+  <data name="ConfirmTeamFormat" xml:space="preserve">
+    <value>Tienes la intención de unirte a {0}, ¿correcto?</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>General</comment>
+  </data>
+  <data name="InvalidCode" xml:space="preserve">
+    <value>Código no válido</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="InvalidCodeMessage" xml:space="preserve">
+    <value>Lo siento, no hay un equipo con ese código!</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="TeamRequestPendingFormat" xml:space="preserve">
+    <value>Su solicitud de unirse a {0} está pendiente.</value>
+    <comment>Onboarding Page</comment>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Cerrar sesión</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Aceptar</value>
+    <comment>General</comment>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Rechazar</value>
+    <comment>General</comment>
+  </data>
+</root>
